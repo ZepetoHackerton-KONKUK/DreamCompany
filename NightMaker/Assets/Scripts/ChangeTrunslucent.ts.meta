@@ -1,0 +1,51 @@
+fileFormatVersion: 2
+guid: bed300d5aec4d304fa02f3d3f2f6ce52
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nclass ChangeTrunslucent extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n        super(...arguments);\r\n       
+    this._originalMaterials = new Array();\r\n    }\r\n    Start() {\r\n        //
+    Find the local player and Set it to _localCharacter\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            this._localCharacter = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n           
+    // Save to keep original materials\r\n            this._bodyRends = this._localCharacter.GetComponentsInChildren($typeof(UnityEngine_1.SkinnedMeshRenderer));\r\n           
+    this._bodyRends.forEach((currentRenderer) => {\r\n                for (let i
+    = 0; i < currentRenderer.sharedMaterials.length; i++) {\r\n                   
+    this._originalMaterials.push(currentRenderer.sharedMaterials[i]);\r\n               
+    }\r\n            });\r\n        });\r\n        // Replace with the preset material
+    when the button is pressed\r\n        this.changeColorButton.onClick.AddListener(()
+    => {\r\n            if (this._localCharacter != null) {\r\n                this._bodyRends.forEach((currentRenderer)
+    => {\r\n                    let tempMaterials = new Array();\r\n                   
+    for (let i = 0; i < currentRenderer.sharedMaterials.length; i++) {\r\n                       
+    tempMaterials.push(this.newColorMaterial);\r\n                    }\r\n                   
+    currentRenderer.sharedMaterials = tempMaterials;\r\n                });\r\n           
+    }\r\n        });\r\n        // Return to the original material when the button
+    is pressed\r\n        this.originalColorButton.onClick.AddListener(() => {\r\n           
+    if (this._localCharacter != null) {\r\n                let indexNum = 0;\r\n               
+    this._bodyRends = this._localCharacter.GetComponentsInChildren($typeof(UnityEngine_1.SkinnedMeshRenderer));\r\n               
+    this._bodyRends.forEach((currentRenderer) => {\r\n                    let tempMaterials
+    = new Array();\r\n                    for (let i = 0; i < currentRenderer.sharedMaterials.length;
+    i++) {\r\n                        tempMaterials.push(this._originalMaterials[indexNum]);\r\n                       
+    indexNum++;\r\n                    }\r\n                    currentRenderer.sharedMaterials
+    = tempMaterials;\r\n                });\r\n            }\r\n        });\r\n   
+    }\r\n}\r\nexports.default = ChangeTrunslucent;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhbmdlVHJ1bnNsdWNlbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJDaGFuZ2VUcnVuc2x1Y2VudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUNyRCw2RUFBd0Y7QUFDeEYsNkNBQTZHO0FBSTdHLE1BQXFCLGlCQUFrQixTQUFRLHFDQUFxQjtJQUFwRTs7UUFNWSx1QkFBa0IsR0FBZ0IsSUFBSSxLQUFLLEVBQUUsQ0FBQztJQStDMUQsQ0FBQztJQTNDRyxLQUFLO1FBQ0Qsc0RBQXNEO1FBQ3RELDJDQUFhLENBQUMsUUFBUSxDQUFDLGtCQUFrQixDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdkQsSUFBSSxDQUFDLGVBQWUsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQztZQUVqRixrQ0FBa0M7WUFDbEMsSUFBSSxDQUFDLFVBQVUsR0FBRSxJQUFJLENBQUMsZUFBZSxDQUFDLHVCQUF1QixTQUFDLGlDQUFtQixFQUFHLENBQUM7WUFDckYsSUFBSSxDQUFDLFVBQVUsQ0FBQyxPQUFPLENBQUMsQ0FBQyxlQUFlLEVBQUUsRUFBRTtnQkFDeEMsS0FBSSxJQUFJLENBQUMsR0FBQyxDQUFDLEVBQUUsQ0FBQyxHQUFDLGVBQWUsQ0FBQyxlQUFlLENBQUMsTUFBTSxFQUFDLENBQUMsRUFBRSxFQUFDO29CQUN0RCxJQUFJLENBQUMsa0JBQWtCLENBQUMsSUFBSSxDQUFDLGVBQWUsQ0FBQyxlQUFlLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztpQkFDcEU7WUFDTCxDQUFDLENBQUMsQ0FBQztRQUNQLENBQUMsQ0FBQyxDQUFDO1FBRUgsOERBQThEO1FBQzlELElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUM1QyxJQUFHLElBQUksQ0FBQyxlQUFlLElBQUksSUFBSSxFQUFFO2dCQUM3QixJQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sQ0FBQyxDQUFDLGVBQWUsRUFBRSxFQUFFO29CQUN4QyxJQUFJLGFBQWEsR0FBZ0IsSUFBSSxLQUFLLEVBQUUsQ0FBQztvQkFDN0MsS0FBSSxJQUFJLENBQUMsR0FBQyxDQUFDLEVBQUUsQ0FBQyxHQUFDLGVBQWUsQ0FBQyxlQUFlLENBQUMsTUFBTSxFQUFDLENBQUMsRUFBRSxFQUFDO3dCQUN0RCxhQUFhLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO3FCQUM3QztvQkFDRCxlQUFlLENBQUMsZUFBZSxHQUFHLGFBQWEsQ0FBQztnQkFDcEQsQ0FBQyxDQUFDLENBQUM7YUFDTjtRQUNMLENBQUMsQ0FBQyxDQUFDO1FBRUgsNkRBQTZEO1FBQzdELElBQUksQ0FBQyxtQkFBbUIsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUM5QyxJQUFHLElBQUksQ0FBQyxlQUFlLElBQUksSUFBSSxFQUFFO2dCQUM3QixJQUFJLFFBQVEsR0FBRyxDQUFDLENBQUM7Z0JBQ2pCLElBQUksQ0FBQyxVQUFVLEdBQUUsSUFBSSxDQUFDLGVBQWUsQ0FBQyx1QkFBdUIsU0FBQyxpQ0FBbUIsRUFBRyxDQUFDO2dCQUNyRixJQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sQ0FBQyxDQUFDLGVBQWUsRUFBRSxFQUFFO29CQUN4QyxJQUFJLGFBQWEsR0FBZ0IsSUFBSSxLQUFLLEVBQUUsQ0FBQztvQkFDN0MsS0FBSSxJQUFJLENBQUMsR0FBQyxDQUFDLEVBQUUsQ0FBQyxHQUFDLGVBQWUsQ0FBQyxlQUFlLENBQUMsTUFBTSxFQUFDLENBQUMsRUFBRSxFQUFDO3dCQUN0RCxhQUFhLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDO3dCQUN0RCxRQUFRLEVBQUUsQ0FBQztxQkFDZDtvQkFDRCxlQUFlLENBQUMsZUFBZSxHQUFHLGFBQWEsQ0FBQztnQkFDcEQsQ0FBQyxDQUFDLENBQUM7YUFDTjtRQUNMLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUNKO0FBckRELG9DQXFEQyJ9","assetPath":"Assets/Scripts/ChangeTrunslucent.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"newColorMaterial","type":"UnityEngine.Material","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"changeColorButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"originalColorButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ChangeTrunslucent","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: a8a3d073aaaec165e13d161669133dd7
+  onlyWriteTrigger: 0

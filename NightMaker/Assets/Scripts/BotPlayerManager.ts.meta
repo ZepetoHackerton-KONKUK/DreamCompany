@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: f98da41d7445be94186dfdf02a46b16d
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nclass
+    BotPlayerManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this._botMapData = new Map();\r\n   
+    }\r\n    Start() {\r\n        this.zepetoWorldMultiplay.add_RoomJoined((room)
+    => {\r\n            this._room = room;\r\n        });\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedPlayer.AddListener((userId)
+    => {\r\n            const currentPlayer = this._room.State.players.get_Item(userId);\r\n           
+    if (currentPlayer.isBot) {\r\n                this.SetBotPlayer(currentPlayer.sessionId);\r\n           
+    }\r\n        });\r\n        this.buttonCreateBot.onClick.AddListener(() => {\r\n           
+    this._room.Send(\"CreateBot\", this.botPlayerId);\r\n        });\r\n    }\r\n   
+    SetBotPlayer(userId) {\r\n        const bot = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(userId).character;\r\n       
+    bot.gameObject.name = userId;\r\n        this._botMapData.set(userId, bot);\r\n   
+    }\r\n}\r\nexports.default = BotPlayerManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQm90UGxheWVyTWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkJvdFBsYXllck1hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFHckQsNkVBQTJFO0FBRTNFLE1BQXFCLGdCQUFpQixTQUFRLHFDQUFxQjtJQUFuRTs7UUFHWSxnQkFBVyxHQUFnQyxJQUFJLEdBQUcsRUFBMEIsQ0FBQztJQXlCekYsQ0FBQztJQXRCRyxLQUFLO1FBQ0QsSUFBSSxDQUFDLG9CQUFvQixnQkFBZSxDQUFDLElBQVUsRUFBQyxFQUFFO1lBQ2xELElBQUksQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDO1FBQ3RCLENBQUMsRUFBQTtRQUNELDJDQUFhLENBQUMsUUFBUSxDQUFDLGFBQWEsQ0FBQyxXQUFXLENBQUMsQ0FBQyxNQUFhLEVBQUMsRUFBRTtZQUM5RCxNQUFNLGFBQWEsR0FBRyxJQUFJLENBQUMsS0FBSyxDQUFDLEtBQUssQ0FBQyxPQUFPLENBQUMsUUFBUSxDQUFDLE1BQU0sQ0FBQyxDQUFDO1lBQ2hFLElBQUcsYUFBYSxDQUFDLEtBQUssRUFBQztnQkFDbkIsSUFBSSxDQUFDLFlBQVksQ0FBQyxhQUFhLENBQUMsU0FBUyxDQUFDLENBQUM7YUFDOUM7UUFDTCxDQUFDLENBQUMsQ0FBQztRQUNILElBQUksQ0FBQyxlQUFlLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFFLEVBQUU7WUFDekMsSUFBSSxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUMsV0FBVyxFQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQztRQUNsRCxDQUFDLENBQUMsQ0FBQTtJQUVOLENBQUM7SUFDRCxZQUFZLENBQUMsTUFBYTtRQUN0QixNQUFNLEdBQUcsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUMsU0FBUyxDQUFDO1FBRS9ELEdBQUcsQ0FBQyxVQUFVLENBQUMsSUFBSSxHQUFHLE1BQU0sQ0FBQztRQUM3QixJQUFJLENBQUMsV0FBVyxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUMsR0FBRyxDQUFDLENBQUM7SUFDckMsQ0FBQztDQUVKO0FBNUJELG1DQTRCQyJ9","assetPath":"Assets/Scripts/BotPlayerManager.ts","manifest":{"properties":[{"assembly":"ZEPETO.World","name":"zepetoWorldMultiplay","type":"ZEPETO.World.ZepetoWorldMultiplay","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"buttonCreateBot","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"botPlayerId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"BotPlayerManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 02f131480d55366309df408fc477b7a0
+  onlyWriteTrigger: 0

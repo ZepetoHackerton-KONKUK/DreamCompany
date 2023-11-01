@@ -1,0 +1,48 @@
+fileFormatVersion: 2
+guid: 4be8205d89deb1b44a5533d6abb04244
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nclass GenerateKids extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        // Create a new instance of the SpawnInfo class\r\n       
+    const firstCloneSpawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    firstCloneSpawnInfo.position = new UnityEngine_1.Vector3(0, 0, 1);\r\n       
+    const secondCloneSpawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    secondCloneSpawnInfo.position = new UnityEngine_1.Vector3(0, 0, 3);\r\n       
+    // Create a `ZepetoCharacter` using ZepetoId\r\n        ZEPETO_Character_Controller_1.ZepetoCharacterCreator.CreateByZepetoId(this.zepetoId,
+    firstCloneSpawnInfo, (character) => {\r\n            this._cloneCharacter = character;\r\n       
+    });\r\n        // Create a `ZepetoCharacterModel` using ZepetoId\r\n        ZEPETO_Character_Controller_1.ZepetoCharacterCreator.CreateModelByZepetoId(this.zepetoId,
+    secondCloneSpawnInfo, (object) => {\r\n            this._cloneCharacterModel
+    = object;\r\n        });\r\n        // Create a `ZepetoCharacter` using UserId\r\n       
+    /*\r\n        ZepetoCharacterCreator.CreateByUserId(WorldService.userId, new
+    SpawnInfo(), (character: ZepetoCharacter) => {\r\n            this._cloneCharacter
+    = character;\r\n        })\r\n  \r\n        // Create a `ZepetoCharacterModel`
+    using UserId\r\n        ZepetoCharacterCreator.CreateModelByUserId(WorldService.userId,
+    new SpawnInfo(), (object) => {\r\n            this._cloneCharacterModel = object;\r\n       
+    })\r\n        */\r\n        // Set up a click event for the `removeCloneCharacterButton`
+    to remove the clone character.\r\n        this.removeCloneCharacterButton.onClick.AddListener(()
+    => {\r\n            ZEPETO_Character_Controller_1.ZepetoCharacterCreator.RemoveCharacter(this._cloneCharacter);\r\n       
+    });\r\n        // Set up a click event for the `removeCloneCharacterModelButton`
+    to destroy the clone character model.\r\n        this.removeCloneCharacterModelButton.onClick.AddListener(()
+    => {\r\n            UnityEngine_1.Object.Destroy(this._cloneCharacterModel);\r\n       
+    });\r\n    }\r\n}\r\nexports.default = GenerateKids;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2VuZXJhdGVLaWRzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiR2VuZXJhdGVLaWRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXNEO0FBQ3RELDZFQUFpRztBQUVqRyw2Q0FBMEQ7QUFHMUQsTUFBcUIsWUFBYSxTQUFRLHFDQUFxQjtJQVMzRCxLQUFLO1FBQ0QsK0NBQStDO1FBQy9DLE1BQU0sbUJBQW1CLEdBQUcsSUFBSSx1Q0FBUyxFQUFFLENBQUM7UUFDNUMsbUJBQW1CLENBQUMsUUFBUSxHQUFHLElBQUkscUJBQU8sQ0FBQyxDQUFDLEVBQUMsQ0FBQyxFQUFDLENBQUMsQ0FBQyxDQUFDO1FBRWxELE1BQU0sb0JBQW9CLEdBQUcsSUFBSSx1Q0FBUyxFQUFFLENBQUM7UUFDN0Msb0JBQW9CLENBQUMsUUFBUSxHQUFHLElBQUkscUJBQU8sQ0FBQyxDQUFDLEVBQUMsQ0FBQyxFQUFDLENBQUMsQ0FBQyxDQUFDO1FBSW5ELDRDQUE0QztRQUM1QyxvREFBc0IsQ0FBQyxnQkFBZ0IsQ0FBQyxJQUFJLENBQUMsUUFBUSxFQUFFLG1CQUFtQixFQUFFLENBQUMsU0FBMEIsRUFBRSxFQUFFO1lBQ3ZHLElBQUksQ0FBQyxlQUFlLEdBQUcsU0FBUyxDQUFDO1FBQ3JDLENBQUMsQ0FBQyxDQUFDO1FBR0gsaURBQWlEO1FBQ2pELG9EQUFzQixDQUFDLHFCQUFxQixDQUFDLElBQUksQ0FBQyxRQUFRLEVBQUUsb0JBQW9CLEVBQUUsQ0FBQyxNQUFNLEVBQUUsRUFBRTtZQUN6RixJQUFJLENBQUMsb0JBQW9CLEdBQUcsTUFBTSxDQUFDO1FBQ3ZDLENBQUMsQ0FBQyxDQUFDO1FBRUgsMENBQTBDO1FBQzFDOzs7Ozs7Ozs7VUFTRTtRQUVGLDJGQUEyRjtRQUMzRixJQUFJLENBQUMsMEJBQTBCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDckQsb0RBQXNCLENBQUMsZUFBZSxDQUFDLElBQUksQ0FBQyxlQUFlLENBQUMsQ0FBQztRQUNqRSxDQUFDLENBQUMsQ0FBQztRQUVILHVHQUF1RztRQUN2RyxJQUFJLENBQUMsK0JBQStCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDMUQsb0JBQU0sQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLG9CQUFvQixDQUFDLENBQUM7UUFDOUMsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0NBRUo7QUFyREQsK0JBcURDIn0=","assetPath":"Assets/Scripts/GenerateKids.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"zepetoId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"removeCloneCharacterButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"removeCloneCharacterModelButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"GenerateKids","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 23ec7e028382b18ee497f3c522e8c1d0
+  onlyWriteTrigger: 0
