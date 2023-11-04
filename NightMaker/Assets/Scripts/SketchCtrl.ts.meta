@@ -1,0 +1,47 @@
+fileFormatVersion: 2
+guid: c11f95e8cdf3c384887ab6a7927338dc
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst UnityEngine = require(\"UnityEngine\");\r\nclass
+    SketchCtrl extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.Setting = new PenSetting();\r\n   
+    }\r\n    Start() {\r\n        this.Setting.isPen = true;\r\n        this.ChangeEraser.onClick.AddListener(()
+    => {\r\n            this.Setting.isPen = false;\r\n        });\r\n        this.ChangePen.onClick.AddListener(()
+    => {\r\n            this.Setting.isPen = true;\r\n        });\r\n    }\r\n   
+    FixedUpdate() {\r\n        if (UnityEngine.Input.GetMouseButton(0)) {\r\n           
+    let ray = UnityEngine.Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);\r\n           
+    let SketchHit = $ref();\r\n            let PenHit = $ref();\r\n            if
+    (UnityEngine.Physics.Raycast(ray, SketchHit, 100)) {\r\n                let hitInfo
+    = $unref(SketchHit);\r\n                if (hitInfo.collider.CompareTag(\"Pen\"))
+    {\r\n                    if (!this.Setting.isPen) {\r\n                       
+    UnityEngine.Object.Destroy(hitInfo.collider.gameObject);\r\n                   
+    }\r\n                    return;\r\n                }\r\n                else
+    {\r\n                    if (!this.Setting.isPen) {\r\n                       
+    return;\r\n                    }\r\n                    const SketchPen = UnityEngine.Object.Instantiate(this.Pen,
+    new UnityEngine.Vector3(hitInfo.point.x, hitInfo.point.y, 0), UnityEngine.Quaternion.identity);\r\n                   
+    this.PenSpriteRenderer = SketchPen.GetComponent($typeof(__UnityEngine__.SpriteRenderer));\r\n                   
+    SketchPen.transform.localScale = new UnityEngine.Vector3(0.4, 0.4, 0.4);\r\n               
+    }\r\n            }\r\n        }\r\n    }\r\n}\r\nexports.default = SketchCtrl;\r\nclass
+    PenSetting {\r\n    PenSetting() {\r\n        this.Tickness = 0.6;\r\n       
+    this.ColorType = new UnityEngine.Color(255, 255, 255);\r\n        this.isPen
+    = true;\r\n    }\r\n}\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU2tldGNoQ3RybC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlNrZXRjaEN0cmwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsaURBQXFEO0FBQ3JELDJDQUEwQztBQUUxQyxNQUFxQixVQUFXLFNBQVEscUNBQXFCO0lBQTdEOztRQU9ZLFlBQU8sR0FBYyxJQUFJLFVBQVUsRUFBRSxDQUFDO0lBcUNsRCxDQUFDO0lBbkNHLEtBQUs7UUFDRCxJQUFJLENBQUMsT0FBTyxDQUFDLEtBQUssR0FBRyxJQUFJLENBQUM7UUFDMUIsSUFBSSxDQUFDLFlBQVksQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUUsRUFBRTtZQUN0QyxJQUFJLENBQUMsT0FBTyxDQUFDLEtBQUssR0FBRyxLQUFLLENBQUM7UUFDL0IsQ0FBQyxDQUFDLENBQUM7UUFDSCxJQUFJLENBQUMsU0FBUyxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRSxFQUFFO1lBQ25DLElBQUksQ0FBQyxPQUFPLENBQUMsS0FBSyxHQUFHLElBQUksQ0FBQztRQUM5QixDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFDRCxXQUFXO1FBQ1AsSUFBRyxXQUFXLENBQUMsS0FBSyxDQUFDLGNBQWMsQ0FBQyxDQUFDLENBQUMsRUFBQztZQUNuQyxJQUFJLEdBQUcsR0FBRyxXQUFXLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxXQUFXLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDO1lBQ3BGLElBQUksU0FBUyxHQUFHLElBQUksRUFBMEIsQ0FBQztZQUMvQyxJQUFJLE1BQU0sR0FBRyxJQUFJLEVBQTBCLENBQUM7WUFDNUMsSUFBRyxXQUFXLENBQUMsT0FBTyxDQUFDLE9BQU8sQ0FBQyxHQUFHLEVBQUMsU0FBUyxFQUFDLEdBQUcsQ0FBQyxFQUFDO2dCQUM5QyxJQUFJLE9BQU8sR0FBRyxNQUFNLENBQUMsU0FBUyxDQUFDLENBQUM7Z0JBQ2hDLElBQUcsT0FBTyxDQUFDLFFBQVEsQ0FBQyxVQUFVLENBQUMsS0FBSyxDQUFDLEVBQUM7b0JBQ2xDLElBQUcsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLEtBQUssRUFBQzt3QkFDbkIsV0FBVyxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsT0FBTyxDQUFDLFFBQVEsQ0FBQyxVQUFVLENBQUMsQ0FBQztxQkFDM0Q7b0JBQ0QsT0FBTztpQkFDVjtxQkFBSTtvQkFDRCxJQUFHLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxLQUFLLEVBQUM7d0JBQ25CLE9BQU87cUJBQ1Y7b0JBQ0QsTUFBTSxTQUFTLEdBQUcsV0FBVyxDQUFDLE1BQU0sQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLEdBQUcsRUFBQyxJQUFJLFdBQVcsQ0FBQyxPQUFPLENBQUMsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUMsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUMsQ0FBQyxDQUFDLEVBQUMsV0FBVyxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQTJCLENBQUM7b0JBQ2hMLElBQUksQ0FBQyxpQkFBaUIsR0FBRyxTQUFTLENBQUMsWUFBWSx5QkFBYSxjQUFjLEVBQUcsQ0FBQztvQkFDOUUsU0FBUyxDQUFDLFNBQVMsQ0FBQyxVQUFVLEdBQUcsSUFBSSxXQUFXLENBQUMsT0FBTyxDQUFDLEdBQUcsRUFBQyxHQUFHLEVBQUMsR0FBRyxDQUFDLENBQUM7aUJBQ3pFO2FBR0o7U0FDSjtJQUNMLENBQUM7Q0FFSjtBQTVDRCw2QkE0Q0M7QUFFRCxNQUFNLFVBQVU7SUFJWixVQUFVO1FBQ04sSUFBSSxDQUFDLFFBQVEsR0FBRyxHQUFHLENBQUM7UUFDcEIsSUFBSSxDQUFDLFNBQVMsR0FBRyxJQUFJLFdBQVcsQ0FBQyxLQUFLLENBQUMsR0FBRyxFQUFDLEdBQUcsRUFBQyxHQUFHLENBQUMsQ0FBQztRQUNwRCxJQUFJLENBQUMsS0FBSyxHQUFHLElBQUksQ0FBQztJQUN0QixDQUFDO0NBQ0oifQ==","assetPath":"Assets/Scripts/SketchCtrl.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"Pen","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"ChangeEraser","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"ChangePen","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"SketchCtrl","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 1652462807a73e9c0ca435cc67d4c877
+  onlyWriteTrigger: 0
