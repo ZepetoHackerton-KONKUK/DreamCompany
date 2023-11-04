@@ -1738,8 +1738,8 @@ MonoBehaviour:
     useDefaultInputController: 1
     verticalController: {fileID: 8523051459139762370, guid: 33446b9369e354b00a7ab43885afbe88, type: 3}
     horizontalController: {fileID: 2787167779785370926, guid: 9b7a03709461140b4b3fc85aa8c5d741, type: 3}
-    verticalDefaultController: {fileID: 8523051459139762370, guid: 33446b9369e354b00a7ab43885afbe88, type: 3}
-    horizontalDefaultController: {fileID: 2787167779785370926, guid: 9b7a03709461140b4b3fc85aa8c5d741, type: 3}
+    verticalDefaultController: {fileID: 0}
+    horizontalDefaultController: {fileID: 0}
     controlMode: 0
   floatingUIData:
     showNickNameLocalPlayer: 0
