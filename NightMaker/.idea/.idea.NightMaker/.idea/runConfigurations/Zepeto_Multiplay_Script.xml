@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Zepeto Multiplay Script" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" port="5782" restartOnDisconnect="true">
+    <configuration default="false" name="Zepeto Multiplay Script" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" port="7955" restartOnDisconnect="true">
         <method v="2" />
     </configuration>
 </component>
