@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: b162c64b58ee0584ca46f0fdaaba5a4c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_SceneManagement_1 = require(\"UnityEngine.SceneManagement\");\r\nclass
+    ChangePuzzle extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n       
+    this.ChangePuzzle.onClick.AddListener(() => {\r\n            UnityEngine_SceneManagement_1.SceneManager.LoadScene(\"Puzzle\");\r\n       
+    });\r\n    }\r\n}\r\nexports.default = ChangePuzzle;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhbmdlUHV6emxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2hhbmdlUHV6emxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBRXJELDZFQUEwRDtBQUMxRCxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBRzNELEtBQUs7UUFDRCxJQUFJLENBQUMsWUFBWSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRSxFQUFFO1lBQ3RDLDBDQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDO1FBQ3JDLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUVKO0FBVEQsK0JBU0MifQ==","assetPath":"Assets/Scripts/ChangePuzzle.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"ChangePuzzle","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ChangePuzzle","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: ea6fe9c20c81f1092243481e71ccfa2e
+  onlyWriteTrigger: 0

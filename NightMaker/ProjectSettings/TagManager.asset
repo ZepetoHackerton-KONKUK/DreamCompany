@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pen
   - Canvas
+  - ZepetoPlayers
   layers:
   - Default
   - TransparentFX

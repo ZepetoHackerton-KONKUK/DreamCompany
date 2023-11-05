@@ -1,5 +1,5 @@
 import {Sandbox, SandboxOptions, SandboxPlayer} from "ZEPETO.Multiplay";
-import { Player } from "ZEPETO.Multiplay.Schema";
+import { Player} from "ZEPETO.Multiplay.Schema";
 import { IModule } from "./ServerModule/IModule";
 import SyncComponentModule from "./ServerModule/Modules/SyncComponentModule";
 import MannequinModule from "./ServerModule/Modules/MannequinModule";
@@ -17,6 +17,9 @@ export default class extends Sandbox {
         for (const module of this._modules) {
             await module.OnCreate();
         }
+        this.onMessage("puzzle",(client:SandboxPlayer,message:LineModel)=>{
+            this.broadcast("puzzle",message, {except:client});
+        })
         this._isCreated = true;
     }
 
@@ -56,5 +59,14 @@ export default class extends Sandbox {
             module.OnTick(deltaTime);
         }
     }
+}
+interface LineModel{
+    name:string,
+    pos:number[],
+    Tick:number,
+    Color:number,
+    sOrder:number,
+    Count:number,
+    isNew:boolean
 }
 
