@@ -1,20 +1,23 @@
-import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
+    import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import * as UnityEngine from 'UnityEngine'
-import {Button} from 'UnityEngine.UI'
+import {Button,Text} from 'UnityEngine.UI'
 import { EventSystem } from 'UnityEngine.EventSystems'
 import MultiplayManager from '../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager'
 import { Room } from 'ZEPETO.Multiplay'
-import TransformSyncHelper from '../Zepeto Multiplay Component/ZepetoScript/Transform/TransformSyncHelper'
+import {ZepetoPlayers} from 'ZEPETO.Character.Controller'
 export default class SketchCtrl extends ZepetoScriptBehaviour {
     
     public m_camera:UnityEngine.Camera;
     public Pen:UnityEngine.GameObject;
     public ChangeEraser:Button;
     public ChangePen:Button;
+    public EndDrawBtn:Button;
     public Materials:UnityEngine.Material[] = [];
     public puzzleEventSystem:EventSystem;
     public SketchPrefab:UnityEngine.GameObject;
+    public TimerText:Text;
 
+    private puzzleState = "Draw";
     private z_camera:UnityEngine.GameObject;
     private curLine:UnityEngine.LineRenderer;
     private positionCount:number = 2;
@@ -25,25 +28,37 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private curRoom:Room;
     private Sketches:Map<string,UnityEngine.GameObject> = new Map<string,UnityEngine.GameObject>();
     private playerCurLine:Map<string,UnityEngine.LineRenderer> = new Map<string,UnityEngine.LineRenderer>();
+    private playerList:string[];
+    private timer:number;
+    private VoteSketch:string="";
+    private firstSketch:UnityEngine.GameObject;
+    private secondSketch:UnityEngine.GameObject;
+    private VoteLeftMeshRend:UnityEngine.MeshRenderer;
+    private VoteRightMeshRend:UnityEngine.MeshRenderer;
+    private z_CtrlUI:UnityEngine.GameObject;
+    private puzzleSketch:UnityEngine.GameObject;
     Start() {   
         this.z_camera = UnityEngine.GameObject.Find("ZepetoCamera") as UnityEngine.GameObject;
+        this.z_CtrlUI = UnityEngine.GameObject.Find("UIZepetoPlayerControl") as UnityEngine.GameObject;
+        this.z_CtrlUI.SetActive(false);
         this.z_camera.SetActive(false);
         this.Setting = new PenSetting(); 
-
-        console.log(this.Setting.ColorType);
         this.ChangeEraser.onClick.AddListener(()=>{
             this.Setting.ColorType = 4;
         });
         this.ChangePen.onClick.AddListener(()=>{
             this.Setting.ColorType = 0;
         });
+        this.EndDrawBtn.onClick.AddListener(()=>{
+            this.EndDrawing();
+        });
         this.puzzleEventSystem.enabled = true;
         this.curRoom = MultiplayManager.instance.room;
-        console.log(this.curRoom.SessionId);
         this.localSketchBook = UnityEngine.Object.Instantiate(this.SketchPrefab) as UnityEngine.GameObject;
         this.localSketchBook.name = this.curRoom.SessionId;
+        this.Sketches.set(this.curRoom.SessionId,this.localSketchBook);
+        this.timer = 60; // 그림그리기 60초
         this.curRoom.AddMessageHandler("puzzle",(message:LineModel)=>{
-            console.log(message.name);
             let SketchBook:UnityEngine.GameObject;
             if(!this.Sketches.has(message.name)){
                 SketchBook = UnityEngine.Object.Instantiate(this.SketchPrefab) as UnityEngine.GameObject;
@@ -75,12 +90,57 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                 lineRend.positionCount = message.Count;
                 lineRend.SetPosition(message.Count-1,posData);
             }
-
-
+        });
+        this.curRoom.AddMessageHandler("EndDraw",(message:string[])=>{
+            this.m_camera.orthographic = false;
+            this.m_camera.transform.position = new UnityEngine.Vector3(0,1,-20);
+            this.timer = 10;
+            this.puzzleState = "Vote";
+            this.playerList = message;
+            if(!(this.startVote()==null)){
+                this.EndVote();
+            }
+        });
+        this.curRoom.AddMessageHandler("Vote",(message:string)=>{
+            this.playerList.push(message);
+            this.timer = 10;
+            this.puzzleState = "Vote";
+            if(!(this.startVote()==null)){
+                this.EndVote();
+            }
+        });
+        this.curRoom.AddMessageHandler("EndVote",(message:string)=>{
+            console.log(this.playerList[0]);
+            this.m_camera.orthographic = true;
+            this.m_camera.transform.position = new UnityEngine.Vector3(0,1,-10);
+            this.puzzleSketch = this.Sketches.get(this.playerList[0]) as UnityEngine.GameObject;
+            this.puzzleSketch.transform.position = new UnityEngine.Vector3(0,1,0.5);
+            this.puzzleSketch.SetActive(true);
+            console.log("the winner is "+message);
         });
     }
     FixedUpdate(){
-        this.DrawMouse();
+        this.TimerText.text = this.timer.toFixed(0)+"s";
+        this.timer-=UnityEngine.Time.deltaTime;
+        switch(this.puzzleState){
+            case "Draw":
+                if(this.timer<0){
+                    this.timer=0;
+                    this.EndDrawing();
+                }
+                this.DrawMouse();
+                break;
+            case "Vote":
+                if(this.timer<0){
+                    this.timer = 0;
+                    this.SendVote();
+                }
+                this.CheckVote();
+                break;
+            case "Wait":
+                this.timer=0;
+                break;
+        }
     }
     DrawMouse():void{
         if(UnityEngine.Input.GetMouseButtonDown(0)){
@@ -122,7 +182,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         lineRend.SetPosition(1,mousePos.point);
         this.curLine = lineRend;
         let posData:number[] = [mousePos.point.x,mousePos.point.y,mousePos.point.z];
-        let lineMessage = {name:this.curRoom.SessionId, pos:posData,Tick:this.Setting.Tickness,Color:this.Setting.ColorType,sOrder:this.OrderLayer,Count:this.positionCount,isNew:true} as LineModel;
+        let lineMessage = {name:this.curRoom.SessionId, pos:posData,Tick:this.Setting.Tickness,Color:this.Setting.ColorType,sOrder:this.OrderLayer,Count:this.positionCount as number,isNew:true} as LineModel;
         this.curRoom.Send("puzzle",lineMessage);
     }
     connectLine(mousePos:UnityEngine.RaycastHit){
@@ -132,9 +192,65 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.curLine.positionCount = this.positionCount;
             this.curLine.SetPosition(this.positionCount -1, mousePos.point);
             let posData:number[] = [mousePos.point.x,mousePos.point.y,mousePos.point.z];
-            let lineMessage = {name:this.curRoom.SessionId, pos:posData,Tick:this.Setting.Tickness,Color:this.Setting.ColorType,sOrder:this.OrderLayer,Count:this.positionCount,isNew:false} as LineModel;
+            let lineMessage = {name:this.curRoom.SessionId, pos:posData,Tick:this.Setting.Tickness,Color:this.Setting.ColorType,sOrder:this.OrderLayer,Count:this.positionCount as number,isNew:false} as LineModel;
             this.curRoom.Send("puzzle",lineMessage);
         }
+    }
+    EndDrawing(){
+        if(this.puzzleState === "Draw"){
+            this.curRoom.Send("EndDraw");
+            this.puzzleState = "Wait";
+        }
+    }
+    startVote():string{
+        this.Sketches.get(this.curRoom.SessionId).SetActive(false);
+        if(this.playerList.length == 1){
+            console.log("sole Live "+this.playerList[0]);
+            return this.playerList[0];
+        }else{
+            let first = this.playerList.shift();
+            let second = this.playerList.shift();
+            this.firstSketch = this.Sketches.get(first) as UnityEngine.GameObject;
+            this.secondSketch = this.Sketches.get(second) as UnityEngine.GameObject;
+            this.firstSketch.transform.position = new UnityEngine.Vector3(-10,1,0.5);
+            this.secondSketch.transform.position = new UnityEngine.Vector3(10,1,0.5);
+            this.VoteLeftMeshRend = this.firstSketch.GetComponent<UnityEngine.MeshRenderer>() as UnityEngine.MeshRenderer;
+            this.VoteRightMeshRend = this.secondSketch.GetComponent<UnityEngine.MeshRenderer>() as UnityEngine.MeshRenderer;
+            this.firstSketch.SetActive(true);
+            this.secondSketch.SetActive(true);
+            return null;
+        }
+    }
+    CheckVote(){
+        if(UnityEngine.Input.GetMouseButton(0)){
+            const ray = this.m_camera.ScreenPointToRay(UnityEngine.Input.mousePosition);
+            let SketchHit = $ref<UnityEngine.RaycastHit>();
+            if(UnityEngine.Physics.Raycast(ray,SketchHit,200)){
+                let hitInfo = $unref(SketchHit);
+                if(hitInfo.collider.CompareTag("Canvas")){
+                    this.VoteSketch = hitInfo.collider.name;
+                    if(this.VoteSketch === this.firstSketch.name){
+                        this.VoteLeftMeshRend.material = this.Materials[2];
+                        this.VoteRightMeshRend.material = this.Materials[4];
+                    }else{
+                        this.VoteLeftMeshRend.material = this.Materials[4];
+                        this.VoteRightMeshRend.material = this.Materials[2];
+                    }
+                }
+            }
+        }
+    }
+    SendVote(){
+        if(this.puzzleState ==="Vote"){
+            this.firstSketch.SetActive(false);
+            this.secondSketch.SetActive(false);
+            this.puzzleState = "Wait";
+            this.curRoom.Send("Vote",this.VoteSketch);
+        }
+    }
+    EndVote(){
+        this.puzzleState = "Wait";
+        this.curRoom.Send("EndVote", this.playerList[0]);
     }
 }
 
@@ -155,3 +271,4 @@ interface LineModel{
     Count:number,
     isNew:boolean
 }
+
