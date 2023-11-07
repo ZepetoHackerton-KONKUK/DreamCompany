@@ -1,6 +1,6 @@
     import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import * as UnityEngine from 'UnityEngine'
-import {Button,Text} from 'UnityEngine.UI'
+import {Button,Text,Toggle} from 'UnityEngine.UI'
 import { EventSystem } from 'UnityEngine.EventSystems'
 import MultiplayManager from '../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager'
 import { Room } from 'ZEPETO.Multiplay'
@@ -8,6 +8,7 @@ import {ZepetoPlayers} from 'ZEPETO.Character.Controller'
 export default class SketchCtrl extends ZepetoScriptBehaviour {
     
     public m_camera:UnityEngine.Camera;
+    public p_camera:UnityEngine.Camera;
     public Pen:UnityEngine.GameObject;
     public ChangeEraser:Button;
     public ChangePen:Button;
@@ -15,7 +16,13 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     public Materials:UnityEngine.Material[] = [];
     public SketchPrefab:UnityEngine.GameObject;
     public TimerText:Text;
+    public TicknessBtns:Toggle[];
+    public OpenTicknessBtn:Button;
+    public TicknessGroup:UnityEngine.GameObject;
 
+    public ColorBtns:Toggle[];
+    public OpenColorBtn:Button;
+    public ColorGroup:UnityEngine.GameObject;
     private puzzleState = "Draw";
     private z_camera:UnityEngine.GameObject;
     private curLine:UnityEngine.LineRenderer;
@@ -36,6 +43,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private VoteRightSelect:UnityEngine.GameObject;
     private z_CtrlUI:UnityEngine.GameObject;
     private puzzleSketch:UnityEngine.GameObject;
+    private WinnerTexture:UnityEngine.Texture2D;
     Start() {   
         this.z_camera = UnityEngine.GameObject.Find("ZepetoCamera") as UnityEngine.GameObject;
         this.z_CtrlUI = UnityEngine.GameObject.Find("UIZepetoPlayerControl") as UnityEngine.GameObject;
@@ -51,6 +59,27 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.EndDrawBtn.onClick.AddListener(()=>{
             this.EndDrawing();
         });
+        for(let i = 0; i<this.TicknessBtns.length;i++){
+            this.TicknessBtns[i].onValueChanged.AddListener((on:boolean)=>{
+                if(on){
+                    this.SetTickness(0.2*(i+1));
+                }
+            });
+        }
+        this.OpenTicknessBtn.onClick.AddListener(()=>{
+            this.TicknessGroup.SetActive(!this.TicknessGroup.activeSelf);
+        });
+        for(let i:number = 0; i<this.ColorBtns.length; i++){
+            this.ColorBtns[i].onValueChanged.AddListener((on:boolean)=>{
+                if(on){
+                    this.SetColor(i);
+                }
+            });
+        }
+        this.OpenColorBtn.onClick.AddListener(()=>{
+            this.ColorGroup.SetActive(!this.ColorGroup.activeSelf);
+        });
+    
         this.curRoom = MultiplayManager.instance.room;
         this.localSketchBook = UnityEngine.Object.Instantiate(this.SketchPrefab) as UnityEngine.GameObject;
         this.localSketchBook.name = "S_"+this.curRoom.SessionId;
@@ -94,6 +123,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.m_camera.transform.position = new UnityEngine.Vector3(0,1,-20);
             this.timer = 10;
             this.puzzleState = "Vote";
+            this.localSketchBook.SetActive(false);
             this.playerList = message;
             if(!(this.startVote()==null)){
                 this.EndVote();
@@ -112,6 +142,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.curRoom.AddMessageHandler("EndVote",(message:string)=>{
             this.ShowWinner();
             console.log("the winner is "+message);
+
         });
     }
     FixedUpdate(){
@@ -198,7 +229,6 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         }
     }
     startVote():string{
-        this.Sketches.get(this.curRoom.SessionId).SetActive(false);
         if(this.playerList.length == 1){
             console.log("sole Live "+this.playerList[0]);
             return this.playerList[0];
@@ -207,6 +237,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             let second = this.playerList.shift();
             this.firstSketch = this.Sketches.get(first.toString()) as UnityEngine.GameObject;
             this.secondSketch = this.Sketches.get(second.toString()) as UnityEngine.GameObject;
+            this.VoteSketch = first+"&"+second;
             this.firstSketch.transform.position = new UnityEngine.Vector3(-10,1,0.5);
             this.secondSketch.transform.position = new UnityEngine.Vector3(10,1,0.5);
             this.VoteLeftSelect = this.firstSketch.transform.GetChild(0).gameObject as UnityEngine.GameObject;
@@ -242,7 +273,6 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.firstSketch.SetActive(false);
             this.secondSketch.SetActive(false);
             this.puzzleState = "Wait";
-
             this.curRoom.Send("Vote",this.VoteSketch.slice(2));
         }
     }
@@ -256,6 +286,27 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.puzzleSketch = this.Sketches.get(this.playerList[0].toString()) as UnityEngine.GameObject;
         this.puzzleSketch.transform.position = new UnityEngine.Vector3(0,1,0.5);
         this.puzzleSketch.SetActive(true);
+    }
+    SetTickness(tick:float){
+        this.Setting.Tickness = tick;
+    }
+    SetColor(color:number){
+        this.Setting.ColorType = color;
+    }
+    *CaptureCoroutine(){
+        yield new UnityEngine.WaitForSeconds(0.2);
+        this.CaptureRenderTexture();
+    }
+    CaptureRenderTexture(){
+        let rt:UnityEngine.RenderTexture = this.p_camera.targetTexture;
+        this.p_camera.Render();
+        UnityEngine.RenderTexture.active = rt;
+        this.WinnerTexture = new UnityEngine.Texture2D(14,8,UnityEngine.TextureFormat.RGB24,false);
+        this.WinnerTexture.ReadPixels(new UnityEngine.Rect(0,0,rt.width,rt.height),0,0);
+        let mat:UnityEngine.Material = new UnityEngine.Material(UnityEngine.Shader.Find("Standard"));
+        mat.SetTexture("_MainTex",this.WinnerTexture);
+        this.puzzleSketch.GetComponent<UnityEngine.MeshRenderer>().material = mat;
+        
     }
 }
 

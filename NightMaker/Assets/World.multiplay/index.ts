@@ -33,12 +33,21 @@ export default class extends Sandbox {
         });
         this.onMessage("Vote", (client:SandboxPlayer, message:string)=>{
             this.voteNum++;
-            //투표 안할때 처리를 해야함
-            if(!this.voteMap.has(message)){
-                this.voteMap.set(message,1);
+            if(message.search("&")){
+                let getPlayers = message.split("&") as string[];
+                for(const str of getPlayers){
+                    if(!this.voteMap.has(str)){
+                        this.voteMap.set(str,0);
+                    }
+                }
             }else{
-                this.voteMap.set(message,this.voteMap.get(message)+1);
+                if(!this.voteMap.has(message)){
+                    this.voteMap.set(message,1);
+                }else{
+                    this.voteMap.set(message,this.voteMap.get(message)+1);
+                }
             }
+
             if(this.voteNum >= this.state.players.size){
                 let candidates:string[] = Array.from(this.voteMap.keys());
                 let winner:string;
@@ -59,7 +68,7 @@ export default class extends Sandbox {
             }
         });
         this.onMessage("EndVote",(client:SandboxPlayer,message:string)=>{
-            this.broadcast("EndVote",this.state.players.get(message).zepetoUserId);
+            this.broadcast("EndVote",this.state.players.get(message).zepetoHash);
         });
         this._isCreated = true;
     }
