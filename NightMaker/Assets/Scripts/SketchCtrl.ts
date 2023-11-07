@@ -13,7 +13,6 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     public ChangePen:Button;
     public EndDrawBtn:Button;
     public Materials:UnityEngine.Material[] = [];
-    public puzzleEventSystem:EventSystem;
     public SketchPrefab:UnityEngine.GameObject;
     public TimerText:Text;
 
@@ -33,8 +32,8 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private VoteSketch:string="";
     private firstSketch:UnityEngine.GameObject;
     private secondSketch:UnityEngine.GameObject;
-    private VoteLeftMeshRend:UnityEngine.MeshRenderer;
-    private VoteRightMeshRend:UnityEngine.MeshRenderer;
+    private VoteLeftSelect:UnityEngine.GameObject;
+    private VoteRightSelect:UnityEngine.GameObject;
     private z_CtrlUI:UnityEngine.GameObject;
     private puzzleSketch:UnityEngine.GameObject;
     Start() {   
@@ -52,17 +51,16 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.EndDrawBtn.onClick.AddListener(()=>{
             this.EndDrawing();
         });
-        this.puzzleEventSystem.enabled = true;
         this.curRoom = MultiplayManager.instance.room;
         this.localSketchBook = UnityEngine.Object.Instantiate(this.SketchPrefab) as UnityEngine.GameObject;
-        this.localSketchBook.name = this.curRoom.SessionId;
+        this.localSketchBook.name = "S_"+this.curRoom.SessionId;
         this.Sketches.set(this.curRoom.SessionId,this.localSketchBook);
         this.timer = 60; // 그림그리기 60초
         this.curRoom.AddMessageHandler("puzzle",(message:LineModel)=>{
             let SketchBook:UnityEngine.GameObject;
             if(!this.Sketches.has(message.name)){
                 SketchBook = UnityEngine.Object.Instantiate(this.SketchPrefab) as UnityEngine.GameObject;
-                SketchBook.name = message.name;
+                SketchBook.name = "S_"+message.name;
                 SketchBook.SetActive(false);
                 this.Sketches.set(message.name,SketchBook);
             }else{
@@ -102,7 +100,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             }
         });
         this.curRoom.AddMessageHandler("Vote",(message:string)=>{
-            this.playerList.push(message);
+            console.log("inVote"+typeof(message));
+            this.playerList.push(message as string);
+            console.log(typeof("inVote"+this.playerList[0]));
             this.timer = 10;
             this.puzzleState = "Vote";
             if(!(this.startVote()==null)){
@@ -110,12 +110,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             }
         });
         this.curRoom.AddMessageHandler("EndVote",(message:string)=>{
-            console.log(this.playerList[0]);
-            this.m_camera.orthographic = true;
-            this.m_camera.transform.position = new UnityEngine.Vector3(0,1,-10);
-            this.puzzleSketch = this.Sketches.get(this.playerList[0]) as UnityEngine.GameObject;
-            this.puzzleSketch.transform.position = new UnityEngine.Vector3(0,1,0.5);
-            this.puzzleSketch.SetActive(true);
+            this.ShowWinner();
             console.log("the winner is "+message);
         });
     }
@@ -210,12 +205,12 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         }else{
             let first = this.playerList.shift();
             let second = this.playerList.shift();
-            this.firstSketch = this.Sketches.get(first) as UnityEngine.GameObject;
-            this.secondSketch = this.Sketches.get(second) as UnityEngine.GameObject;
+            this.firstSketch = this.Sketches.get(first.toString()) as UnityEngine.GameObject;
+            this.secondSketch = this.Sketches.get(second.toString()) as UnityEngine.GameObject;
             this.firstSketch.transform.position = new UnityEngine.Vector3(-10,1,0.5);
             this.secondSketch.transform.position = new UnityEngine.Vector3(10,1,0.5);
-            this.VoteLeftMeshRend = this.firstSketch.GetComponent<UnityEngine.MeshRenderer>() as UnityEngine.MeshRenderer;
-            this.VoteRightMeshRend = this.secondSketch.GetComponent<UnityEngine.MeshRenderer>() as UnityEngine.MeshRenderer;
+            this.VoteLeftSelect = this.firstSketch.transform.GetChild(0).gameObject as UnityEngine.GameObject;
+            this.VoteRightSelect = this.secondSketch.transform.GetChild(0).gameObject as UnityEngine.GameObject; 
             this.firstSketch.SetActive(true);
             this.secondSketch.SetActive(true);
             return null;
@@ -230,11 +225,11 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                 if(hitInfo.collider.CompareTag("Canvas")){
                     this.VoteSketch = hitInfo.collider.name;
                     if(this.VoteSketch === this.firstSketch.name){
-                        this.VoteLeftMeshRend.material = this.Materials[2];
-                        this.VoteRightMeshRend.material = this.Materials[4];
+                        this.VoteLeftSelect.SetActive(true);
+                        this.VoteRightSelect.SetActive(false);
                     }else{
-                        this.VoteLeftMeshRend.material = this.Materials[4];
-                        this.VoteRightMeshRend.material = this.Materials[2];
+                        this.VoteLeftSelect.SetActive(false);
+                        this.VoteRightSelect.SetActive(true);
                     }
                 }
             }
@@ -242,15 +237,25 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     }
     SendVote(){
         if(this.puzzleState ==="Vote"){
+            this.VoteLeftSelect.SetActive(false);
+            this.VoteRightSelect.SetActive(false);
             this.firstSketch.SetActive(false);
             this.secondSketch.SetActive(false);
             this.puzzleState = "Wait";
-            this.curRoom.Send("Vote",this.VoteSketch);
+
+            this.curRoom.Send("Vote",this.VoteSketch.slice(2));
         }
     }
     EndVote(){
         this.puzzleState = "Wait";
         this.curRoom.Send("EndVote", this.playerList[0]);
+    }
+    ShowWinner(){
+        this.m_camera.orthographic = true;
+        this.m_camera.transform.position = new UnityEngine.Vector3(0,1,-10);
+        this.puzzleSketch = this.Sketches.get(this.playerList[0].toString()) as UnityEngine.GameObject;
+        this.puzzleSketch.transform.position = new UnityEngine.Vector3(0,1,0.5);
+        this.puzzleSketch.SetActive(true);
     }
 }
 

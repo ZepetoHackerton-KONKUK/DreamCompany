@@ -20,9 +20,18 @@ ScriptedImporter:
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
-    UnityEngine_SceneManagement_1 = require(\"UnityEngine.SceneManagement\");\r\nclass
-    ChangePuzzle extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n       
-    this.ChangePuzzle.onClick.AddListener(() => {\r\n            UnityEngine_SceneManagement_1.SceneManager.LoadScene(\"Puzzle\");\r\n       
-    });\r\n    }\r\n}\r\nexports.default = ChangePuzzle;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhbmdlUHV6emxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2hhbmdlUHV6emxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBRXJELDZFQUEwRDtBQUMxRCxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBRzNELEtBQUs7UUFDRCxJQUFJLENBQUMsWUFBWSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRSxFQUFFO1lBQ3RDLDBDQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDO1FBQ3JDLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztDQUVKO0FBVEQsK0JBU0MifQ==","assetPath":"Assets/Scripts/ChangePuzzle.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"ChangePuzzle","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ChangePuzzle","description":"","hasAnimatorMove":false},"isCompiled":true}'
-  typescriptHash: ea6fe9c20c81f1092243481e71ccfa2e
+    UnityEngine_SceneManagement_1 = require(\"UnityEngine.SceneManagement\");\r\nconst
+    MultiplayManager_1 = require(\"../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager\");\r\nclass
+    ChangePuzzle extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.isInit = false;\r\n    }\r\n   
+    Start() {\r\n        this.ChangePuzzle.onClick.AddListener(() => {\r\n           
+    this.curRoom.Send(\"StartPuzzle\");\r\n        });\r\n    }\r\n    Update() {\r\n       
+    if (this.curRoom == null) {\r\n            this.curRoom = MultiplayManager_1.default.instance.room;\r\n       
+    }\r\n        if (this.curRoom != null && !this.isInit) {\r\n            this.isInit
+    = true;\r\n            this.curRoom.AddMessageHandler(\"StartPuzzle\", (message)
+    => {\r\n                console.log(\"Get Message from Server\" + message);\r\n               
+    UnityEngine_SceneManagement_1.SceneManager.LoadScene(\"Puzzle\");\r\n           
+    });\r\n            console.log(\"Init Success\");\r\n        }\r\n    }\r\n}\r\nexports.default
+    = ChangePuzzle;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhbmdlUHV6emxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2hhbmdlUHV6emxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBRXJELDZFQUEwRDtBQUMxRCx5R0FBaUc7QUFHakcsTUFBcUIsWUFBYSxTQUFRLHFDQUFxQjtJQUEvRDs7UUFJWSxXQUFNLEdBQVcsS0FBSyxDQUFDO0lBb0JuQyxDQUFDO0lBbkJHLEtBQUs7UUFDRCxJQUFJLENBQUMsWUFBWSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRSxFQUFFO1lBQ3RDLElBQUksQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFDO1FBQ3JDLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUNELE1BQU07UUFDRixJQUFHLElBQUksQ0FBQyxPQUFPLElBQUksSUFBSSxFQUFDO1lBRXBCLElBQUksQ0FBQyxPQUFPLEdBQUcsMEJBQWdCLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQztTQUNqRDtRQUNELElBQUcsSUFBSSxDQUFDLE9BQU8sSUFBSSxJQUFJLElBQUksQ0FBQyxJQUFJLENBQUMsTUFBTSxFQUFDO1lBQ3BDLElBQUksQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDO1lBQ25CLElBQUksQ0FBQyxPQUFPLENBQUMsaUJBQWlCLENBQUMsYUFBYSxFQUFDLENBQUMsT0FBYyxFQUFDLEVBQUU7Z0JBQzNELE9BQU8sQ0FBQyxHQUFHLENBQUMseUJBQXlCLEdBQUMsT0FBTyxDQUFDLENBQUM7Z0JBQy9DLDBDQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDO1lBQ3JDLENBQUMsQ0FBQyxDQUFDO1lBQ0gsT0FBTyxDQUFDLEdBQUcsQ0FBQyxjQUFjLENBQUMsQ0FBQztTQUMvQjtJQUNMLENBQUM7Q0FDSjtBQXhCRCwrQkF3QkMifQ==","assetPath":"Assets/Scripts/ChangePuzzle.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"ChangePuzzle","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ChangePuzzle","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f87c6e4c2ee87dbcb77bea4e943f276e
   onlyWriteTrigger: 0

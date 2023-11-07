@@ -18,6 +18,11 @@ export default class extends Sandbox {
         for (const module of this._modules) {
             await module.OnCreate();
         }
+        this.onMessage("StartPuzzle",(client:SandboxPlayer)=>{
+            console.log("Get Message StartPuzzle");
+            this.broadcast("StartPuzzle","msg");
+            
+        })
         this.onMessage("puzzle",(client:SandboxPlayer,message:LineModel)=>{
             this.broadcast("puzzle",message, {except:client});
         });
@@ -28,6 +33,7 @@ export default class extends Sandbox {
         });
         this.onMessage("Vote", (client:SandboxPlayer, message:string)=>{
             this.voteNum++;
+            //투표 안할때 처리를 해야함
             if(!this.voteMap.has(message)){
                 this.voteMap.set(message,1);
             }else{
