@@ -28,7 +28,7 @@ export default class extends Sandbox {
         });
         this.onMessage("EndDraw",(client:SandboxPlayer)=>{
             let playerList:string[] = Array.from(this.state.players.keys());
-            playerList = this.shuffleList(playerList);
+            playerList = this.shuffleList(playerList) as string[];
             this.broadcast("EndDraw",playerList);
         });
         this.onMessage("Vote", (client:SandboxPlayer, message:string)=>{
@@ -68,7 +68,14 @@ export default class extends Sandbox {
             }
         });
         this.onMessage("EndVote",(client:SandboxPlayer,message:string)=>{
-            this.broadcast("EndVote",this.state.players.get(message).zepetoHash);
+            console.log("Get Message EndVote");
+            let position = [0,1,2,3,4,5] as number[];
+            position = this.shuffleNumberList(position) as number[];
+            console.log(position);
+            let rotation = this.generateRanList(6,5) as number[];
+            console.log(rotation);
+            let puzzleMessage = {name:message,pos:position,rot:rotation} as PuzzleModel;
+            this.broadcast("EndVote",puzzleMessage);
         });
         this._isCreated = true;
     }
@@ -116,6 +123,20 @@ export default class extends Sandbox {
         }
         return array;
     }
+    shuffleNumberList(array: number[]):number[]{
+        for(let i = array.length-1; i>0; i--){
+            const j = Math.floor(Math.random() * (i+1));
+            [array[i],array[j]] = [array[j],array[i]];
+        }
+        return array;
+    }
+    generateRanList(size:number, max:number):number[]{
+        let arr = [];
+        for(let i = 0; i<size; i++){
+            arr.push(Math.floor(Math.random()*max));
+        }
+        return arr as number[];
+    }
 }
 interface LineModel{
     name:string,
@@ -125,5 +146,10 @@ interface LineModel{
     sOrder:number,
     Count:number,
     isNew:boolean
+}
+interface PuzzleModel{
+    name:string,
+    pos:number[],
+    rot:number[]
 }
 

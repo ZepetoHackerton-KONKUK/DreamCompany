@@ -19,7 +19,8 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     public TicknessBtns:Toggle[];
     public OpenTicknessBtn:Button;
     public TicknessGroup:UnityEngine.GameObject;
-
+    public PuzzleFrame:UnityEngine.GameObject;
+    public PuzzlePosition:UnityEngine.Vector3[];
     public ColorBtns:Toggle[];
     public OpenColorBtn:Button;
     public ColorGroup:UnityEngine.GameObject;
@@ -43,11 +44,12 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private VoteRightSelect:UnityEngine.GameObject;
     private z_CtrlUI:UnityEngine.GameObject;
     private puzzleSketch:UnityEngine.GameObject;
-    private WinnerTexture:UnityEngine.Texture2D;
+    private puzzlePieces:UnityEngine.GameObject[] = [null,null,null,null,null,null,null,null]; // 0 전체,1 판, 2 왼아래, 3 왼얼굴 4 왼위 5 오른아래 6오른얼굴 7 오른위
+    
     Start() {   
         this.z_camera = UnityEngine.GameObject.Find("ZepetoCamera") as UnityEngine.GameObject;
-        this.z_CtrlUI = UnityEngine.GameObject.Find("UIZepetoPlayerControl") as UnityEngine.GameObject;
-        this.z_CtrlUI.SetActive(false);
+        //this.z_CtrlUI = UnityEngine.GameObject.Find("UIZepetoPlayerControl") as UnityEngine.GameObject;
+        //this.z_CtrlUI.SetActive(false);
         this.z_camera.SetActive(false);
         this.Setting = new PenSetting(); 
         this.ChangeEraser.onClick.AddListener(()=>{
@@ -139,10 +141,10 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                 this.EndVote();
             }
         });
-        this.curRoom.AddMessageHandler("EndVote",(message:string)=>{
+        this.curRoom.AddMessageHandler("EndVote",(message:PuzzleModel)=>{
             this.ShowWinner();
             console.log("the winner is "+message);
-
+            this.InitPuzzle(message.pos,message.rot);
         });
     }
     FixedUpdate(){
@@ -284,7 +286,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.m_camera.orthographic = true;
         this.m_camera.transform.position = new UnityEngine.Vector3(0,1,-10);
         this.puzzleSketch = this.Sketches.get(this.playerList[0].toString()) as UnityEngine.GameObject;
-        this.puzzleSketch.transform.position = new UnityEngine.Vector3(0,1,0.5);
+        this.puzzleSketch.transform.position = new UnityEngine.Vector3(-100,1,0.5);
         this.puzzleSketch.SetActive(true);
     }
     SetTickness(tick:float){
@@ -293,20 +295,15 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     SetColor(color:number){
         this.Setting.ColorType = color;
     }
-    *CaptureCoroutine(){
-        yield new UnityEngine.WaitForSeconds(0.2);
-        this.CaptureRenderTexture();
-    }
-    CaptureRenderTexture(){
-        let rt:UnityEngine.RenderTexture = this.p_camera.targetTexture;
-        this.p_camera.Render();
-        UnityEngine.RenderTexture.active = rt;
-        this.WinnerTexture = new UnityEngine.Texture2D(14,8,UnityEngine.TextureFormat.RGB24,false);
-        this.WinnerTexture.ReadPixels(new UnityEngine.Rect(0,0,rt.width,rt.height),0,0);
-        let mat:UnityEngine.Material = new UnityEngine.Material(UnityEngine.Shader.Find("Standard"));
-        mat.SetTexture("_MainTex",this.WinnerTexture);
-        this.puzzleSketch.GetComponent<UnityEngine.MeshRenderer>().material = mat;
-        
+    InitPuzzle(pos:number[],rot:number[]){
+        let puzzle = UnityEngine.Object.Instantiate(this.PuzzleFrame, new UnityEngine.Vector3(0,1,0),UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,-180,0))) as UnityEngine.GameObject;
+        this.puzzlePieces[0]=puzzle;
+        this.puzzlePieces[1]=puzzle.transform.GetChild(0).gameObject;
+        for(let i = 0; i<6; i++){
+            this.puzzlePieces[2+i]=this.puzzlePieces[1].transform.GetChild(i).gameObject;
+            this.puzzlePieces[2+i].transform.localPosition = this.PuzzlePosition[pos[i]];
+            this.puzzlePieces[2+i].transform.localEulerAngles = new UnityEngine.Vector3(0,0,45*rot[i]);
+        }
     }
 }
 
@@ -327,4 +324,8 @@ interface LineModel{
     Count:number,
     isNew:boolean
 }
-
+interface PuzzleModel{
+    name:string,
+    pos:number[],
+    rot:number[]
+}
