@@ -16,9 +16,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     public Materials:UnityEngine.Material[] = [];
     public SketchPrefab:UnityEngine.GameObject;
     public TimerText:Text;
-    public TicknessBtns:Toggle[];
-    public OpenTicknessBtn:Button;
-    public TicknessGroup:UnityEngine.GameObject;
+    public TicknessBtns:Button[];
     public PuzzleFrame:UnityEngine.GameObject;
     public PuzzlePosition:UnityEngine.Vector3[];
     public ColorBtns:Toggle[];
@@ -62,15 +60,10 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.EndDrawing();
         });
         for(let i = 0; i<this.TicknessBtns.length;i++){
-            this.TicknessBtns[i].onValueChanged.AddListener((on:boolean)=>{
-                if(on){
-                    this.SetTickness(0.2*(i+1));
-                }
+            this.TicknessBtns[i].onClick.AddListener(()=>{
+                    this.SetTickness(0.2*(i+1)); 
             });
         }
-        this.OpenTicknessBtn.onClick.AddListener(()=>{
-            this.TicknessGroup.SetActive(!this.TicknessGroup.activeSelf);
-        });
         for(let i:number = 0; i<this.ColorBtns.length; i++){
             this.ColorBtns[i].onValueChanged.AddListener((on:boolean)=>{
                 if(on){
@@ -296,11 +289,11 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.Setting.ColorType = color;
     }
     InitPuzzle(pos:number[],rot:number[]){
-        let puzzle = UnityEngine.Object.Instantiate(this.PuzzleFrame, new UnityEngine.Vector3(0,1,0),UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,-180,0))) as UnityEngine.GameObject;
+        let puzzle = UnityEngine.Object.Instantiate(this.PuzzleFrame, new UnityEngine.Vector3(-2.7,3.7,0),UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,-180,0))) as UnityEngine.GameObject;
         this.puzzlePieces[0]=puzzle;
         this.puzzlePieces[1]=puzzle.transform.GetChild(0).gameObject;
         for(let i = 0; i<6; i++){
-            this.puzzlePieces[2+i]=this.puzzlePieces[1].transform.GetChild(i).gameObject;
+            this.puzzlePieces[2+i]=this.puzzlePieces[0].transform.GetChild(1+i).gameObject;
             this.puzzlePieces[2+i].transform.localPosition = this.PuzzlePosition[pos[i]];
             this.puzzlePieces[2+i].transform.localEulerAngles = new UnityEngine.Vector3(0,0,45*rot[i]);
         }
@@ -308,10 +301,10 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
 }
 
 class PenSetting{
-    Tickness:float; //0.2 0.4 0.6 0.8 1.0
+    Tickness:float; //0.2 0.4 0.6
     ColorType:number; // 0 black 1 red 2 yello 3 blue 4 White
     constructor(){
-        this.Tickness = 0.6;
+        this.Tickness = 0.4;
         this.ColorType = 0; 
     }
 }
