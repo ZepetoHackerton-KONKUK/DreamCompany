@@ -9,6 +9,7 @@ TagManager:
   - ZepetoPlayers
   - Select
   - PuzzlePiece
+  - AnswerPiece
   layers:
   - Default
   - TransparentFX

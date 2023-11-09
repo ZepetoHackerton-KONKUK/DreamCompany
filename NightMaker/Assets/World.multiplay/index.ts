@@ -11,7 +11,10 @@ export default class extends Sandbox {
     private _isCreated: boolean = false;
     private voteMap:Map<string,number> = new Map<string,number>();
     private voteNum:number = 0;
+    
     async onCreate(options: SandboxOptions) {
+        let endDraw:boolean = false;
+        let endVote:boolean = false;
         this._modules.push(new SyncComponentModule(this));
         this._modules.push(new MannequinModule(this));
         this._modules.push(new ProductModule(this));
@@ -26,7 +29,10 @@ export default class extends Sandbox {
         this.onMessage("puzzle",(client:SandboxPlayer,message:LineModel)=>{
             this.broadcast("puzzle",message, {except:client});
         });
+        
         this.onMessage("EndDraw",(client:SandboxPlayer)=>{
+            if(endDraw) return;
+            endDraw=true;
             let playerList:string[] = Array.from(this.state.players.keys());
             playerList = this.shuffleList(playerList) as string[];
             this.broadcast("EndDraw",playerList);
@@ -68,6 +74,8 @@ export default class extends Sandbox {
             }
         });
         this.onMessage("EndVote",(client:SandboxPlayer,message:string)=>{
+            if(endVote) return;
+            endVote = true;
             console.log("Get Message EndVote");
             let position = [0,1,2,3,4,5] as number[];
             position = this.shuffleNumberList(position) as number[];
