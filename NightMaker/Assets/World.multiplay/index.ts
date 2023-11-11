@@ -23,8 +23,10 @@ export default class extends Sandbox {
         }
         this.onMessage("StartPuzzle",(client:SandboxPlayer)=>{
             console.log("Get Message StartPuzzle");
-            this.broadcast("StartPuzzle","msg");
-            
+            this.broadcast("StartPuzzle","msg");         
+        })
+        this.onMessage("InitProfile",(client:SandboxPlayer)=>{
+            client.send("UpdatePlayers",this.currentPlayerList());
         })
         this.onMessage("puzzle",(client:SandboxPlayer,message:LineModel)=>{
             this.broadcast("puzzle",message, {except:client});
@@ -112,7 +114,7 @@ export default class extends Sandbox {
             await module.OnLeave(client);
         }
         this.state.players.delete(client.sessionId);
-
+        this.broadcast("UpdatePlayers",this.currentPlayerList());
         console.log(`leave player, ${client.sessionId}`);
     }
 
@@ -144,6 +146,14 @@ export default class extends Sandbox {
             arr.push(Math.floor(Math.random()*max));
         }
         return arr as number[];
+    }
+    currentPlayerList():string[]{
+        let playerList:string[] = Array.from(this.state.players.keys());
+        let array:string[]=[];
+        for(let i = 0; i<playerList.length; i++){
+            array.push(this.state.players.get(playerList[i]).zepetoUserId);
+        }
+        return array;
     }
 }
 interface LineModel{
