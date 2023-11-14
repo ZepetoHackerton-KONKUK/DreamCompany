@@ -66,20 +66,23 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private _puzzleKidObject:UnityEngine.GameObject;
     private isFindKid:boolean = false;
     private puzzleAnimator:UnityEngine.Animator;
+    private puzzleScore:number;
     Start() {   
+        let kidID:string[] = ["jjiyeiye","tstscscs"];
         const ClonePlayerSpawnInfo = new SpawnInfo();
         ClonePlayerSpawnInfo.position = new UnityEngine.Vector3(500,-1,0);
         ClonePlayerSpawnInfo.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,-180,0));
         const KidSpawnInfo = new SpawnInfo();
         KidSpawnInfo.position = new UnityEngine.Vector3(199.8,0,0);
         KidSpawnInfo.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,90,0)); 
-        ZepetoCharacterCreator.CreateByZepetoId("jjiyeiye",KidSpawnInfo,(character:ZepetoCharacter)=>{
+        
+        ZepetoCharacterCreator.CreateByZepetoId(kidID[Math.floor(Math.random()*2)],KidSpawnInfo,(character:ZepetoCharacter)=>{
             this._puzzleKid = character;
         });
         this.z_camera = UnityEngine.GameObject.Find("ZepetoCamera") as UnityEngine.GameObject;
         this.z_CtrlUI = UnityEngine.GameObject.Find("UIZepetoPlayerControl") as UnityEngine.GameObject;
         this.Canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.RectTransform>();
-        this.UIGroup[3].GetComponent<UnityEngine.RectTransform>().sizeDelta = new UnityEngine.Vector2(40,this.Canvas.sizeDelta.y);
+        this.UIGroup[3].GetComponent<UnityEngine.RectTransform>().sizeDelta = new UnityEngine.Vector2(50,this.Canvas.sizeDelta.y);
         this.z_CtrlUI.SetActive(false);
         this.z_camera.SetActive(false);
         this.Setting = new PenSetting(); 
@@ -536,11 +539,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             Rigids[i-2] = this.puzzlePieces[i].GetComponent<UnityEngine.Rigidbody>();
             Rigids[i-2].useGravity = false;
         }
-        this.PuzzleLogo.color = new UnityEngine.Color(1,1,1,0);
+        yield new UnityEngine.WaitForSeconds(0.3);
         this.puzzlePieces[1].SetActive(false);
         this.m_camera.orthographic = false;
-        this.Bed.transform.localScale = new UnityEngine.Vector3(4,4,4);
-        this.Bed.transform.position = new UnityEngine.Vector3(0,-2,5);
         Rigids[0].AddForce(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
         Rigids[0].AddTorque(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
         Rigids[1].AddForce(new UnityEngine.Vector3(0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
@@ -553,13 +554,15 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         Rigids[4].AddTorque(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
         Rigids[5].AddForce(new UnityEngine.Vector3(-0.5,0.5,-0.2),UnityEngine.ForceMode.Impulse);
         Rigids[5].AddTorque(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
-        while(this.Bed.transform.position.z >2){
+        this.PuzzleLogo.color = new UnityEngine.Color(1,1,1,0);
+        this.Bed.transform.localScale = new UnityEngine.Vector3(4,4,4);
+        this.Bed.transform.position = new UnityEngine.Vector3(0,-2,6);
+        while(this.Bed.transform.position.z >3){
             this.Bed.transform.position = new UnityEngine.Vector3(0,-2,this.Bed.transform.position.z-0.1);
             yield new UnityEngine.WaitForSeconds(0.1);
         }
         this.PuzzleLogo.color = new UnityEngine.Color(1,1,1,0);
         let BedPos:UnityEngine.Vector3 = this.Bed.transform.position;
-        BedPos = new UnityEngine.Vector3(BedPos.x-0.5,BedPos.y+0.1,BedPos.z);
         for(let i = 0; i<6; i++){
             Rigids[i].AddForce(4*(BedPos-Rigids[i].position), UnityEngine.ForceMode.Impulse);
             yield new UnityEngine.WaitForSeconds(0.2);
@@ -571,6 +574,10 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         }
         yield new UnityEngine.WaitForSeconds(1);
         this.puzzleAnimator.SetTrigger("WakeUp");
+        while(this.puzzleAnimator.GetCurrentAnimatorStateInfo(0).IsName("Wakeup")){
+            yield new UnityEngine.WaitForSeconds(0.1);
+        }
+        
 
         
 

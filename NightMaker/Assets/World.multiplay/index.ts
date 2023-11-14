@@ -11,7 +11,6 @@ export default class extends Sandbox {
     private _isCreated: boolean = false;
     private voteMap:Map<string,number> = new Map<string,number>();
     private voteNum:number = 0;
-    
     async onCreate(options: SandboxOptions) {
         let endDraw:boolean = false;
         let endVote:boolean = false;
@@ -40,40 +39,8 @@ export default class extends Sandbox {
             this.broadcast("EndDraw",playerList);
         });
         this.onMessage("Vote", (client:SandboxPlayer, message:string)=>{
-            this.voteNum++;
-            if(message.search("&")){
-                let getPlayers = message.split("&") as string[];
-                for(const str of getPlayers){
-                    if(!this.voteMap.has(str)){
-                        this.voteMap.set(str,0);
-                    }
-                }
-            }else{
-                if(!this.voteMap.has(message)){
-                    this.voteMap.set(message,1);
-                }else{
-                    this.voteMap.set(message,this.voteMap.get(message)+1);
-                }
-            }
-
-            if(this.voteNum >= this.state.players.size){
-                let candidates:string[] = Array.from(this.voteMap.keys());
-                let winner:string;
-                if(candidates.length==2){
-                    if(this.voteMap.get(candidates[0]) < this.voteMap.get(candidates[1])){
-                        winner = candidates[1];
-                    }else if(this.voteMap.get(candidates[0])>this.voteMap.get(candidates[1])) {
-                        winner = candidates[0];
-                    }else{
-                        winner = candidates[Math.floor(Math.random()*2)];
-                    }
-                }else{
-                    winner = candidates[0];
-                }
-                this.voteNum = 0;
-                this.voteMap.clear();
-                this.broadcast("Vote",winner);
-            }
+            //this.VoteQueue.push(message);
+            this.Vote(message);
         });
         this.onMessage("EndVote",(client:SandboxPlayer,message:string)=>{
             if(endVote) return;
@@ -125,6 +92,7 @@ export default class extends Sandbox {
         for (const module of this._modules) {
             module.OnTick(deltaTime);
         }
+        
     }
     shuffleList(array: string[]):string[]{
         for(let i = array.length-1; i>0; i--){
@@ -154,6 +122,43 @@ export default class extends Sandbox {
             array.push(this.state.players.get(playerList[i]).zepetoUserId);
         }
         return array;
+    }
+    Vote(message:string):number{
+        this.voteNum++;
+        if(message.search("&") > -1){
+            let getPlayers = message.split("&") as string[];
+            for(const str of getPlayers){
+                if(!this.voteMap.has(str)){
+                    this.voteMap.set(str,0);
+                }
+            }
+        }else{
+            if(!this.voteMap.has(message)){
+                this.voteMap.set(message,1);
+            }else{
+                this.voteMap.set(message,this.voteMap.get(message)+1);
+            }
+        }
+
+        if(this.voteNum >= this.state.players.size){
+            let candidates:string[] = Array.from(this.voteMap.keys());
+            let winner:string;
+            if(candidates.length==2){
+                if(this.voteMap.get(candidates[0]) < this.voteMap.get(candidates[1])){
+                    winner = candidates[1];
+                }else if(this.voteMap.get(candidates[0])>this.voteMap.get(candidates[1])) {
+                    winner = candidates[0];
+                }else{
+                    winner = candidates[Math.floor(Math.random()*2)];
+                }
+            }else{
+                winner = candidates[0];
+            }
+            this.voteNum = 0;
+            this.voteMap.clear();
+            this.broadcast("Vote",winner);
+        }
+        return 1;
     }
 }
 interface LineModel{
