@@ -2,8 +2,6 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script';
 import { SpawnInfo, ZepetoCharacter, ZepetoCharacterCreator } from 'ZEPETO.Character.Controller';
 import { Button } from 'UnityEngine.UI';
 import { GameObject, Object, Vector3 } from 'UnityEngine';
-import { WorldService } from 'ZEPETO.World';
- 
 export default class GenerateKids extends ZepetoScriptBehaviour {
  
     public zepetoId: string;

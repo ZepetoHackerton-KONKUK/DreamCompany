@@ -1,0 +1,48 @@
+fileFormatVersion: 2
+guid: 68e4565195b180945a0e307ae837dcc1
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Module_Shop_1 = require(\"ZEPETO.Module.Shop\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nclass ClotheTest extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        this.StartCoroutine(this.CoGetMyCategory());\r\n   
+    }\r\n    *CoGetMyCategory() {\r\n        var requestCategory = ZEPETO_Module_Shop_1.ShopService.GetMyCategoryAsync();\r\n       
+    yield new UnityEngine_1.WaitUntil(() => requestCategory.keepWaiting == false);\r\n       
+    if (requestCategory.responseData.isSuccess) {\r\n            let categoryInfo
+    = requestCategory.responseData.category;\r\n            console.log(`[Category
+    Info] ${categoryInfo.displayName} - length : ${categoryInfo.categories.Length}`);\r\n           
+    let categories = categoryInfo.categories;\r\n            for (const category
+    of categories) {\r\n                console.log(`[Category displayName] ${category.displayName}
+    `);\r\n                //Category Keyword is used as an argument in the ShopService.GetMyContentItemListAsync
+    function\r\n                console.log(`[Category keyword] ${category.keyword}
+    `);\r\n            }\r\n        }\r\n        this.StartCoroutine(this.CoGetMyItem());\r\n   
+    }\r\n    *CoGetMyItem() {\r\n        var requestItemList = ZEPETO_Module_Shop_1.ShopService.GetMyContentItemListAsync(ZEPETO_Module_Shop_1.ItemKeyword.all,
+    null);\r\n        yield new UnityEngine_1.WaitUntil(() => requestItemList.keepWaiting
+    == false);\r\n        if (requestItemList.responseData.isSuccess) {\r\n           
+    let items = requestItemList.responseData.items;\r\n            // The number
+    of items received as a result of GetMyContentItemListAsync().\r\n           
+    console.log(items.length);\r\n            for (let i = 0; i < items.length; ++i)
+    {\r\n                const property = items[i].property;\r\n                //
+    Item ID and item property\r\n                console.log(`[Content Item] (id):
+    ${items[i].id} | (property): ${property}`);\r\n                // Setting the
+    item thumbnail as the texture of a rawImage\r\n            }\r\n        }\r\n   
+    }\r\n}\r\nexports.default = ClotheTest;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2xvdGhlVGVzdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNsb3RoZVRlc3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFDckQsMkRBQXVFO0FBRXZFLDZDQUFrRDtBQUlsRCxNQUFxQixVQUFXLFNBQVEscUNBQXFCO0lBR3pELEtBQUs7UUFDRCxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxlQUFlLEVBQUUsQ0FBQyxDQUFDO0lBQ2hELENBQUM7SUFFRCxDQUFDLGVBQWU7UUFDWixJQUFJLGVBQWUsR0FBRyxnQ0FBVyxDQUFDLGtCQUFrQixFQUFFLENBQUM7UUFDdkQsTUFBTSxJQUFJLHVCQUFTLENBQUMsR0FBRyxFQUFFLENBQUMsZUFBZSxDQUFDLFdBQVcsSUFBSSxLQUFLLENBQUMsQ0FBQztRQUVoRSxJQUFJLGVBQWUsQ0FBQyxZQUFZLENBQUMsU0FBUyxFQUFFO1lBQ3hDLElBQUksWUFBWSxHQUFHLGVBQWUsQ0FBQyxZQUFZLENBQUMsUUFBUSxDQUFDO1lBQ3pELE9BQU8sQ0FBQyxHQUFHLENBQUMsbUJBQW1CLFlBQVksQ0FBQyxXQUFXLGVBQWUsWUFBWSxDQUFDLFVBQVUsQ0FBQyxNQUFNLEVBQUUsQ0FBQyxDQUFDO1lBRXhHLElBQUksVUFBVSxHQUFlLFlBQVksQ0FBQyxVQUFVLENBQUM7WUFFckQsS0FBSyxNQUFNLFFBQVEsSUFBSSxVQUFVLEVBQUU7Z0JBQy9CLE9BQU8sQ0FBQyxHQUFHLENBQUMsMEJBQTBCLFFBQVEsQ0FBQyxXQUFXLEdBQUcsQ0FBQyxDQUFDO2dCQUMvRCwrRkFBK0Y7Z0JBQy9GLE9BQU8sQ0FBQyxHQUFHLENBQUMsc0JBQXNCLFFBQVEsQ0FBQyxPQUFPLEdBQUcsQ0FBQyxDQUFDO2FBQzFEO1NBQ0o7UUFDRCxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxXQUFXLEVBQUUsQ0FBQyxDQUFDO0lBQzVDLENBQUM7SUFFRCxDQUFDLFdBQVc7UUFDUixJQUFJLGVBQWUsR0FBRyxnQ0FBVyxDQUFDLHlCQUF5QixDQUFDLGdDQUFXLENBQUMsR0FBRyxFQUFFLElBQUksQ0FBQyxDQUFDO1FBRW5GLE1BQU0sSUFBSSx1QkFBUyxDQUFDLEdBQUcsRUFBRSxDQUFDLGVBQWUsQ0FBQyxXQUFXLElBQUksS0FBSyxDQUFDLENBQUM7UUFFaEUsSUFBSSxlQUFlLENBQUMsWUFBWSxDQUFDLFNBQVMsRUFBRTtZQUN4QyxJQUFJLEtBQUssR0FBVyxlQUFlLENBQUMsWUFBWSxDQUFDLEtBQUssQ0FBQztZQUV2RCwyRUFBMkU7WUFDM0UsT0FBTyxDQUFDLEdBQUcsQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLENBQUM7WUFFMUIsS0FBSyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxHQUFHLEtBQUssQ0FBQyxNQUFNLEVBQUUsRUFBRSxDQUFDLEVBQUU7Z0JBQ25DLE1BQU0sUUFBUSxHQUF1QixLQUFLLENBQUMsQ0FBQyxDQUFDLENBQUMsUUFBUSxDQUFDO2dCQUN2RCw0QkFBNEI7Z0JBQzVCLE9BQU8sQ0FBQyxHQUFHLENBQUMsd0JBQXdCLEtBQUssQ0FBQyxDQUFDLENBQUMsQ0FBQyxFQUFFLGtCQUFrQixRQUFRLEVBQUUsQ0FBQyxDQUFDO2dCQUU3RSwwREFBMEQ7YUFHN0Q7U0FDSjtJQUNMLENBQUM7Q0FDSjtBQWhERCw2QkFnREMifQ==","assetPath":"Assets/Scripts/ClotheTest.ts","manifest":{"properties":[],"name":"ClotheTest","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 630a8fe1968bcca11396710206211d88
+  onlyWriteTrigger: 0
