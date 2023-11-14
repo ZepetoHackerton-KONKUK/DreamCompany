@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: ea9b51d704133ff4c926c78434d9bce5
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass ButtonClick extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        let btn = this.Button.GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    btn.onClick.AddListener(this.TaskOnClick);\r\n    }\r\n    TaskOnClick() {\r\n       
+    this.Animator.Play(\"Surprise\");\r\n    }\r\n}\r\nexports.default = ButtonClick;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQnV0dG9uQ2xpY2suanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJCdXR0b25DbGljay50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUNBLG1EQUF3QztBQUN4QyxpREFBcUQ7QUFFckQsTUFBcUIsV0FBWSxTQUFRLHFDQUFxQjtJQUkxRCxLQUFLO1FBQ0QsSUFBSSxHQUFHLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxZQUFZLFNBQUMsdUJBQU0sRUFBRyxDQUFDO1FBQzdDLEdBQUcsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQztJQUM5QyxDQUFDO0lBRUQsV0FBVztRQUNQLElBQUksQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDO0lBQ25DLENBQUM7Q0FDSjtBQVpELDhCQVlDIn0=","assetPath":"Assets/ButtonClick.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"Button","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.AnimationModule","name":"Animator","type":"UnityEngine.Animator","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ButtonClick","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 99d4d8d385901d2d65ff67e1bc06a6c6
+  onlyWriteTrigger: 0
