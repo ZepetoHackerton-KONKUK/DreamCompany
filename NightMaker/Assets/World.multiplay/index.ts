@@ -24,6 +24,10 @@ export default class extends Sandbox {
             console.log("Get Message StartPuzzle");
             this.broadcast("StartPuzzle","msg");         
         })
+        this.onMessage("StartSurprise",(client:SandboxPlayer)=>{
+            console.log("Get Message StartSurprise");
+            this.broadcast("StartSurprise","msg");
+        })
         this.onMessage("InitProfile",(client:SandboxPlayer)=>{
             client.send("UpdatePlayers",this.currentPlayerList());
         })
@@ -175,4 +179,3 @@ interface PuzzleModel{
     pos:number[],
     rot:number[]
 }
-

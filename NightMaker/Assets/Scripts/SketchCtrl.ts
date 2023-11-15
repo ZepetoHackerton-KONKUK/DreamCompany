@@ -541,6 +541,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         }
         yield new UnityEngine.WaitForSeconds(0.3);
         this.puzzlePieces[1].SetActive(false);
+        this.UIGroup[6].transform.localScale = new UnityEngine.Vector3(2.5,2.5,2.5);
         this.m_camera.orthographic = false;
         Rigids[0].AddForce(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
         Rigids[0].AddTorque(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);

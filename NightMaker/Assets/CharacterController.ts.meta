@@ -1,0 +1,44 @@
+fileFormatVersion: 2
+guid: a91de67c2c9e33b45baae913087a8788
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nclass
+    CharacterController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            this._localPlayer = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer;\r\n           
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.enabled
+    = false;\r\n        });\r\n        if (!ZEPETO_Character_Controller_1.ZepetoPlayers.instance.HasPlayer(ZEPETO_World_1.WorldService.userId))
+    {\r\n            const Spawn = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n           
+    Spawn.position = new UnityEngine_1.Vector3(-2.5, -7.5, 20);\r\n            Spawn.rotation
+    = UnityEngine_1.Quaternion.Euler(new UnityEngine_1.Vector3(0, 100, 0));\r\n           
+    $extension(\"ZEPETO.Character.Controller.ZepetoPlayersExtension\").CreatePlayerWithUserId(ZEPETO_Character_Controller_1.ZepetoPlayers.instance,
+    ZEPETO_World_1.WorldService.userId, Spawn, true);\r\n        }\r\n        else
+    {\r\n            this._localPlayer = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(ZEPETO_World_1.WorldService.userId);\r\n       
+    }\r\n        this.playCustomAnimationButton.onClick.AddListener(() => {\r\n           
+    this._localPlayer.character.SetGesture(this.customAnimationClip);\r\n       
+    });\r\n        const z_CtrlUI = UnityEngine_1.GameObject.Find(\"UIZepetoPlayerControl\");\r\n       
+    const z_camera = UnityEngine_1.GameObject.Find(\"ZepetoCamera\");\r\n       
+    z_CtrlUI.SetActive(false);\r\n        z_camera.SetActive(false);\r\n        //this._localPlayer.character.Teleport(new
+    Vector3(-7.66,-6,11.69),Quaternion.identity);\r\n        //console.log(this._localPlayer.character.transform.position);\r\n   
+    }\r\n}\r\nexports.default = CharacterController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhcmFjdGVyQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNoYXJhY3RlckNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBc0Q7QUFFdEQsNkNBQW9GO0FBQ3BGLDZFQUFrSDtBQUNsSCwrQ0FBNEM7QUFFNUMsTUFBcUIsbUJBQW9CLFNBQVEscUNBQXFCO0lBS2xFLEtBQUs7UUFDRCwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxrQkFBa0IsQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3ZELElBQUksQ0FBQyxZQUFZLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQztZQUNwRSwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLE9BQU8sR0FBRyxLQUFLLENBQUM7UUFDcEUsQ0FBQyxDQUFDLENBQUM7UUFDSCxJQUFHLENBQUMsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLDJCQUFZLENBQUMsTUFBTSxDQUFDLEVBQUM7WUFDdEQsTUFBTSxLQUFLLEdBQUcsSUFBSSx1Q0FBUyxFQUFFLENBQUM7WUFDOUIsS0FBSyxDQUFDLFFBQVEsR0FBRyxJQUFJLHFCQUFPLENBQUMsQ0FBQyxHQUFHLEVBQUMsQ0FBQyxHQUFHLEVBQUMsRUFBRSxDQUFDLENBQUM7WUFDM0MsS0FBSyxDQUFDLFFBQVEsR0FBRyx3QkFBVSxDQUFDLEtBQUssQ0FBQyxJQUFJLHFCQUFPLENBQUMsQ0FBQyxFQUFDLEdBQUcsRUFBQyxDQUFDLENBQUMsQ0FBQyxDQUFDO1lBQ3hELGlFQUF1QixzQkFBc0IsQ0FBN0MsMkNBQWEsQ0FBQyxRQUFRLEVBQXdCLDJCQUFZLENBQUMsTUFBTSxFQUFFLEtBQUssRUFBRSxJQUFJLEVBQUU7U0FDbkY7YUFDRztZQUNBLElBQUksQ0FBQyxZQUFZLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLDJCQUFZLENBQUMsTUFBTSxDQUFDLENBQUM7U0FDN0U7UUFDRCxJQUFJLENBQUMseUJBQXlCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDcEQsSUFBSSxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxtQkFBbUIsQ0FBQyxDQUFDO1FBQ3JFLENBQUMsQ0FBQyxDQUFDO1FBQ0gsTUFBTSxRQUFRLEdBQUcsd0JBQVUsQ0FBQyxJQUFJLENBQUMsdUJBQXVCLENBQWUsQ0FBQztRQUN4RSxNQUFNLFFBQVEsR0FBRyx3QkFBVSxDQUFDLElBQUksQ0FBQyxjQUFjLENBQWUsQ0FBQztRQUMvRCxRQUFRLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQzFCLFFBQVEsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDMUIsd0ZBQXdGO1FBQ3hGLDhEQUE4RDtJQUdsRSxDQUFDO0NBRUo7QUFoQ0Qsc0NBZ0NDIn0=","assetPath":"Assets/CharacterController.ts","manifest":{"properties":[{"assembly":"UnityEngine.AnimationModule","name":"customAnimationClip","type":"UnityEngine.AnimationClip","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.UI","name":"playCustomAnimationButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"CharacterController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 0efa187a6719a1e5eb61d4037226e1b4
+  onlyWriteTrigger: 0

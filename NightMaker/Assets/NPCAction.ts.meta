@@ -1,0 +1,133 @@
+fileFormatVersion: 2
+guid: 6720ec2eb9aa9134784c355e0a1f67aa
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst
+    ZEPETO_Character_Controller_1 = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nconst
+    UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nclass NPCAction extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\\r\\n    constructor() {\\r\\n        super(...arguments);\\r\\n        this._isButtonPressed
+    = false;\\r\\n        this._maxTime = 60;\\r\\n        this._score = 0;\\r\\n   
+    }\\r\\n    Start() {\\r\\n        this.StartCoroutine(this.MainCoroutine());\\r\\n       
+    this.Button.onClick.AddListener(() => {\\r\\n            this._isButtonPressed
+    = true;\\r\\n        });\\r\\n    }\\r\\n    *MainCoroutine() {\\r\\n       
+    const startTime = UnityEngine_1.Time.time;\\r\\n        while (UnityEngine_1.Time.time
+    - startTime < this._maxTime) {\\r\\n            const spawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\\r\\n           
+    //spawnInfo.position = new Vector3(-1.42,-5.625,23.075);\\r\\n            spawnInfo.position
+    = this.transform.position;\\r\\n            spawnInfo.rotation = this.transform.rotation;\\r\\n           
+    const zepetoIds = [\\\"jjiyeiye\\\", \\\"tstscscs\\\"];\\r\\n            const
+    randomIndex = Math.floor(Math.random() * zepetoIds.length);\\r\\n           
+    const randomZepetoId = zepetoIds[randomIndex];\\r\\n            ZEPETO_Character_Controller_1.ZepetoCharacterCreator.CreateByZepetoId(randomZepetoId,
+    spawnInfo, (character) => {\\r\\n                this._npc = character;\\r\\n               
+    //character.SetGesture(this.LayingAnim);\\r\\n                console.log(character.name);\\r\\n               
+    //this.StartCoroutine(this.ActionCoroutine(character));\\r\\n            });\\r\\n           
+    yield new UnityEngine_1.WaitUntil(() => this._npc != undefined);\\r\\n           
+    this._npc.SetGesture(this.LayingAnim);\\r\\n            this._npc.characterController.center
+    = new UnityEngine_1.Vector3(0, 1, 0);\\r\\n            this._npc.transform.gameObject.GetComponentInChildren($typeof(UnityEngine_1.Animator)).runtimeAnimatorController
+    = this.KidAnimator;\\r\\n            //this._npc.additionalRunSpeed = -2.7;\\r\\n           
+    //this._npc.additionalWalkSpeed = -0.7;\\r\\n            this._npc.MoveToPosition(new
+    UnityEngine_1.Vector3(-1.5, -7.4, 19));\\r\\n            yield new UnityEngine_1.WaitForSeconds(1);\\r\\n       
+    }\\r\\n    }\\r\\n    *ActionCoroutine(npc) {\\r\\n        let moving = true;\\r\\n       
+    let combo = 0;\\r\\n        let speed = 0.1;\\r\\n        while (moving) {\\r\\n           
+    const direction = new UnityEngine_1.Vector3(this.Miss.transform.position.x -
+    this._npc.transform.position.x, this.Miss.transform.position.y - this._npc.transform.position.y,
+    this.Miss.transform.position.z - this._npc.transform.position.z).normalized;\\r\\n           
+    this._npc.transform.position = new UnityEngine_1.Vector3(this._npc.transform.position.x
+    + direction.x * speed * UnityEngine_1.Time.deltaTime, this._npc.transform.position.y
+    + direction.y * speed * UnityEngine_1.Time.deltaTime, this._npc.transform.position.z
+    + direction.z * speed * UnityEngine_1.Time.deltaTime);\\r\\n            const
+    ray = new UnityEngine_1.Ray(this._npc.transform.position, UnityEngine_1.Vector3.down);\\r\\n           
+    let ref = $ref();\\r\\n            if (UnityEngine_1.Physics.Raycast(ray, ref,
+    1000)) {\\r\\n                let hitInfo = $unref(ref);\\r\\n               
+    if (hitInfo.collider.gameObject === this.Miss && this._isButtonPressed) { //Miss\uC77C\uB54C\\r\\n                   
+    combo = 0;\\r\\n                    speed = 0.1;\\r\\n                    moving
+    = false;\\r\\n                    this.StartCoroutine(this.DreamCoroutine());\\r\\n                   
+    this._isButtonPressed = false;\\r\\n                }\\r\\n                else
+    if (hitInfo.collider.gameObject === this.Bad && this._isButtonPressed) { //Bad\uC77C\uB54C\\r\\n                   
+    combo++;\\r\\n                    if (combo = 5) {\\r\\n                       
+    combo = 0;\\r\\n                        speed = 0.12;\\r\\n                   
+    }\\r\\n                    moving = false;\\r\\n                    this._score
+    += 10;\\r\\n                    this.StartCoroutine(this.NightmareCoroutine());\\r\\n                   
+    this.StartCoroutine(this.UpdateScoreText());\\r\\n                    this._isButtonPressed
+    = false;\\r\\n                }\\r\\n                else if (hitInfo.collider.gameObject
+    === this.Good && this._isButtonPressed) { //Good\uC77C\uB54C\\r\\n                   
+    combo++;\\r\\n                    if (combo = 5) {\\r\\n                       
+    combo = 0;\\r\\n                        speed = 0.14;\\r\\n                   
+    }\\r\\n                    moving = false;\\r\\n                    this._score
+    += 20;\\r\\n                    this.StartCoroutine(this.NightmareCoroutine());\\r\\n                   
+    this.StartCoroutine(this.UpdateScoreText());\\r\\n                    this._isButtonPressed
+    = false;\\r\\n                }\\r\\n                else if (hitInfo.collider.gameObject
+    === this.Great && this._isButtonPressed) { //Great\uC77C\uB54C\\r\\n                   
+    combo++;\\r\\n                    if (combo = 5) {\\r\\n                       
+    combo = 0;\\r\\n                        speed = 0.16;\\r\\n                   
+    }\\r\\n                    moving = false;\\r\\n                    this._score
+    += 30;\\r\\n                    this.StartCoroutine(this.NightmareCoroutine());\\r\\n                   
+    this.StartCoroutine(this.UpdateScoreText());\\r\\n                    this, this._isButtonPressed
+    = false;\\r\\n                }\\r\\n                else if (hitInfo.collider.gameObject
+    === this.Excellent && this._isButtonPressed) { //Excellent\uC77C\uB54C\\r\\n                   
+    combo++;\\r\\n                    if (combo = 5) {\\r\\n                       
+    combo = 0;\\r\\n                        speed = 0.18;\\r\\n                   
+    }\\r\\n                    moving = false;\\r\\n                    this._score
+    += 40;\\r\\n                    this.StartCoroutine(this.NightmareCoroutine());\\r\\n                   
+    this.StartCoroutine(this.UpdateScoreText());\\r\\n                    this._isButtonPressed
+    = false;\\r\\n                }\\r\\n                else if (hitInfo.collider.gameObject
+    === this.Perfect && this._isButtonPressed) { //Perfect\uC77C\uB54C\\r\\n                   
+    combo++;\\r\\n                    if (combo = 5) {\\r\\n                       
+    combo = 0;\\r\\n                        speed = 0.2;\\r\\n                   
+    }\\r\\n                    moving = false;\\r\\n                    this._score
+    += 50;\\r\\n                    this.StartCoroutine(this.NightmareCoroutine());\\r\\n                   
+    this.StartCoroutine(this.UpdateScoreText());\\r\\n                    this._isButtonPressed
+    = false;\\r\\n                }\\r\\n                else {\\r\\n                   
+    combo = 0;\\r\\n                    speed = 0.1;\\r\\n                    moving
+    = false;\\r\\n                    this.StartCoroutine(this.DreamCoroutine());\\r\\n                   
+    this.StartCoroutine(this.UpdateScoreText());\\r\\n                    this._isButtonPressed
+    = false;\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n   
+    *UpdateScoreText() {\\r\\n        this.scoreText.text = \\\"Score: \\\" + this._score.toString();\\r\\n   
+    }\\r\\n    *DreamCoroutine() {\\r\\n        let moving = true;\\r\\n        let
+    speed = 0.15;\\r\\n        while (moving) {\\r\\n            const direction
+    = new UnityEngine_1.Vector3(this.Dream.transform.position.x - this._npc.transform.position.x,
+    this.Dream.transform.position.y - this._npc.transform.position.y, this.Dream.transform.position.z
+    - this._npc.transform.position.z).normalized;\\r\\n            this._npc.transform.position
+    = new UnityEngine_1.Vector3(this._npc.transform.position.x + direction.x * speed
+    * UnityEngine_1.Time.deltaTime, this._npc.transform.position.y + direction.y
+    * speed * UnityEngine_1.Time.deltaTime, this._npc.transform.position.z + direction.z
+    * speed * UnityEngine_1.Time.deltaTime);\\r\\n            const ray = new UnityEngine_1.Ray(this._npc.transform.position,
+    UnityEngine_1.Vector3.down);\\r\\n            let ref = $ref();\\r\\n           
+    if (UnityEngine_1.Physics.Raycast(ray, ref, 1000)) {\\r\\n                let
+    hitInfo = $unref(ref);\\r\\n                if (hitInfo.collider.gameObject ===
+    this.Dream) {\\r\\n                    moving = false;\\r\\n                   
+    UnityEngine_1.GameObject.Destroy(this._npc.gameObject);\\r\\n               
+    }\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    *NightmareCoroutine()
+    {\\r\\n        let moving = true;\\r\\n        let speed = 0.15;\\r\\n       
+    while (moving) {\\r\\n            const direction = new UnityEngine_1.Vector3(this.Nightmare.transform.position.x
+    - this._npc.transform.position.x, this.Nightmare.transform.position.y - this._npc.transform.position.y,
+    this.Nightmare.transform.position.z - this._npc.transform.position.z).normalized;\\r\\n           
+    this._npc.transform.position = new UnityEngine_1.Vector3(this._npc.transform.position.x
+    + direction.x * speed * UnityEngine_1.Time.deltaTime, this._npc.transform.position.y
+    + direction.y * speed * UnityEngine_1.Time.deltaTime, this._npc.transform.position.z
+    + direction.z * speed * UnityEngine_1.Time.deltaTime);\\r\\n            const
+    ray = new UnityEngine_1.Ray(this._npc.transform.position, UnityEngine_1.Vector3.down);\\r\\n           
+    let ref = $ref();\\r\\n            if (UnityEngine_1.Physics.Raycast(ray, ref,
+    1000)) {\\r\\n                let hitInfo = $unref(ref);\\r\\n               
+    if (hitInfo.collider.gameObject === this.Dream) {\\r\\n                    moving
+    = false;\\r\\n                    UnityEngine_1.GameObject.Destroy(this._npc.gameObject);\\r\\n               
+    }\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n}\\r\\nexports.default =
+    NPCAction;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTlBDQWN0aW9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTlBDQWN0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXNEO0FBQ3RELDZFQUFpRztBQUNqRyw2Q0FBNkw7QUFHN0wsTUFBcUIsU0FBVSxTQUFRLHFDQUFxQjtJQUE1RDs7UUFtQlkscUJBQWdCLEdBQVksS0FBSyxDQUFDO1FBQ2xDLGFBQVEsR0FBVyxFQUFFLENBQUM7UUFDdEIsV0FBTSxHQUFXLENBQUMsQ0FBQztJQXdNL0IsQ0FBQztJQXRNRyxLQUFLO1FBRUQsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsYUFBYSxFQUFFLENBQUMsQ0FBQztRQUMxQyxJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2pDLElBQUksQ0FBQyxnQkFBZ0IsR0FBRyxJQUFJLENBQUM7UUFDakMsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBQ0csQ0FBQyxhQUFhO1FBQ1YsTUFBTSxTQUFTLEdBQUcsa0JBQUksQ0FBQyxJQUFJLENBQUM7UUFDaEMsT0FBTyxrQkFBSSxDQUFDLElBQUksR0FBRyxTQUFTLEdBQUcsSUFBSSxDQUFDLFFBQVEsRUFBQztZQUN6QyxNQUFNLFNBQVMsR0FBRyxJQUFJLHVDQUFTLEVBQUUsQ0FBQztZQUNsQyx3REFBd0Q7WUFDeEQsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQztZQUM3QyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDO1lBRTdDLE1BQU0sU0FBUyxHQUFHLENBQUMsVUFBVSxFQUFDLFVBQVUsQ0FBQyxDQUFDO1lBQzFDLE1BQU0sV0FBVyxHQUFHLElBQUksQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUFDLE1BQU0sRUFBRSxHQUFHLFNBQVMsQ0FBQyxNQUFNLENBQUMsQ0FBQztZQUNqRSxNQUFNLGNB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\",\"assetPath\":\"Assets/NPCAction.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"mscorlib\",\"name\":\"zepetoId\",\"type\":\"System.String[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"Button\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Miss\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Bad\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Good\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Great\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Excellent\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Perfect\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.AnimationModule\",\"name\":\"LayingAnim\",\"type\":\"UnityEngine.AnimationClip\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Dream\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"Nightmare\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.AnimationModule\",\"name\":\"KidAnimator\",\"type\":\"UnityEngine.RuntimeAnimatorController\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"scoreText\",\"type\":\"UnityEngine.UI.Text\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]}],\"name\":\"NPCAction\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: d8dc2de04350443863d9a092477684aa
+  onlyWriteTrigger: 0

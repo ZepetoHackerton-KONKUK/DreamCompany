@@ -1,7 +1,7 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script';
 import { SpawnInfo, ZepetoCharacter, ZepetoCharacterCreator } from 'ZEPETO.Character.Controller';
 import { Time, Animator, RuntimeAnimatorController, Vector3, GameObject, RaycastHit, Physics, Ray, TerrainHeightmapSyncControl, WaitForSeconds } from 'UnityEngine';
-import { Button } from 'UnityEngine.UI';
+import { Button,Text } from 'UnityEngine.UI';
 
 export default class NPCAction extends ZepetoScriptBehaviour {
 
@@ -160,7 +160,7 @@ export default class NPCAction extends ZepetoScriptBehaviour {
     }
 
     *UpdateScoreText() {
-        this.scoreText.textContent = "Score: " + this._score.toString();
+        this.scoreText.text = "Score: " + this._score.toString();
     }
 
     *DreamCoroutine() {
