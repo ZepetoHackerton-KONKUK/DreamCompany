@@ -10,7 +10,9 @@ export default class extends Sandbox {
     private readonly _modules: IModule[] = [];
     private _isCreated: boolean = false;
     private voteMap:Map<string,number> = new Map<string,number>();
+    private playerScore:Map<string,number> = new Map<string,number>();
     private voteNum:number = 0;
+    private endSurpNum:number = 0;
     async onCreate(options: SandboxOptions) {
         let endDraw:boolean = false;
         let endVote:boolean = false;
@@ -58,6 +60,17 @@ export default class extends Sandbox {
             let puzzleMessage = {name:message,pos:position,rot:rotation} as PuzzleModel;
             this.broadcast("EndVote",puzzleMessage);
         });
+        this.onMessage("EndSurprise",(client:SandboxPlayer)=>{
+            this.endSurpNum+=1;
+            if(this.endSurpNum>=this.state.players.size){
+                this.broadcast("MoveToPuzzle",client.userId);
+            }
+        });
+        this.onMessage("UpdateScore",(client:SandboxPlayer,message:number)=>{
+            console.log(client.userId+":"+message);
+            this.playerScore.set(client.userId,message);
+            this.broadcast("UpdateScoreRank",this.currentRank());
+        });
         this._isCreated = true;
     }
 
@@ -75,7 +88,7 @@ export default class extends Sandbox {
             player.zepetoUserId = client.userId;
         }
         this.state.players.set(client.sessionId, player);
-        
+        this.playerScore.set(client.userId,0);
         console.log(`join player, ${client.sessionId}`);
     }
     
@@ -85,6 +98,7 @@ export default class extends Sandbox {
             await module.OnLeave(client);
         }
         this.state.players.delete(client.sessionId);
+        this.playerScore.delete(client.userId);
         this.broadcast("UpdatePlayers",this.currentPlayerList());
         console.log(`leave player, ${client.sessionId}`);
     }
@@ -164,6 +178,23 @@ export default class extends Sandbox {
         }
         return 1;
     }
+    currentRank():SurpScore{
+        let mapToArray = Array.from(this.playerScore);
+        console.log("init array");
+        mapToArray.sort((a,b)=>b[1]-a[1]);
+        console.log("sort Array");
+        if(mapToArray.length > 4){
+            mapToArray = mapToArray.slice(0,3);
+        }
+        let _players:string[] = [];
+        let _scores:number[] = [];
+        mapToArray.forEach((value,index)=>{
+            _players.push(value[0]);
+            _scores.push(value[1]);
+        });
+        const scoreInfo = {players:_players,scores:_scores} as SurpScore;
+        return scoreInfo;
+    }
 }
 interface LineModel{
     name:string,
@@ -178,4 +209,8 @@ interface PuzzleModel{
     name:string,
     pos:number[],
     rot:number[]
+}
+interface SurpScore{
+    players:string[],
+    scores:number[]
 }

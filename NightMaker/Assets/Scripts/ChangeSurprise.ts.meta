@@ -20,18 +20,18 @@ ScriptedImporter:
   wrapperOutputDirectory: Generated
   compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
     { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
-    UnityEngine_SceneManagement_1 = require(\"UnityEngine.SceneManagement\");\r\nconst
-    MultiplayManager_1 = require(\"../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager\");\r\nclass
-    ChangePuzzle extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
-    {\r\n        super(...arguments);\r\n        this.isInit = false;\r\n    }\r\n   
-    Start() {\r\n        this.ChangeSurprise.onClick.AddListener(() => {\r\n           
-    this.curRoom.Send(\"StartSurprise\");\r\n        });\r\n    }\r\n    Update()
-    {\r\n        if (this.curRoom == null) {\r\n            this.curRoom = MultiplayManager_1.default.instance.room;\r\n       
-    }\r\n        if (this.curRoom != null && !this.isInit) {\r\n            this.isInit
-    = true;\r\n            this.curRoom.AddMessageHandler(\"StartSurprise\", (message)
-    => {\r\n                console.log(\"Get Message from Server\" + message);\r\n               
-    UnityEngine_SceneManagement_1.SceneManager.LoadScene(\"SurprsiseScene\");\r\n           
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst UnityEngine_SceneManagement_1
+    = require(\"UnityEngine.SceneManagement\");\r\nconst MultiplayManager_1 = require(\"../Zepeto
+    Multiplay Component/ZepetoScript/Common/MultiplayManager\");\r\nclass ChangePuzzle
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.isInit = false;\r\n    }\r\n    Start()
+    {\r\n        this.ChangeSurprise.onClick.AddListener(() => {\r\n            this.curRoom.Send(\"StartSurprise\");\r\n       
+    });\r\n    }\r\n    Update() {\r\n        if (this.curRoom == null) {\r\n           
+    this.curRoom = MultiplayManager_1.default.instance.room;\r\n        }\r\n       
+    if (this.curRoom != null && !this.isInit) {\r\n            this.isInit = true;\r\n           
+    this.curRoom.AddMessageHandler(\"StartSurprise\", (message) => {\r\n               
+    console.log(\"Get Message from Server\" + message);\r\n                UnityEngine_SceneManagement_1.SceneManager.LoadScene(\"SurprsiseScene\");\r\n           
     });\r\n            console.log(\"Init Success\");\r\n        }\r\n    }\r\n}\r\nexports.default
-    = ChangePuzzle;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhbmdlU3VycHJpc2UuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJDaGFuZ2VTdXJwcmlzZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUVyRCw2RUFBMEQ7QUFDMUQseUdBQWlHO0FBR2pHLE1BQXFCLFlBQWEsU0FBUSxxQ0FBcUI7SUFBL0Q7O1FBSVksV0FBTSxHQUFXLEtBQUssQ0FBQztJQW9CbkMsQ0FBQztJQW5CRyxLQUFLO1FBQ0QsSUFBSSxDQUFDLGNBQWMsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUUsRUFBRTtZQUN4QyxJQUFJLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxlQUFlLENBQUMsQ0FBQztRQUN2QyxDQUFDLENBQUMsQ0FBQztJQUNQLENBQUM7SUFDRCxNQUFNO1FBQ0YsSUFBRyxJQUFJLENBQUMsT0FBTyxJQUFJLElBQUksRUFBQztZQUVwQixJQUFJLENBQUMsT0FBTyxHQUFHLDBCQUFnQixDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUM7U0FDakQ7UUFDRCxJQUFHLElBQUksQ0FBQyxPQUFPLElBQUksSUFBSSxJQUFJLENBQUMsSUFBSSxDQUFDLE1BQU0sRUFBQztZQUNwQyxJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQztZQUNuQixJQUFJLENBQUMsT0FBTyxDQUFDLGlCQUFpQixDQUFDLGVBQWUsRUFBQyxDQUFDLE9BQWMsRUFBQyxFQUFFO2dCQUM3RCxPQUFPLENBQUMsR0FBRyxDQUFDLHlCQUF5QixHQUFDLE9BQU8sQ0FBQyxDQUFDO2dCQUMvQywwQ0FBWSxDQUFDLFNBQVMsQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO1lBQzdDLENBQUMsQ0FBQyxDQUFDO1lBQ0gsT0FBTyxDQUFDLEdBQUcsQ0FBQyxjQUFjLENBQUMsQ0FBQztTQUMvQjtJQUNMLENBQUM7Q0FDSjtBQXhCRCwrQkF3QkMifQ==","assetPath":"Assets/Scripts/ChangeSurprise.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"ChangeSurprise","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ChangePuzzle","description":"","hasAnimatorMove":false},"isCompiled":true}'
+    = ChangePuzzle;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhbmdlU3VycHJpc2UuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJDaGFuZ2VTdXJwcmlzZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUNyRCxtREFBdUM7QUFDdkMsNkVBQTBEO0FBQzFELHlHQUFpRztBQUdqRyxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBQS9EOztRQUlZLFdBQU0sR0FBVyxLQUFLLENBQUM7SUFvQm5DLENBQUM7SUFuQkcsS0FBSztRQUNELElBQUksQ0FBQyxjQUFjLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFFLEVBQUU7WUFDeEMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsZUFBZSxDQUFDLENBQUM7UUFDdkMsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBQ0QsTUFBTTtRQUNGLElBQUcsSUFBSSxDQUFDLE9BQU8sSUFBSSxJQUFJLEVBQUM7WUFFcEIsSUFBSSxDQUFDLE9BQU8sR0FBRywwQkFBZ0IsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDO1NBQ2pEO1FBQ0QsSUFBRyxJQUFJLENBQUMsT0FBTyxJQUFJLElBQUksSUFBSSxDQUFDLElBQUksQ0FBQyxNQUFNLEVBQUM7WUFDcEMsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUM7WUFDbkIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxpQkFBaUIsQ0FBQyxlQUFlLEVBQUMsQ0FBQyxPQUFjLEVBQUMsRUFBRTtnQkFDN0QsT0FBTyxDQUFDLEdBQUcsQ0FBQyx5QkFBeUIsR0FBQyxPQUFPLENBQUMsQ0FBQztnQkFDL0MsMENBQVksQ0FBQyxTQUFTLENBQUMsZ0JBQWdCLENBQUMsQ0FBQztZQUM3QyxDQUFDLENBQUMsQ0FBQztZQUNILE9BQU8sQ0FBQyxHQUFHLENBQUMsY0FBYyxDQUFDLENBQUM7U0FDL0I7SUFDTCxDQUFDO0NBQ0o7QUF4QkQsK0JBd0JDIn0=","assetPath":"Assets/Scripts/ChangeSurprise.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"ChangeSurprise","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"ChangePuzzle","description":"","hasAnimatorMove":false},"isCompiled":true}'
   typescriptHash: 0f0b7c20dbd8fa07bc0798e6571586f3
   onlyWriteTrigger: 0

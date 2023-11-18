@@ -37,7 +37,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     public Bed:UnityEngine.GameObject;
     public KidAnimator:UnityEngine.RuntimeAnimatorController;
     private puzzleState = "Draw";
-    private z_camera:UnityEngine.GameObject;
+    private z_camera:UnityEngine.GameObject = null;
     private curLine:UnityEngine.LineRenderer;
     private positionCount:number = 2;
     private PrevPos:UnityEngine.Vector3 = UnityEngine.Vector3.zero;
@@ -54,7 +54,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private secondSketch:UnityEngine.GameObject;
     private VoteLeftSelect:UnityEngine.GameObject;
     private VoteRightSelect:UnityEngine.GameObject;
-    private z_CtrlUI:UnityEngine.GameObject;
+    private z_CtrlUI:UnityEngine.GameObject = null;
     private puzzleSketch:UnityEngine.GameObject;
     private puzzlePieces:UnityEngine.GameObject[] = [null,null,null,null,null,null,null,null]; // 0 전체,1 판, 2 왼아래, 3 왼얼굴 4 왼위 5 오른아래 6오른얼굴 7 오른위
     private AnswerPosition:UnityEngine.Vector3[] = [null,null,null,null,null,null];
@@ -68,7 +68,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private puzzleAnimator:UnityEngine.Animator;
     private puzzleScore:number;
     Start() {   
-        let kidID:string[] = ["jjiyeiye","tstscscs"];
+        let kidID:string[] = ["jjiyeiye","tstscscs","jamminboy","jammingirl"];
         const ClonePlayerSpawnInfo = new SpawnInfo();
         ClonePlayerSpawnInfo.position = new UnityEngine.Vector3(500,-1,0);
         ClonePlayerSpawnInfo.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,-180,0));
@@ -83,8 +83,12 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.z_CtrlUI = UnityEngine.GameObject.Find("UIZepetoPlayerControl") as UnityEngine.GameObject;
         this.Canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.RectTransform>();
         this.UIGroup[3].GetComponent<UnityEngine.RectTransform>().sizeDelta = new UnityEngine.Vector2(50,this.Canvas.sizeDelta.y);
-        this.z_CtrlUI.SetActive(false);
-        this.z_camera.SetActive(false);
+        if(this.z_camera != null){
+            this.z_camera.SetActive(false);
+        }
+        if(this.z_CtrlUI != null){
+            this.z_CtrlUI.SetActive(false);
+        }
         this.Setting = new PenSetting(); 
         this.ChangeEraser.onClick.AddListener(()=>{
             this.Setting.ColorType = 1;

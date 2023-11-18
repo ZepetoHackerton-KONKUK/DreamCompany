@@ -2,7 +2,9 @@
   "dependencies": {
     "asset.effect": "1.0.1",
     "asset.epicvillage": "1.0.5",
+    "asset.galaxy": "1.0.3",
     "asset.mysteryhouse": "1.0.1",
+    "asset.prison": "1.0.5",
     "asset.text": "1.0.2",
     "com.unity.ide.rider": "2.0.7",
     "com.unity.textmeshpro": "3.0.6",

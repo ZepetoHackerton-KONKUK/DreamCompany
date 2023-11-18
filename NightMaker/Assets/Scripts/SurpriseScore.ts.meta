@@ -1,0 +1,35 @@
+fileFormatVersion: 2
+guid: 31ae728b1d15c954cb185bbd217822f6
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nclass
+    SurpriseScore extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        this._image = this.GetComponent($typeof(UnityEngine_UI_1.RawImage));\r\n       
+    this.trans = this.GetComponent($typeof(UnityEngine_1.RectTransform));\r\n       
+    this.trans.anchoredPosition = new UnityEngine_1.Vector2(0, 0);\r\n        this.StartCoroutine(this.Floating());\r\n   
+    }\r\n    *Floating() {\r\n        while (this._image.color.a >= 0) {\r\n           
+    this.trans.anchoredPosition = new UnityEngine_1.Vector2(this.trans.anchoredPosition.x,
+    this.trans.anchoredPosition.y + 1);\r\n            this._image.color = new UnityEngine_1.Color(1,
+    1, 1, this._image.color.a - 0.1);\r\n            yield new UnityEngine_1.WaitForSeconds(0.02);\r\n       
+    }\r\n        UnityEngine_1.Object.Destroy(this.gameObject);\r\n    }\r\n}\r\nexports.default
+    = SurpriseScore;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU3VycHJpc2VTY29yZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlN1cnByaXNlU2NvcmUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBc0Q7QUFDdEQsbURBQXlDO0FBQ3pDLDZDQUErRTtBQUMvRSxNQUFxQixhQUFjLFNBQVEscUNBQXFCO0lBRzVELEtBQUs7UUFDRCxJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMseUJBQVEsRUFBRyxDQUFDO1FBQzVDLElBQUksQ0FBQyxLQUFLLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQywyQkFBYSxFQUFHLENBQUM7UUFDaEQsSUFBSSxDQUFDLEtBQUssQ0FBQyxnQkFBZ0IsR0FBRyxJQUFJLHFCQUFPLENBQUMsQ0FBQyxFQUFDLENBQUMsQ0FBQyxDQUFDO1FBQy9DLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDLENBQUM7SUFDekMsQ0FBQztJQUNELENBQUMsUUFBUTtRQUNMLE9BQU0sSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsQ0FBQyxJQUFHLENBQUMsRUFBQztZQUMxQixJQUFJLENBQUMsS0FBSyxDQUFDLGdCQUFnQixHQUFHLElBQUkscUJBQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLGdCQUFnQixDQUFDLENBQUMsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLGdCQUFnQixDQUFDLENBQUMsR0FBQyxDQUFDLENBQUMsQ0FBQztZQUMxRyxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssR0FBRyxJQUFJLG1CQUFLLENBQUMsQ0FBQyxFQUFDLENBQUMsRUFBQyxDQUFDLEVBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsQ0FBQyxHQUFDLEdBQUcsQ0FBQyxDQUFDO1lBQzdELE1BQU0sSUFBSSw0QkFBYyxDQUFDLElBQUksQ0FBQyxDQUFDO1NBQ2xDO1FBQ0Qsb0JBQU0sQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDO0lBQ3BDLENBQUM7Q0FFSjtBQWxCRCxnQ0FrQkMifQ==","assetPath":"Assets/Scripts/SurpriseScore.ts","manifest":{"properties":[],"name":"SurpriseScore","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f78d9e277cf2a2f82d224109abfc419d
+  onlyWriteTrigger: 0
