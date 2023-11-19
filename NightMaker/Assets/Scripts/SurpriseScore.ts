@@ -5,7 +5,7 @@ export default class SurpriseScore extends ZepetoScriptBehaviour {
     private _image:RawImage;
     private trans:RectTransform;
     Start() {    
-        this._image = this.GetComponent<RawImage>();
+        this._image = this.GetComponentInChildren<RawImage>();
         this.trans = this.GetComponent<RectTransform>();
         this.trans.anchoredPosition = new Vector2(0,0);
         this.StartCoroutine(this.Floating());

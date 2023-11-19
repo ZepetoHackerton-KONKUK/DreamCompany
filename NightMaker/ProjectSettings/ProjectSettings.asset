@@ -147,7 +147,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.ZEPETO.me.zepeto.template.default
-    Standalone: com.jk.practice
+    Standalone: com.KONKUK.DreamCompany
     iPhone: com.ZEPETO.me.zepeto.template.default
   buildNumber:
     Standalone: 0

@@ -1,8 +1,8 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script';
 import {Room} from 'ZEPETO.Multiplay';
 import { SpawnInfo, ZepetoCharacter, ZepetoCharacterCreator,ZepetoPlayers } from 'ZEPETO.Character.Controller';
-import { Camera,Time, Animator, RuntimeAnimatorController, Vector3, GameObject, RaycastHit, Physics, Ray, TerrainHeightmapSyncControl, WaitForSeconds, AnimationClip, WaitUntil,Texture,Object,Quaternion, Coroutine, WaitForFixedUpdate,RectTransform,Screen,Vector2 } from 'UnityEngine';
-import { Button, Text ,RawImage} from 'UnityEngine.UI';
+import { Camera,Time, Animator, RuntimeAnimatorController, Vector3, GameObject, RaycastHit, Physics, Ray, TerrainHeightmapSyncControl, WaitForSeconds, AnimationClip, WaitUntil,Texture,Object,Quaternion, Coroutine, WaitForFixedUpdate,RectTransform,Screen,Vector2,Sprite,Input } from 'UnityEngine';
+import { Button, Text ,RawImage,Image} from 'UnityEngine.UI';
 import MultiplayManager from '../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager';
 import {WorldService,ZepetoWorldHelper,Users} from 'ZEPETO.World'
 export default class NPCAction extends ZepetoScriptBehaviour {
@@ -11,7 +11,6 @@ export default class NPCAction extends ZepetoScriptBehaviour {
     public zepetoId: string[];
     public e_camera:GameObject;
     public EndScene:GameObject;
-    public Button: Button;
     public offset:number[]; // 0 Perfect 1 Excellent 2 Great 3 Good 4 Bad 5 Miss
     public Perfect: GameObject;
     public LayingAnim: AnimationClip;
@@ -20,7 +19,6 @@ export default class NPCAction extends ZepetoScriptBehaviour {
     public KidAnimator: RuntimeAnimatorController;
     public scoreUI:GameObject;
     public rankUI:GameObject;
-    public screamUI:GameObject;
     public scoreText: Text;
     public GoDream: GameObject;
     public MissDist:number;
@@ -33,8 +31,12 @@ export default class NPCAction extends ZepetoScriptBehaviour {
     public rankScores:Text[];
     public FallAnimator:RuntimeAnimatorController;
     public rankNames:Text[];
+    public rankImages:Sprite[];
+    public rankEntires:Sprite[];
     public fallkid:RectTransform;
+    public finish:GameObject;
     //private _npc: ZepetoCharacter;
+    private playerAnimator:Animator;
     private _isButtonPressed: boolean = false;
     private _maxTime: number = 60;
     private _score: number = 0;
@@ -50,12 +52,13 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         this.curRoom = MultiplayManager.instance.room;
         this.startTime = Time.time;
         this.scoreText.text = "0";
-        this.Button.onClick.AddListener(() => {
-            this._isButtonPressed = true;
-        });
+
         
         this.curRoom.AddMessageHandler("UpdateScoreRank",(message:SurpScore)=>{
             console.log("GetMessage from UpdateScoreRank");
+            if(!this.rankUI.transform.GetChild(4).gameObject.activeSelf){
+                this.rankUI.transform.GetChild(4).gameObject.SetActive(true);
+            }
             for (let i = 0; i < 4; i++) {
                 if (i > message.players.length - 1) {
                     this.rankPlayers[i].SetActive(false);
@@ -63,6 +66,13 @@ export default class NPCAction extends ZepetoScriptBehaviour {
                     this.rankPlayers[i].SetActive(true);
                     this.rankScores[i].text = message.scores[i].toString();
                 }
+            }
+            const rank = message.players.findIndex((value)=>value === ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.userId);
+            this.rankUI.transform.GetChild(4).GetChild(0).gameObject.GetComponent<Image>().sprite = this.rankImages[rank];
+            this.rankUI.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Image>().sprite = this.rankEntires[message.players.length-1];
+            
+            if(message.players.length > 4){
+                message.players = message.players.slice(0,3);
             }
             ZepetoWorldHelper.GetUserInfo(message.players,(info:Users[])=>{
                 for(let i = 0; i<info.length;i++){
@@ -88,7 +98,6 @@ export default class NPCAction extends ZepetoScriptBehaviour {
                 this.isStart = true;
                 this.scoreUI.SetActive(true);
                 this.rankUI.SetActive(true);
-                this.screamUI.SetActive(true);
                 this.MovCor = this.StartCoroutine(this.MainCoroutine());
                 const canvasHeight = GameObject.Find("Canvas").GetComponent<RectTransform>().rect.height;
                 this.fallkid.sizeDelta = new Vector2(canvasHeight,canvasHeight);
@@ -104,6 +113,9 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         }else{
             this.timer.text = "0s";
             return;
+        }
+        if(Input.GetMouseButtonDown(0)){
+            this.DoSurprise();
         }
         this.timer.text = timeLeft.toFixed(0) + "s";
         this.npcList.forEach((value, index, arr) => {
@@ -141,6 +153,7 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         });
         yield new WaitUntil(() => _npc != undefined);
         _npc.characterController.center = new Vector3(0, 1, 0);
+        this.playerAnimator = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject.GetComponentInChildren<Animator>();
         _npc.transform.gameObject.GetComponentInChildren<Animator>().runtimeAnimatorController = this.KidAnimator;
         _npc.additionalRunSpeed = -1 * (1.7);
         _npc.additionalWalkSpeed = 0.7;
@@ -163,7 +176,7 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         _npc.additionalWalkSpeed = 0.7;
         _npc.MoveToPosition(this.Perfect.transform.position);
         yield new WaitUntil(()=>Vector3.Distance(_npc.transform.position,this.Perfect.transform.position)<=0.4);
-        ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject.GetComponentInChildren<Animator>().SetTrigger("Scream");
+        this.playerAnimator.SetTrigger("Scream");
         _npc.StopMoving();
         _npc.MoveToPosition(this.GoDream.transform.position);
         yield new WaitUntil(()=>Vector3.Distance(_npc.transform.position,this.GoDream.transform.position)<=this.MissDist);
@@ -174,6 +187,9 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         this.FirstAnimEnd = true;
     }
     *EndAnim(){
+        this.finish.SetActive(true);
+        yield new WaitForSeconds(2);
+        this.finish.SetActive(false);
         this.EndScene.SetActive(true);
         const spawnInfo = new SpawnInfo();
         spawnInfo.position = new Vector3(15,2.5,0);
@@ -198,6 +214,13 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         ZepetoCharacterCreator.RemoveCharacter(_npc);
         this.curRoom.Send("EndSurprise");
                 
+    }
+    DoSurprise(){
+        console.log(this.playerAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        if(this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
+            this.playerAnimator.SetTrigger("Scream");
+            this._isButtonPressed = true;
+        }
     }
     *MainCoroutine() {
         while (Time.time - this.startTime < this._maxTime) {
@@ -236,9 +259,10 @@ export default class NPCAction extends ZepetoScriptBehaviour {
             _npc.character.StopMoving();
             if(_npc.state == 0){
                 const scoreObject = Object.Instantiate(this.FloatScore,new Vector3(0,0,0),Quaternion.identity,GameObject.Find("Canvas").transform) as GameObject;
-                const _texture = scoreObject.GetComponent<RawImage>();
+                const _texture = scoreObject.GetComponentInChildren<RawImage>();
                 _npc.character.MoveToPosition(this.Dream.transform.position);
                 _texture.texture = this.scoreTextures[3];
+
                 this.combo = 0;
                 _npc.state = 2;
             }else if(_npc.state == 1){
@@ -252,15 +276,16 @@ export default class NPCAction extends ZepetoScriptBehaviour {
     CheckScore(_npc:NPC):NPC{
         const DistPerfect = Vector3.Distance(_npc.character.transform.position,this.Perfect.transform.position);
         const scoreObject = Object.Instantiate(this.FloatScore,new Vector3(0,0,0),Quaternion.identity,GameObject.Find("Canvas").transform) as GameObject;
-        const _texture = scoreObject.GetComponent<RawImage>();
-        if(DistPerfect > this.offset[3]){ // Miss
+        const _texture = scoreObject.GetComponentInChildren<RawImage>();
+        
+        if(DistPerfect > this.offset[3]){ // Miss   
         }else if(DistPerfect > this.offset[2]) { //good
             _npc.state = 1;
             this._score+=10*(1+this.combo);
             if(this.combo < 2){
                 this.combo+=0.1;
             }
-            _texture.texture = this.scoreTextures[2];
+            _texture.texture = this.scoreTextures[2];  
             this.UpdateScoreText();
         }else if(DistPerfect > this.offset[1]) { // Excellent
             _npc.state = 1;
@@ -268,7 +293,7 @@ export default class NPCAction extends ZepetoScriptBehaviour {
             if(this.combo < 2){
                 this.combo+=0.1;
             }
-            _texture.texture = this.scoreTextures[1];
+            _texture.texture = this.scoreTextures[1]; 
             this.UpdateScoreText();
         }else if(DistPerfect > this.offset[0]) {// Perfect
             _npc.state = 1;
@@ -276,7 +301,7 @@ export default class NPCAction extends ZepetoScriptBehaviour {
             if(this.combo < 2){
                 this.combo+=0.1;
             }
-            _texture.texture = this.scoreTextures[0];
+            _texture.texture = this.scoreTextures[0];    
             this.UpdateScoreText();
         }
         this._isButtonPressed = false;

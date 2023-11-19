@@ -4,7 +4,7 @@ import { IModule } from "./ServerModule/IModule";
 import SyncComponentModule from "./ServerModule/Modules/SyncComponentModule";
 import MannequinModule from "./ServerModule/Modules/MannequinModule";
 import ProductModule from "./ServerModule/Modules/ProductModule";
-
+import {DataStorage} from "ZEPETO.Multiplay.DataStorage";
 export default class extends Sandbox {
 
     private readonly _modules: IModule[] = [];
@@ -13,6 +13,7 @@ export default class extends Sandbox {
     private playerScore:Map<string,number> = new Map<string,number>();
     private voteNum:number = 0;
     private endSurpNum:number = 0;
+    private playerStorage:DataStorage;
     async onCreate(options: SandboxOptions) {
         let endDraw:boolean = false;
         let endVote:boolean = false;
@@ -71,10 +72,16 @@ export default class extends Sandbox {
             this.playerScore.set(client.userId,message);
             this.broadcast("UpdateScoreRank",this.currentRank());
         });
+        this.onMessage("PuzzleScore",(client:SandboxPlayer,message:number)=>{
+            const surpScore:number = this.playerScore.get(client.userId);
+            const puzzleScore:number = message;
+            this.playerScore.set(client.userId,surpScore+puzzleScore);
+        });
         this._isCreated = true;
     }
 
     async onJoin(client: SandboxPlayer) {
+        this.playerStorage = client.loadDataStorage();
         for (const module of this._modules) {
             await module.OnJoin(client);
         }
@@ -89,6 +96,9 @@ export default class extends Sandbox {
         }
         this.state.players.set(client.sessionId, player);
         this.playerScore.set(client.userId,0);
+        if((await this.playerStorage.get("Points") as number)==null){
+            await this.playerStorage.set("Points",0);
+        }
         console.log(`join player, ${client.sessionId}`);
     }
     
@@ -183,9 +193,6 @@ export default class extends Sandbox {
         console.log("init array");
         mapToArray.sort((a,b)=>b[1]-a[1]);
         console.log("sort Array");
-        if(mapToArray.length > 4){
-            mapToArray = mapToArray.slice(0,3);
-        }
         let _players:string[] = [];
         let _scores:number[] = [];
         mapToArray.forEach((value,index)=>{
@@ -214,3 +221,8 @@ interface SurpScore{
     players:string[],
     scores:number[]
 }
+// interface TotalScore{
+//     surprise:number,
+//     puzzle:number,
+//     rank:number
+// }
