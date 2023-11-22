@@ -7,8 +7,10 @@ import { Room } from 'ZEPETO.Multiplay'
 import {SpawnInfo,ZepetoPlayers, ZepetoCharacter, ZepetoCharacterCreator} from 'ZEPETO.Character.Controller'
 import {WorldService,ZepetoWorldHelper,Users} from 'ZEPETO.World'
 import { VideoPlayer } from 'UnityEngine.Video'
+import { SceneManager } from 'UnityEngine.SceneManagement';
 export default class SketchCtrl extends ZepetoScriptBehaviour {
-    
+    public BGM:UnityEngine.AudioSource[];
+    public bgmClips:UnityEngine.AudioClip[];
     public m_camera:UnityEngine.Camera;
     public p_camera:UnityEngine.Camera;
     public Pen:UnityEngine.GameObject;
@@ -39,6 +41,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     public KidAnimator:UnityEngine.RuntimeAnimatorController;
     public LoadRect:UnityEngine.RectTransform;
     public VP:VideoPlayer;
+    public ScoreTexts:Text[];
     private puzzleState = "Draw";
     private z_camera:UnityEngine.GameObject = null;
     private curLine:UnityEngine.LineRenderer;
@@ -69,9 +72,10 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private _puzzleKidObject:UnityEngine.GameObject;
     private isFindKid:boolean = false;
     private puzzleAnimator:UnityEngine.Animator;
-    private puzzleScore:number;
+    private puzzleScore:number = 0;
     private isVideoEnd:boolean = false;
     private winner:string;
+    private isTimer:boolean = false;
     Start() {   
         let kidID:string[] = ["jjiyeiye","tstscscs","jamminboy","jammingirl"];
         const ClonePlayerSpawnInfo = new SpawnInfo();
@@ -80,7 +84,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         const KidSpawnInfo = new SpawnInfo();
         KidSpawnInfo.position = new UnityEngine.Vector3(199.8,0,0);
         KidSpawnInfo.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,90,0)); 
-        
+        ZepetoCharacterCreator.CreateByUserId(WorldService.userId,ClonePlayerSpawnInfo,(character:ZepetoCharacter)=>{
+            this._clonePlayer = character;
+        });
         ZepetoCharacterCreator.CreateByZepetoId(kidID[Math.floor(Math.random()*2)],KidSpawnInfo,(character:ZepetoCharacter)=>{
             this._puzzleKid = character;
         });
@@ -98,11 +104,13 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.Setting = new PenSetting(); 
         this.ChangeEraser.onClick.AddListener(()=>{
             this.Setting.ColorType = 1;
+            this.BGM[3].Play();
             this.UIGroup[0].transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
             this.UIGroup[0].transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
         });
         this.ChangePen.onClick.AddListener(()=>{
             this.Setting.ColorType = 0;
+            this.BGM[3].Play();
             this.UIGroup[0].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             this.UIGroup[0].transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
         });
@@ -111,25 +119,30 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         });
         for(let i = 0; i<this.TicknessBtns.length;i++){
             this.TicknessBtns[i].onClick.AddListener(()=>{
+                    this.BGM[3].Play();
                     this.SetTickness(i); 
             });
         }
         for(let i:number = 0; i<this.ColorBtns.length; i++){
             this.ColorBtns[i].onClick.AddListener(()=>{
+                this.BGM[3].Play();
                 this.SetColor(i);
             });
         }
         this.OpenColorBtn.onClick.AddListener(()=>{
+            this.BGM[3].Play();
             this.ColorGroup.SetActive(!this.ColorGroup.activeSelf);
         });
         this.RotationBtns[0].onClick.AddListener(()=>{
             if(this.CurrentPiece != null){
+                this.BGM[6].Play();
                 this.CurrentPiece.transform.Rotate(0,0,-45);
                 this.checkMatch();
             }
         });
         this.RotationBtns[1].onClick.AddListener(()=>{
             if(this.CurrentPiece != null){
+                this.BGM[6].Play();
                 this.CurrentPiece.transform.Rotate(0,0,45);
                 this.checkMatch();
             }
@@ -137,9 +150,6 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.VP.loopPointReached += this.CheckOver;
         this.curRoom = MultiplayManager.instance.room;
         console.log(WorldService.userId);
-        ZepetoCharacterCreator.CreateByUserId(WorldService.userId,ClonePlayerSpawnInfo,(character:ZepetoCharacter)=>{
-            this._clonePlayer = character;
-        });
         this.timer = 43; // 그림그리기 40초
         this.curRoom.AddMessageHandler("UpdatePlayers",(message:string[])=>{
             ZepetoWorldHelper.GetUserInfo(message,(info:Users[])=>{
@@ -202,6 +212,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.timer = 18;
             this.puzzleState = "Vote";
             this.localSketchBook.SetActive(false);
+            this.isTimer = false;
             for(let i = 0; i<message.length; i++){
                 if(this.Sketches.has(message[i])){
                     this.playerList.push(message[i]);
@@ -214,6 +225,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.curRoom.AddMessageHandler("Vote",(message:string)=>{
             this.playerList.push(message as string);
             this.timer = 10;
+            this.isTimer = false;
             this.puzzleState = "Vote";
             if(!(this.startVote()==null)){
                 this.EndVote();
@@ -229,6 +241,17 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             console.log("the winner is "+message);
             this.InitPuzzle(message.pos,message.rot);
         });
+        this.curRoom.AddMessageHandler("TotalScore",(message:TotalScore)=>{
+            this.BGM[7].Play();
+            this.UIGroup[9].SetActive(true);
+            console.log(message.surprise,message.puzzle,message.bonus,message.crystal,message.rank);
+            this.ScoreTexts[0].text = (message.surprise+message.puzzle).toString();
+            this.ScoreTexts[1].text = message.surprise.toString();
+            this.ScoreTexts[2].text = message.puzzle.toString();
+            this.ScoreTexts[3].text = "x"+message.bonus.toString();
+            this.ScoreTexts[4].text = message.crystal.toString();
+            this.StartCoroutine(this.GoLobby());
+        });
     }
     FixedUpdate(){
         if(!this.isFindKid){
@@ -239,17 +262,30 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                 this.puzzleAnimator = this._puzzleKidObject.GetComponentInChildren<UnityEngine.Animator>();
                 this.puzzleAnimator.runtimeAnimatorController = this.KidAnimator;
                 this.StartImage.SetActive(true);
+                this.BGM[1].Play();
                 this._clonePlayer.SetGesture(this.ScareAnim);                
                 this.isFindKid = true;
             }
         }
-        this.TimerText.text = this.timer.toFixed(0)+"s";
+        const t:string = this.timer.toFixed(0);
+        if(t.length == 1){
+            this.TimerText.text = "0"+t;
+        }
+        else{
+            this.TimerText.text = this.timer.toFixed(0);
+        }
         this.timer-=UnityEngine.Time.deltaTime;
         switch(this.puzzleState){
             
             case "Draw":
+                if(this.timer<5&&!this.isTimer){
+                    this.isTimer = true;
+                    this.BGM[2].Play();
+                }
                 if(this.timer<0){
                     this.timer=0;
+                    this.BGM[2].Stop();
+                    this.BGM[0].Stop();
                     this.EndDrawing();
                 }
                 if(this.StartImage.activeSelf){
@@ -260,6 +296,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                     this.localSketchBook.name = "S_"+this.curRoom.SessionId;
                     this.Sketches.set(this.curRoom.SessionId,this.localSketchBook);
                     this.UIGroup[5].SetActive(true);
+                    this.BGM[0].Play();
                     this.StartImage.SetActive(false);
                 }
                 this.DrawMouse();
@@ -267,11 +304,17 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             case "Vote":
                 this.VoteTimer.value = this.timer;
                 if(this.Loading.activeSelf){
-                    if(this.isVideoEnd) return;
+                    if(!this.isVideoEnd) return;
+                    this.BGM[0].clip = this.bgmClips[0];
+                    this.BGM[0].Play();
                     this.timer = 10;
                     this.Loading.SetActive(false);
                     this.UIGroup[3].SetActive(true);
                     this.UIGroup[4].SetActive(true);
+                }
+                if(this.timer<3&&!this.isTimer){
+                    this.isTimer = true;
+                    this.BGM[2].Play();
                 }
                 if(this.timer<0){
                     this.timer = 0;
@@ -284,10 +327,13 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                 break;
             case "Puzzle":
                 if(this.Loading.activeSelf){
+                    this.VP.Stop();
                     this.Loading.SetActive(false);
                 }
                 if(this.UIGroup[7].activeSelf){
                     if(this.timer>30) return;
+                    this.BGM[0].clip = this.bgmClips[1];
+                    this.BGM[0].Play();
                     this.UIGroup[7].SetActive(false);
                 }
                 if(this.timer<0){
@@ -325,7 +371,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private offset:UnityEngine.Vector3;
     PuzzleGame(){
         if(this.CorrectPiece == 6 && !this.puzzlePieces[0].GetComponentInChildren<UnityEngine.ParticleSystem>().isPlaying){
-            this.puzzleScore+=(60-this.timer)*100;
+            this.puzzleScore+=Math.floor(this.timer)*100;
             this.puzzlePieces[0].GetComponentInChildren<UnityEngine.ParticleSystem>().Play();
             this.CorrectPiece = 7;
         }
@@ -350,6 +396,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                         
                     }
                     this.CurrentPiece = hitInfo.collider.gameObject;
+                    this.BGM[4].Play();
                     this.CurrentPiece.transform.position = new UnityEngine.Vector3(this.CurrentPiece.transform.position.x,this.CurrentPiece.transform.position.y,-2);
                     this.CurrentPiece.transform.GetChild(0).gameObject.SetActive(true);
                     this.offset = this.CurrentPiece.transform.position-worldPoint;
@@ -400,6 +447,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         if(CheckRot == 0 && CheckPos < 0.5){
             this.CurrentPiece.transform.position = new UnityEngine.Vector3(this.AnswerPosition[index].x,this.AnswerPosition[index].y,0);
             this.CurrentPiece.transform.GetChild(0).gameObject.SetActive(false);
+            this.BGM[5].Play();
             this.CorrectPiece++;
             this.puzzleScore += 500;
             this.CurrentPiece.tag = "AnswerPiece"
@@ -493,6 +541,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.puzzleState = "Wait";
         this.curRoom.Send("EndVote", this.playerList[0]);
         this.UIGroup[7].SetActive(true);
+        this.BGM[0].Stop();
     }
     ShowWinner(){
         this.puzzleSketch = this.Sketches.get(this.playerList[0].toString()) as UnityEngine.GameObject;
@@ -541,6 +590,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         let Rigids:UnityEngine.Rigidbody[] = [null,null,null,null,null,null];
         for(let i = 2; i<8; i++){
             UnityEngine.Object.Destroy(this.puzzlePieces[i].GetComponent<UnityEngine.MeshCollider>());
+            this.puzzlePieces[i].transform.GetChild(0).gameObject.SetActive(false);
             this.puzzlePieces[i].AddComponent<UnityEngine.Rigidbody>();
             Rigids[i-2] = this.puzzlePieces[i].GetComponent<UnityEngine.Rigidbody>();
             Rigids[i-2].useGravity = false;
@@ -575,23 +625,38 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             yield new UnityEngine.WaitForSeconds(0.2);
             this.puzzlePieces[i+2].SetActive(false);
         }
+
         while(this.Bed.transform.position.z >0){
             this.Bed.transform.position = new UnityEngine.Vector3(0,-2,this.Bed.transform.position.z-0.05);
+            if(this.BGM[0].volume>0){
+                this.BGM[0].volume -= 0.1;
+            }
             yield new UnityEngine.WaitForSeconds(0.1);
         }
+        this.BGM[0].Stop();
+        this.BGM[0].volume = 1;        
+        this.BGM[0].loop = false;
+        this.BGM[0].clip = this.bgmClips[2];
         yield new UnityEngine.WaitForSeconds(1);
         this.puzzleAnimator.SetTrigger("WakeUp");
         while(this.puzzleAnimator.GetCurrentAnimatorStateInfo(0).IsName("Wakeup")){
             yield new UnityEngine.WaitForSeconds(0.1);
         }
+        this.BGM[0].Play();
         if(this.winner == this.curRoom.SessionId){
             this.puzzleScore = this.puzzleScore * 1.5;
         }
-        this.curRoom.Send("PuzzleScore",this.puzzleScore);
+        yield new UnityEngine.WaitForSeconds(3);
+        this.curRoom.Send("PuzzleScore",this.puzzleScore as number);
 
     }
     CheckOver(vp:VideoPlayer):void{
         this.isVideoEnd = true;
+    }
+    *GoLobby(){
+        yield new UnityEngine.WaitForSeconds(1);
+        yield new UnityEngine.WaitUntil(()=>UnityEngine.Input.GetMouseButtonDown(0));
+        SceneManager.LoadScene("test");
     }
 }
 
@@ -616,4 +681,11 @@ interface PuzzleModel{
     name:string,
     pos:number[],
     rot:number[]
+}
+interface TotalScore{
+    surprise:number,
+    puzzle:number,
+    rank:number,
+    bonus:number,
+    crystal:number
 }

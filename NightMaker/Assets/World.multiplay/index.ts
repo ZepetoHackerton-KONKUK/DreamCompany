@@ -72,10 +72,19 @@ export default class extends Sandbox {
             this.playerScore.set(client.userId,message);
             this.broadcast("UpdateScoreRank",this.currentRank());
         });
-        this.onMessage("PuzzleScore",(client:SandboxPlayer,message:number)=>{
+        this.onMessage("PuzzleScore",async (client:SandboxPlayer,message:number)=>{
             const surpScore:number = this.playerScore.get(client.userId);
             const puzzleScore:number = message;
+            const _bonus:number = await this.playerStorage.get("Bonus");
+            const tier:number = await this.playerStorage.get("Tier");
+            await this.playerStorage.set("Points",await this.playerStorage.get("Points") as number+surpScore+puzzleScore);
+            const _crystal:number = Math.floor((surpScore+puzzleScore)/(50-2*tier)*_bonus);
             this.playerScore.set(client.userId,surpScore+puzzleScore);
+            let mapToArray = Array.from(this.playerScore);
+            mapToArray.sort((a,b)=>b[1]-a[1]);
+            const _rank:number = mapToArray.findIndex((value,index,obj)=>value[0]===client.userId);
+            console.log(`${client.userId} surp ${surpScore}, puzzle ${puzzleScore}, bonus ${_bonus}, tier ${tier}, crystal ${_crystal}`);
+            client.send("TotalScore",{surprise:surpScore,puzzle:puzzleScore,rank:_rank,bonus:_bonus,crystal:_crystal} as TotalScore);
         });
         this._isCreated = true;
     }
@@ -98,6 +107,12 @@ export default class extends Sandbox {
         this.playerScore.set(client.userId,0);
         if((await this.playerStorage.get("Points") as number)==null){
             await this.playerStorage.set("Points",0);
+        }
+        if((await this.playerStorage.get("Bonus")as number)== null){
+            await this.playerStorage.set("Bonus",1);
+        }
+        if((await this.playerStorage.get("Tier")as number)==null){
+            await this.playerStorage.set("Tier",0);
         }
         console.log(`join player, ${client.sessionId}`);
     }
@@ -221,8 +236,10 @@ interface SurpScore{
     players:string[],
     scores:number[]
 }
-// interface TotalScore{
-//     surprise:number,
-//     puzzle:number,
-//     rank:number
-// }
+interface TotalScore{
+    surprise:number,
+    puzzle:number,
+    rank:number,
+    bonus:number,
+    crystal:number
+}
