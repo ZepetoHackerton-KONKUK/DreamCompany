@@ -122,7 +122,7 @@ export default class NPCAction extends ZepetoScriptBehaviour {
                 this.isEnd = true;
             }
         }else{
-            this.timer.text = "0";
+            this.timer.text = "00";
             return;
         }
         if(Input.GetMouseButtonDown(0)){
@@ -186,8 +186,6 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         yield new WaitUntil(()=>Vector3.Distance(_npc.transform.position,this.GoDream.transform.position)<=this.MissDist);
         _npc.StopMoving();
         _npc.MoveToPosition(this.Dream.transform.position);
-        audio.clip = this.bgmClip[1];
-        audio.Play();
         yield new WaitUntil(()=>Vector3.Distance(_npc.transform.position,this.Dream.transform.position)<=this.DreamDist);
         ZepetoCharacterCreator.RemoveCharacter(_npc);
         _npc = undefined;
@@ -211,8 +209,6 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         this.BGM[1].Play();
         _npc.StopMoving();
         _npc.MoveToPosition(this.GoDream.transform.position);
-        audio.clip = this.bgmClip[1];
-        audio.Play();
         yield new WaitUntil(()=>Vector3.Distance(_npc.transform.position,this.GoDream.transform.position)<=this.MissDist);
         _npc.StopMoving();
         _npc.MoveToPosition(this.Nightmare.transform.position);
@@ -308,8 +304,6 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         if(Vector3.Distance(_npc.character.transform.position,this.GoDream.transform.position)<=this.MissDist){
             _npc.character.StopMoving();
             const audio = _npc.character.transform.gameObject.GetComponent<AudioSource>();
-            audio.clip = this.bgmClip[0];
-            audio.Play();
             if(_npc.state == 0){
                 const scoreObject = Object.Instantiate(this.FloatScore,new Vector3(0,0,0),Quaternion.identity,GameObject.Find("Canvas").transform) as GameObject;
                 const _texture = scoreObject.GetComponentInChildren<RawImage>();
@@ -323,19 +317,18 @@ export default class NPCAction extends ZepetoScriptBehaviour {
                 _npc.state = 3;
             }
 
-        }else{
-            console.log(Vector3.Distance(_npc.character.transform.position,this.GoDream.transform.position));
         }
         return _npc;
     }
     CheckScore(_npc:NPC):NPC{
         const DistPerfect = Vector3.Distance(_npc.character.transform.position,this.Perfect.transform.position);
-        const scoreObject = Object.Instantiate(this.FloatScore,new Vector3(0,0,0),Quaternion.identity,GameObject.Find("Canvas").transform) as GameObject;
-        const _texture = scoreObject.GetComponentInChildren<RawImage>();
+
         
         if(DistPerfect > this.offset[3]){ // Miss   
         }else if(DistPerfect > this.offset[2]) { //good
             _npc.state = 1;
+            const scoreObject = Object.Instantiate(this.FloatScore,new Vector3(0,0,0),Quaternion.identity,GameObject.Find("Canvas").transform) as GameObject;
+            const _texture = scoreObject.GetComponentInChildren<RawImage>();
             this._score+=100*(1+this.combo);
             if(this.combo < 2){
                 this.combo+=0.1;
@@ -345,6 +338,8 @@ export default class NPCAction extends ZepetoScriptBehaviour {
             this.UpdateScoreText();
         }else if(DistPerfect > this.offset[1]) { // Excellent
             _npc.state = 1;
+            const scoreObject = Object.Instantiate(this.FloatScore,new Vector3(0,0,0),Quaternion.identity,GameObject.Find("Canvas").transform) as GameObject;
+            const _texture = scoreObject.GetComponentInChildren<RawImage>();
             this._score+=150*(1+this.combo);
             if(this.combo < 2){
                 this.combo+=0.1;
@@ -354,6 +349,8 @@ export default class NPCAction extends ZepetoScriptBehaviour {
             this.UpdateScoreText();
         }else if(DistPerfect > this.offset[0]) {// Perfect
             _npc.state = 1;
+            const scoreObject = Object.Instantiate(this.FloatScore,new Vector3(0,0,0),Quaternion.identity,GameObject.Find("Canvas").transform) as GameObject;
+            const _texture = scoreObject.GetComponentInChildren<RawImage>();
             this._score+=200*(1+this.combo);
             if(this.combo < 2){
                 this.combo+=0.1;

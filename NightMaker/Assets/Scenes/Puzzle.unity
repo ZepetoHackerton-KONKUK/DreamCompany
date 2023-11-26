@@ -1862,7 +1862,6 @@ GameObject:
   m_Component:
   - component: {fileID: 384483338}
   - component: {fileID: 384483337}
-  - component: {fileID: 384483336}
   m_Layer: 0
   m_Name: PuzzleCamera
   m_TagString: Untagged
@@ -1870,14 +1869,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &384483336
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384483335}
-  m_Enabled: 1
 --- !u!20 &384483337
 Camera:
   m_ObjectHideFlags: 0
@@ -3165,11 +3156,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2177475849559930421, guid: 68f61952b18c44b98beffc62ffd739f3, type: 3}
       propertyPath: m_Size.y
-      value: 0.11801177
+      value: 0.15505593
       objectReference: {fileID: 0}
     - target: {fileID: 2177475849559930421, guid: 68f61952b18c44b98beffc62ffd739f3, type: 3}
       propertyPath: m_Center.y
-      value: -0.06124819
+      value: -0.14408854
       objectReference: {fileID: 0}
     - target: {fileID: 2177475849559930421, guid: 68f61952b18c44b98beffc62ffd739f3, type: 3}
       propertyPath: m_Center.z
@@ -5479,7 +5470,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1115427271}
   - component: {fileID: 1115427270}
-  - component: {fileID: 1115427269}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5487,14 +5477,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1115427269
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115427268}
-  m_Enabled: 0
 --- !u!20 &1115427270
 Camera:
   m_ObjectHideFlags: 0

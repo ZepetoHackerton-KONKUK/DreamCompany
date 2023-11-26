@@ -7,7 +7,7 @@ import { Room } from 'ZEPETO.Multiplay'
 import {SpawnInfo,ZepetoPlayers, ZepetoCharacter, ZepetoCharacterCreator} from 'ZEPETO.Character.Controller'
 import {WorldService,ZepetoWorldHelper,Users} from 'ZEPETO.World'
 import { VideoPlayer } from 'UnityEngine.Video'
-import { SceneManager } from 'UnityEngine.SceneManagement';
+import { SceneManager,LoadSceneMode } from 'UnityEngine.SceneManagement';
 export default class SketchCtrl extends ZepetoScriptBehaviour {
     public BGM:UnityEngine.AudioSource[];
     public bgmClips:UnityEngine.AudioClip[];
@@ -83,11 +83,11 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         ClonePlayerSpawnInfo.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,-180,0));
         const KidSpawnInfo = new SpawnInfo();
         KidSpawnInfo.position = new UnityEngine.Vector3(199.8,0,0);
-        KidSpawnInfo.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,90,0)); 
+        KidSpawnInfo.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,90,0));
         ZepetoCharacterCreator.CreateByUserId(WorldService.userId,ClonePlayerSpawnInfo,(character:ZepetoCharacter)=>{
             this._clonePlayer = character;
         });
-        ZepetoCharacterCreator.CreateByZepetoId(kidID[Math.floor(Math.random()*2)],KidSpawnInfo,(character:ZepetoCharacter)=>{
+        ZepetoCharacterCreator.CreateByZepetoId(kidID[Math.floor(Math.random()*4)],KidSpawnInfo,(character:ZepetoCharacter)=>{
             this._puzzleKid = character;
         });
         this.z_camera = UnityEngine.GameObject.Find("ZepetoCamera") as UnityEngine.GameObject;
@@ -317,6 +317,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
                     this.BGM[2].Play();
                 }
                 if(this.timer<0){
+                    this.BGM[2].Stop();
                     this.timer = 0;
                     this.SendVote();
                 }
@@ -582,6 +583,10 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.StartCoroutine(this.GenerateLogo());
     }
     *GenerateLogo(){
+        this.UIGroup[4].SetActive(false);
+        this.UIGroup[1].SetActive(false);
+        this.UIGroup[2].SetActive(false);
+        this.TimerText.text = "";
         while(this.PuzzleLogo.color.a<1){
             this.PuzzleLogo.color = new UnityEngine.Color(1,1,1,this.PuzzleLogo.color.a+0.05);
             yield new UnityEngine.WaitForSeconds(0.1);
@@ -656,7 +661,12 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     *GoLobby(){
         yield new UnityEngine.WaitForSeconds(1);
         yield new UnityEngine.WaitUntil(()=>UnityEngine.Input.GetMouseButtonDown(0));
-        SceneManager.LoadScene("test");
+        this.ChangeScene();
+    }
+    ChangeScene(){
+        ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform.position=new UnityEngine.Vector3(0,0,0);
+        ZepetoPlayers.instance.LocalPlayer.zepetoCamera.enabled=true;
+        SceneManager.LoadScene("Lobby");
     }
 }
 

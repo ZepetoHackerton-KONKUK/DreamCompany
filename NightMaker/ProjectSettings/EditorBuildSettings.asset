@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SurprsiseScene.unity
     guid: 8fe58446358748b4e89783dbf1c567c6
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 1b2e061fe5b90da43a8a6b444a32b082
   m_configObjects: {}

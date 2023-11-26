@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: d4911822a6bfc5c439c148343607c05b
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst
+    MultiplayManager_1 = require(\\\"../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager\\\");\\r\\nconst
+    UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst ZEPETO_Character_Controller_1
+    = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nclass LobbyPosition extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor() {\\r\\n       
+    super(...arguments);\\r\\n        this.curRoom = null;\\r\\n    }\\r\\n    Update()
+    {\\r\\n        if (this.curRoom == null) {\\r\\n            this.curRoom = MultiplayManager_1.default.instance.room;\\r\\n       
+    }\\r\\n    }\\r\\n    OnEnable() {\\r\\n        console.log(\\\"\uCF54\uB8E8\uD2F4\\\");\\r\\n       
+    this.StartCoroutine(this.OnCamera());\\r\\n    }\\r\\n    *OnCamera() {\\r\\n       
+    yield new UnityEngine_1.WaitUntil(() => this.curRoom != null);\\r\\n        yield
+    new UnityEngine_1.WaitUntil(() => ZEPETO_Character_Controller_1.ZepetoPlayers.instance.HasPlayer(this.curRoom.SessionId));\\r\\n       
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject.GetComponentInChildren($typeof(UnityEngine_1.Animator)).runtimeAnimatorController
+    = this.playerAnim;\\r\\n        UnityEngine_1.GameObject.Find(\\\"ZepetoPlayers\\\").transform.GetChild(4).gameObject.SetActive(true);\\r\\n       
+    UnityEngine_1.GameObject.Find(\\\"ZepetoPlayers\\\").GetComponentInChildren($typeof(UnityEngine_1.Camera)).gameObject.SetActive(true);\\r\\n       
+    UnityEngine_1.GameObject.Find(\\\"Camera\\\").SetActive(false);\\r\\n       
+    console.log(\\\"camera,ui on\\\");\\r\\n    }\\r\\n}\\r\\nexports.default = LobbyPosition;\\r\\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9iYnlQb3NpdGlvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkxvYmJ5UG9zaXRpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFDckQseUdBQWlHO0FBRWpHLDZDQUF1SDtBQUN2SCw2RUFBa0g7QUFFbEgsTUFBcUIsYUFBYyxTQUFRLHFDQUFxQjtJQUFoRTs7UUFFWSxZQUFPLEdBQU0sSUFBSSxDQUFDO0lBb0I5QixDQUFDO0lBbkJHLE1BQU07UUFDRixJQUFHLElBQUksQ0FBQyxPQUFPLElBQUksSUFBSSxFQUFDO1lBQ3BCLElBQUksQ0FBQyxPQUFPLEdBQUcsMEJBQWdCLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQztTQUNqRDtJQUNMLENBQUM7SUFDRCxRQUFRO1FBQ0osT0FBTyxDQUFDLEdBQUcsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUNuQixJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQyxDQUFDO0lBQ3pDLENBQUM7SUFDRCxDQUFDLFFBQVE7UUFDTCxNQUFNLElBQUksdUJBQVMsQ0FBQyxHQUFFLEVBQUUsQ0FBQSxJQUFJLENBQUMsT0FBTyxJQUFFLElBQUksQ0FBQyxDQUFDO1FBQzVDLE1BQU0sSUFBSSx1QkFBUyxDQUFDLEdBQUUsRUFBRSxDQUFBLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUM7UUFDbEYsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLHNCQUFzQixTQUFDLHNCQUFRLEdBQUkseUJBQXlCLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQztRQUNwSix3QkFBVSxDQUFDLElBQUksQ0FBQyxlQUFlLENBQUMsQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDbEYsd0JBQVUsQ0FBQyxJQUFJLENBQUMsZUFBZSxDQUFDLENBQUMsc0JBQXNCLFNBQUMsb0JBQU0sR0FBSSxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQzdGLHdCQUFVLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUMzQyxPQUFPLENBQUMsR0FBRyxDQUFDLGNBQWMsQ0FBQyxDQUFDO0lBQ2hDLENBQUM7Q0FFSjtBQXRCRCxnQ0FzQkMifQ==\",\"assetPath\":\"Assets/Scripts/LobbyPosition.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.AnimationModule\",\"name\":\"playerAnim\",\"type\":\"UnityEngine.RuntimeAnimatorController\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]}],\"name\":\"LobbyPosition\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: b495570cdfb37b898660dcb51c10ebf3
+  onlyWriteTrigger: 0
