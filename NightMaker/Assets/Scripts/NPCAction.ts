@@ -309,7 +309,7 @@ export default class NPCAction extends ZepetoScriptBehaviour {
                 const _texture = scoreObject.GetComponentInChildren<RawImage>();
                 _npc.character.MoveToPosition(this.Dream.transform.position);
                 _texture.texture = this.scoreTextures[3];
-
+                this.BGM[5].Play();
                 this.combo = 0;
                 _npc.state = 2;
             }else if(_npc.state == 1){

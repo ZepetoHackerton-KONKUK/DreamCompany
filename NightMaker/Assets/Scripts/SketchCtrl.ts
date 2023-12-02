@@ -90,17 +90,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         ZepetoCharacterCreator.CreateByZepetoId(kidID[Math.floor(Math.random()*4)],KidSpawnInfo,(character:ZepetoCharacter)=>{
             this._puzzleKid = character;
         });
-        this.z_camera = UnityEngine.GameObject.Find("ZepetoCamera") as UnityEngine.GameObject;
-        this.z_CtrlUI = UnityEngine.GameObject.Find("UIZepetoPlayerControl") as UnityEngine.GameObject;
         this.Canvas = UnityEngine.GameObject.Find("Canvas").GetComponent<UnityEngine.RectTransform>();
         this.LoadRect.sizeDelta = new UnityEngine.Vector2(this.Canvas.sizeDelta.y,this.Canvas.sizeDelta.x);
         this.UIGroup[3].GetComponent<UnityEngine.RectTransform>().sizeDelta = new UnityEngine.Vector2(50,this.Canvas.sizeDelta.y);
-        if(this.z_camera != null){
-            this.z_camera.SetActive(false);
-        }
-        if(this.z_CtrlUI != null){
-            this.z_CtrlUI.SetActive(false);
-        }
         this.Setting = new PenSetting(); 
         this.ChangeEraser.onClick.AddListener(()=>{
             this.Setting.ColorType = 1;
@@ -248,8 +240,10 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.ScoreTexts[0].text = (message.surprise+message.puzzle).toString();
             this.ScoreTexts[1].text = message.surprise.toString();
             this.ScoreTexts[2].text = message.puzzle.toString();
-            this.ScoreTexts[3].text = "x"+message.bonus.toString();
+            this.ScoreTexts[3].text = "+"+message.bonus.toString()+"%";
             this.ScoreTexts[4].text = message.crystal.toString();
+            this.ScoreTexts[5].text = (message.rank+1).toString()+"/"+message.member.toString();
+            this.ScoreTexts[6].text = message.multi.toString();
             this.StartCoroutine(this.GoLobby());
         });
     }
@@ -541,8 +535,8 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     EndVote(){
         this.puzzleState = "Wait";
         this.curRoom.Send("EndVote", this.playerList[0]);
-        this.UIGroup[7].SetActive(true);
         this.BGM[0].Stop();
+        this.UIGroup[7].SetActive(true);
     }
     ShowWinner(){
         this.puzzleSketch = this.Sketches.get(this.playerList[0].toString()) as UnityEngine.GameObject;
@@ -586,6 +580,8 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.UIGroup[4].SetActive(false);
         this.UIGroup[1].SetActive(false);
         this.UIGroup[2].SetActive(false);
+        this.BGM[5].clip = this.bgmClips[3];
+        this.BGM[6].clip = this.bgmClips[4];
         this.TimerText.text = "";
         while(this.PuzzleLogo.color.a<1){
             this.PuzzleLogo.color = new UnityEngine.Color(1,1,1,this.PuzzleLogo.color.a+0.05);
@@ -604,6 +600,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.puzzlePieces[1].SetActive(false);
         this.UIGroup[6].transform.localScale = new UnityEngine.Vector3(2.5,2.5,2.5);
         this.m_camera.orthographic = false;
+        this.BGM[5].Play();
         Rigids[0].AddForce(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
         Rigids[0].AddTorque(new UnityEngine.Vector3(-0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
         Rigids[1].AddForce(new UnityEngine.Vector3(0.5,0,-0.2),UnityEngine.ForceMode.Impulse);
@@ -625,6 +622,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         }
         this.PuzzleLogo.color = new UnityEngine.Color(1,1,1,0);
         let BedPos:UnityEngine.Vector3 = this.Bed.transform.position;
+        this.BGM[6].Play();
         for(let i = 0; i<6; i++){
             Rigids[i].AddForce(4*(BedPos-Rigids[i].position), UnityEngine.ForceMode.Impulse);
             yield new UnityEngine.WaitForSeconds(0.2);
@@ -664,9 +662,15 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.ChangeScene();
     }
     ChangeScene(){
-        ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform.position=new UnityEngine.Vector3(0,0,0);
-        ZepetoPlayers.instance.LocalPlayer.zepetoCamera.enabled=true;
-        SceneManager.LoadScene("Lobby");
+        UnityEngine.Object.Destroy(GameObject.Find("ZepetoCharacter_"));
+        UnityEngine.Object.Destroy(GameObject.Find("[Debug Updater]"));
+        UnityEngine.Object.Destroy(GameObject.Find("MainThreadDispatcher"));
+        UnityEngine.Object.Destroy(GameObject.Find("ZepetoPlaeyrs"));
+        UnityEngine.Object.Destroy(GameObject.Find("WorldMultiplay"));
+        
+        
+        //ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform.position=new UnityEngine.Vector3(0,0,0);
+        SceneManager.LoadScene("test");
     }
 }
 
@@ -696,6 +700,8 @@ interface TotalScore{
     surprise:number,
     puzzle:number,
     rank:number,
+    member:number,
     bonus:number,
-    crystal:number
+    crystal:number,
+    multi:number
 }

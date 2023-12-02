@@ -32,7 +32,6 @@ export default class CharacterController extends ZepetoScriptBehaviour {
         if(!this.isInit && ZepetoPlayers.instance.HasPlayer(this.curRoom.SessionId)){
             this._localPlayer = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer;
             console.log(this._localPlayer);
-            ZepetoPlayers.instance.LocalPlayer.zepetoCamera.enabled = false;
             console.log(this._localPlayer.userId);
             //this._localPlayer.character.transform.position = new Vector3(-2.5,-7.5,20);
             this._localPlayer.character.Teleport(new Vector3(-2.5,-7.5,20),Quaternion.Euler(new Vector3(0,100,0)));
