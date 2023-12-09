@@ -94,6 +94,8 @@ export default class ZepetoPlayersCtrl extends ZepetoScriptBehaviour {
             this.curRoom.AddMessageHandler("ChangeLobby",(message:string)=>{
                 SceneManager.LoadScene("Lobby");
                 ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId).character.Teleport(new Vector3(10,0,-2.4+Math.floor(Math.random()*5)),Quaternion.Euler(new Vector3(0,-90,0)));
+                this.camera.SetActive(true);
+                this.UI.SetActive(true);
                 //this.curRoom.Send("ChangeScene","Puzzle");
             });
             this.curRoom.AddMessageHandler("SyncAura",(message:AuraMessage)=>{
@@ -106,14 +108,7 @@ export default class ZepetoPlayersCtrl extends ZepetoScriptBehaviour {
 
         }
         const SceneName:String = SceneManager.GetActiveScene().name;
-        if(SceneName == "Lobby" && ZepetoPlayers.instance.HasPlayer(this.curRoom.SessionId) && !this.UI.activeSelf){
-            const localPlayer = ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId);
-            localPlayer.character.Teleport(new Vector3(0,0,0),Quaternion.Euler(new Vector3(0,180,0)));
-            this.camera.SetActive(true);
-            this.UI.SetActive(true);
-            return;
-        }
-        else if(SceneName == "Surprise" && this.camera.activeSelf){
+        if(SceneName == "Surprise" && this.camera.activeSelf){
             this.localAnimator.SetBool("isFloating",false);
             this.camera.SetActive(false);
             return;

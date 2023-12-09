@@ -14,7 +14,7 @@ export default class WatingRoom extends ZepetoScriptBehaviour {
     private isStart:boolean = false;
     private impact:Vector3 = new Vector3(0,2,0);
     public Test:Button;
-    Start() {    
+    OnEnable() {    
         this.curRoom = MultiplayManager.instance.room;
         this.localPlayer = ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId);
         this.curRoom.AddMessageHandler("WaitGame",(message:number)=>{
@@ -24,7 +24,6 @@ export default class WatingRoom extends ZepetoScriptBehaviour {
         this.isStart = false;
         this.timer = -1;
         this.Test.onClick.AddListener(()=>{
-            
             const localPlayer = ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId);
             localPlayer.character.Teleport(new Vector3(0,0,0),Quaternion.Euler(new Vector3(0,180,0)));
             SceneManager.LoadScene("Lobby");
