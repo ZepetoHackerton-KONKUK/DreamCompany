@@ -1,10 +1,5 @@
 {
   "dependencies": {
-    "asset.effect": "1.0.1",
-    "asset.epicvillage": "1.0.5",
-    "asset.galaxy": "1.0.3",
-    "asset.mysteryhouse": "1.0.1",
-    "asset.prison": "1.0.5",
     "asset.text": "1.0.2",
     "com.unity.collab-proxy": "1.3.9",
     "com.unity.ide.rider": "2.0.7",
@@ -15,7 +10,6 @@
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.4.7",
     "com.unity.ugui": "1.0.0",
-    "zepeto.mannequin": "1.2.1",
     "zepeto.module": "1.0.3",
     "zepeto.product": "1.2.7",
     "zepeto.voice.chat": "0.3.0",

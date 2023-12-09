@@ -7,51 +7,6 @@
       "dependencies": {},
       "url": "https://upm.zepeto.run"
     },
-    "asset.effect": {
-      "version": "1.0.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "asset.commons": "1.0.6"
-      },
-      "url": "https://upm.zepeto.run"
-    },
-    "asset.epicvillage": {
-      "version": "1.0.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "asset.commons": "1.0.6"
-      },
-      "url": "https://upm.zepeto.run"
-    },
-    "asset.galaxy": {
-      "version": "1.0.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "asset.commons": "1.0.6"
-      },
-      "url": "https://upm.zepeto.run"
-    },
-    "asset.mysteryhouse": {
-      "version": "1.0.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "asset.commons": "1.0.6"
-      },
-      "url": "https://upm.zepeto.run"
-    },
-    "asset.prison": {
-      "version": "1.0.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "asset.commons": "1.0.6"
-      },
-      "url": "https://upm.zepeto.run"
-    },
     "asset.text": {
       "version": "1.0.2",
       "depth": 0,
@@ -295,16 +250,6 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "https://upm.zepeto.run"
-    },
-    "zepeto.mannequin": {
-      "version": "1.2.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "zepeto.character": "3.1.18",
-        "zepeto.script": "1.5.0"
-      },
       "url": "https://upm.zepeto.run"
     },
     "zepeto.module": {
