@@ -1,9 +1,10 @@
 import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import MultiplayManager from '../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager'
 import { Room } from 'ZEPETO.Multiplay'
-import {Text} from 'UnityEngine.UI'
-import {Time,Vector3,CharacterController,AnimationClip} from 'UnityEngine'
+import {Text,Button} from 'UnityEngine.UI'
+import {Time,Vector3,CharacterController,AnimationClip,Quaternion} from 'UnityEngine'
 import {ZepetoPlayers,ZepetoPlayer} from 'ZEPETO.Character.Controller'
+import { SceneManager } from 'UnityEngine.SceneManagement'
 export default class WatingRoom extends ZepetoScriptBehaviour {
     public timerText:Text;
     private localPlayer:ZepetoPlayer;
@@ -12,6 +13,7 @@ export default class WatingRoom extends ZepetoScriptBehaviour {
     private readyForGame:boolean = false;
     private isStart:boolean = false;
     private impact:Vector3 = new Vector3(0,2,0);
+    public Test:Button;
     Start() {    
         this.curRoom = MultiplayManager.instance.room;
         this.localPlayer = ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId);
@@ -21,6 +23,13 @@ export default class WatingRoom extends ZepetoScriptBehaviour {
         this.curRoom.Send("EnterWaiting");
         this.isStart = false;
         this.timer = -1;
+        this.Test.onClick.AddListener(()=>{
+            
+            const localPlayer = ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId);
+            localPlayer.character.Teleport(new Vector3(0,0,0),Quaternion.Euler(new Vector3(0,180,0)));
+            SceneManager.LoadScene("Lobby");
+    
+        });
     }
     Update(){
         if(this.isStart){

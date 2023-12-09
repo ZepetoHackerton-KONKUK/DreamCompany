@@ -3,9 +3,9 @@ import { Button, RawImage,Image,Text } from 'UnityEngine.UI';
 import { GameObject, Resources, Texture2D, Sprite,Transform } from 'UnityEngine';
 export default class ItemLoader extends ZepetoScriptBehaviour {
 
-    @SerializeField() private _itemPrefab: GameObject; // Item 프리팹에 대한 참조
-    @SerializeField() private _parent: Transform;      // 생성된 인스턴스의 부모가 될 Transform
-    @SerializeField() private _count : number = 15;    // 아이템 패널을 여는 버튼에 대한 참조
+    public _itemPrefab: GameObject; // Item 프리팹에 대한 참조
+    public _parent: Transform;      // 생성된 인스턴스의 부모가 될 Transform
+    private _count : number = 15;    // 아이템 패널을 여는 버튼에 대한 참조
 
     public itemImages: Sprite[];
     public costPrice:number[];
