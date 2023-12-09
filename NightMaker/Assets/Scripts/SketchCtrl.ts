@@ -148,6 +148,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         console.log(WorldService.userId);
         this.timer = 43; // 그림그리기 40초
         this.curRoom.AddMessageHandler("UpdatePlayers",(message:string[])=>{
+            if(this.Bed == null){
+                return;
+            }
             ZepetoWorldHelper.GetUserInfo(message,(info:Users[])=>{
                 for(let i = 0; i<info.length;i++){
                     this.Profiles[i].GetComponentInChildren<Text>().text = info[i].name;
@@ -168,6 +171,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             }
         });
         this.curRoom.AddMessageHandler("puzzle",(message:LineModel)=>{
+            if(this.Bed == null){
+                return;
+            }
             let SketchBook:UnityEngine.GameObject;
             if(!this.Sketches.has(message.name)){
                 SketchBook = UnityEngine.Object.Instantiate(this.SketchPrefab) as UnityEngine.GameObject;
@@ -201,6 +207,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             }
         });
         this.curRoom.AddMessageHandler("EndDraw",(message:string[])=>{
+            if(this.Bed == null){
+                return;
+            }
             this.puzzleState = "Wait";
             this.Loading.SetActive(true);
             this.VP.Play();
@@ -220,6 +229,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             }
         });
         this.curRoom.AddMessageHandler("Vote",(message:string)=>{
+            if(this.Bed == null){
+                return;
+            }
             this.playerList.push(message as string);
             this.timer = 10;
             this.isTimer = false;
@@ -229,6 +241,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             }
         });
         this.curRoom.AddMessageHandler("EndVote",(message:PuzzleModel)=>{
+            if(this.Bed == null){
+                return;
+            }
             this.timer = 33;
             this.ShowWinner();
             this.winner = message.name;
@@ -239,6 +254,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.InitPuzzle(message.pos,message.rot);
         });
         this.curRoom.AddMessageHandler("TotalScore",(message:TotalScore)=>{
+            if(this.Bed == null){
+                return;
+            }
             this.BGM[7].Play();
             this.UIGroup[9].SetActive(true);
             const total = (message.surprise+message.puzzle)*message.multi*(1+(message.bonus/100));
@@ -255,6 +273,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             this.StartCoroutine(this.GoLobby());
         });
         this.curRoom.AddMessageHandler("RespondPlayerTier",(message:TierModel)=>{
+            if(this.Bed == null){
+                return;
+            }
             for(let i = 0; i<message.players.length; i++){
                 this.playerTiers.set(message.players[i],message.tiers[i]);
             }
@@ -678,6 +699,9 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     }
     ChangeScene(){
         this.curRoom.Send("EndGame");
+    }
+    OnDestroy(){
+        this.Bed = null;
     }
 }
 

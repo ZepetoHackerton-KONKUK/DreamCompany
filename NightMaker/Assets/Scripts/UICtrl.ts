@@ -2,7 +2,7 @@ import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import { Room } from 'ZEPETO.Multiplay'
 import MultiplayManager from '../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager';
 import {Text,Image,RawImage,Button} from 'UnityEngine.UI'
-import {Sprite, TextAnchor,Texture,WaitUntil,GameObject,Transform} from 'UnityEngine'
+import {Sprite, TextAnchor,Texture,WaitUntil,GameObject,Transform,RectTransform} from 'UnityEngine'
 import {WorldService,ZepetoWorldHelper,Users} from 'ZEPETO.World'
 import {CurrencyService} from 'ZEPETO.Currency'
 import {RoomData} from 'ZEPETO.Multiplay'
@@ -12,6 +12,7 @@ import LeaderboardManager from '../Zepeto LeaderBoard Module/ZepetoScript/Leader
 import { ZepetoPlayers } from 'ZEPETO.Character.Controller';
 import ItemLoader from '../ItemLoader';
 import MyChrGesture from '../MyChrGesture';
+import ZepetoPlayersCtrl from './ZepetoPlayersCtrl';
 import AuraCtrl from './AuraCtrl';
 export default class UICtrl extends ZepetoScriptBehaviour {
     
@@ -53,20 +54,24 @@ export default class UICtrl extends ZepetoScriptBehaviour {
     public buySoupByCrystal:Button;
     public buySoupByZem:Button;
     public testCrystal:Button;
-    public FrameContent:Transform;
+    public FrameContent:RectTransform;
     public CheckPurchasAura:GameObject;
     public BlockOtherAura:GameObject;
     private currentFrame:number;
-    private FrameSelects:Transform[];
+    private FrameSelects:Transform[]=[];
     private AuraCharGenerator:MyChrGesture;
-    private Auras:GameObject[];
+    private Auras:GameObject[]=[];
     private AuraNum:number;
-    Start() {    
+    Start() {  
+        if(this.NpcCanvas == null){
+            return;
+            console.log("noreturn");
+        }  
         this.ItemPackages = [];
         this.CurrencyPackages = [];
         this.AchieveNum = [];
         this.AuraItem = [];
-        
+        console.log("Hi");        
         this.curRoom = MultiplayManager.instance.room;
         this.testCrystal.onClick.AddListener(()=>{
             const data = new RoomData();
@@ -79,13 +84,25 @@ export default class UICtrl extends ZepetoScriptBehaviour {
 
         });
         this.curRoom.AddMessageHandler<BalanceSync>("SyncBalances",(message)=>{
+            console.log(this.NpcCanvas);
+            if(this.NpcCanvas == null){
+                return;
+            }
             this.RefreshAllBalanceUI();
         });
         this.curRoom.AddMessageHandler("onGetStorageResult",(message:StorageMessage)=>{
+            console.log(this.NpcCanvas);
+            if(this.NpcCanvas == null){
+                return;
+                console.log("noreturn");
+            }
             if(message.key == "Achievement"){
                 this.AchieveNum = message.value.split(",");
                 console.log(this.AchieveNum);
                 for(let i = 0; i<this.AchieveNum.length; i++){
+                    if(this.Achievements[i] == null){
+                        return;
+                    }
                     this.Achievements[i].GetComponentInChildren<Button>().onClick.AddListener(()=>{
                         this.AquireAchievement(i);
                     });
@@ -132,6 +149,11 @@ export default class UICtrl extends ZepetoScriptBehaviour {
 
         });
         this.curRoom.AddMessageHandler("UserInfo",(message:UserInfo)=>{
+            console.log(this.NpcCanvas);
+            if(this.NpcCanvas == null){
+                return;
+                console.log("noreturn");
+            }
             const offset = message.Points - this.myScore;
             this.myTier = message.Tier;
             this.IncreaseScore(offset);
@@ -152,7 +174,7 @@ export default class UICtrl extends ZepetoScriptBehaviour {
             this.ImageUI[1].sprite = this.TierImages[this.myTier];
             this.currentFrame = message.Frame;
             this.FrameSelects.forEach((value,index)=>{
-                const btn = value.GetComponentInChildren<Button>() as Button;
+                const btn = value.gameObject.GetComponentInChildren<Button>(true) as Button;
                 if(index <= message.Tier){
                     btn.interactable = true;
                     value.GetChild(3).gameObject.SetActive(false);
@@ -170,6 +192,8 @@ export default class UICtrl extends ZepetoScriptBehaviour {
                     this.curRoom.Send("SetFrame",this.currentFrame);
                 });
             });
+            this.curRoom.Send("onGetStorage",{key:"AttendanceDate"}as StorageMessage);
+            this.curRoom.Send("onGetStorage",{key:"Achievement"} as StorageMessage);
             this.RefreshAllBalanceUI();
             this.RefreshScoreUI();
             
@@ -212,6 +236,9 @@ export default class UICtrl extends ZepetoScriptBehaviour {
             }
         });
         ProductService.OnPurchaseCompleted.AddListener((product,response)=>{
+            if(this.NpcCanvas == null){
+                return;
+            }
             if(response.productId == "n_soup"){
                 this.BuyUI.SetActive(false);
                 this.CompleteUI.SetActive(true);
@@ -227,8 +254,6 @@ export default class UICtrl extends ZepetoScriptBehaviour {
         this.AuraCharGenerator = this.CharGenerator.GetComponent<MyChrGesture>();
         this.AuraCharGenerator.CharacterLoad();
         this.curRoom.Send("RequestUserInfo");
-        this.curRoom.Send("onGetStorage",{key:"AttendanceDate"}as StorageMessage);
-        this.curRoom.Send("onGetStorage",{key:"Achievement"} as StorageMessage);
         
     }
     private InitAura(){
@@ -547,13 +572,16 @@ export default class UICtrl extends ZepetoScriptBehaviour {
         this.RefreshAllBalanceUI();
         
     }
-    private GetChildren(parent:Transform):Transform[]{
+    private GetChildren(parent:RectTransform):Transform[]{
         let Children:Transform[] = [];
         for(let i = 0; i<parent.childCount; i++){
             Children.push(parent.GetChild(i));
         }
         return Children;
     }   
+    OnDestroy(){
+        this.NpcCanvas = null;
+    }
 }
 
 interface UserInfo{
