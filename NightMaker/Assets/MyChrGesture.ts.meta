@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+guid: 5ac21e4f04b0263428d8adc001c116fb
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    AuraCtrl_1 = require(\"./Scripts/AuraCtrl\");\r\nclass MyChrGesture extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        this.AC = UnityEngine_1.GameObject.Find(\"AuraController\").GetComponent($typeof(AuraCtrl_1.default));\r\n   
+    }\r\n    CharacterLoad() {\r\n        const spawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    spawnInfo.position = this.transform.position;\r\n        spawnInfo.rotation =
+    this.transform.rotation;\r\n        ZEPETO_Character_Controller_1.ZepetoCharacterCreator.CreateByZepetoId(this.ZepetoId,
+    spawnInfo, (character) => {\r\n            this._npc = character;\r\n       
+    });\r\n    }\r\n    ShowGesture(index) {\r\n        this.AC.GenerateAura(this._npc.gameObject,
+    index);\r\n    }\r\n}\r\nexports.default = MyChrGesture;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTXlDaHJHZXN0dXJlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTXlDaHJHZXN0dXJlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXNEO0FBQ3RELDZFQUFpRztBQUNqRyw2Q0FBOEU7QUFDOUUsbURBQXdDO0FBQ3hDLGlEQUEwQztBQUUxQyxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBTTNELEtBQUs7UUFDRCxJQUFJLENBQUMsRUFBRSxHQUFHLHdCQUFVLENBQUMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLENBQUMsWUFBWSxTQUFDLGtCQUFRLEVBQUcsQ0FBQztJQUN6RSxDQUFDO0lBQ00sYUFBYTtRQUNoQixNQUFNLFNBQVMsR0FBRyxJQUFJLHVDQUFTLEVBQUUsQ0FBQztRQUNsQyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDO1FBQzdDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUM7UUFHN0Msb0RBQXNCLENBQUMsZ0JBQWdCLENBQUMsSUFBSSxDQUFDLFFBQVEsRUFBRSxTQUFTLEVBQUUsQ0FBQyxTQUEwQixFQUFFLEVBQUU7WUFDN0YsSUFBSSxDQUFDLElBQUksR0FBRyxTQUFTLENBQUM7UUFDMUIsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBSU0sV0FBVyxDQUFDLEtBQVk7UUFDM0IsSUFBSSxDQUFDLEVBQUUsQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxVQUFVLEVBQUMsS0FBSyxDQUFDLENBQUM7SUFDckQsQ0FBQztDQUVKO0FBMUJELCtCQTBCQyJ9","assetPath":"Assets/MyChrGesture.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"ZepetoId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"MyChrGesture","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 9e0eec853dfb650d9e012451fa523bf0
+  onlyWriteTrigger: 0

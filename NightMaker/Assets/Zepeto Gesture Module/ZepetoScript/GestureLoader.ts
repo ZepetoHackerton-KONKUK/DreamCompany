@@ -30,11 +30,8 @@ export default class GestureLoader extends ZepetoScriptBehaviour {
     @Tooltip("Pose duration in seconds") @SerializeField() private _duration: number; //Pose duration in seconds 
     
     Start() {
-        ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
-            // In order to take a thumbnail with my character, You need to request the content after the character is created.
-            this._myCharacter = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;
-            this.ContentRequest();            
-        });
+        this._myCharacter = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;
+        this.ContentRequest();            
     }
     
     // 1. Receive content from the server

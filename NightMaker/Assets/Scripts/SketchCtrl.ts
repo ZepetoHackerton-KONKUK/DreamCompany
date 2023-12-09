@@ -1,4 +1,4 @@
-    import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
+import { ZepetoScriptBehaviour } from 'ZEPETO.Script'
 import * as UnityEngine from 'UnityEngine'
 import {Button,Text,Slider,RawImage,Image} from 'UnityEngine.UI'
 import { EventSystem } from 'UnityEngine.EventSystems'
@@ -7,6 +7,7 @@ import { Room } from 'ZEPETO.Multiplay'
 import {SpawnInfo,ZepetoPlayers, ZepetoCharacter, ZepetoCharacterCreator} from 'ZEPETO.Character.Controller'
 import {WorldService,ZepetoWorldHelper,Users} from 'ZEPETO.World'
 import { VideoPlayer } from 'UnityEngine.Video'
+import LeaderboardManager from '../Zepeto LeaderBoard Module/ZepetoScript/LeaderBoardManager'
 import { SceneManager,LoadSceneMode } from 'UnityEngine.SceneManagement';
 export default class SketchCtrl extends ZepetoScriptBehaviour {
     public BGM:UnityEngine.AudioSource[];
@@ -37,13 +38,16 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     public WakeAnim:UnityEngine.AnimationClip;
     public Profiles:UnityEngine.GameObject[];
     public ProfileImages:RawImage[];
+    public ProfileTierImages:Image[];
+    public ProfileTiers:UnityEngine.Sprite[];
+    public TierImages:UnityEngine.Sprite[];
     public Bed:UnityEngine.GameObject;
     public KidAnimator:UnityEngine.RuntimeAnimatorController;
     public LoadRect:UnityEngine.RectTransform;
     public VP:VideoPlayer;
+    public TierImage:Image;
     public ScoreTexts:Text[];
     private puzzleState = "Draw";
-    private z_camera:UnityEngine.GameObject = null;
     private curLine:UnityEngine.LineRenderer;
     private positionCount:number = 2;
     private PrevPos:UnityEngine.Vector3 = UnityEngine.Vector3.zero;
@@ -60,7 +64,6 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private secondSketch:UnityEngine.GameObject;
     private VoteLeftSelect:UnityEngine.GameObject;
     private VoteRightSelect:UnityEngine.GameObject;
-    private z_CtrlUI:UnityEngine.GameObject = null;
     private puzzleSketch:UnityEngine.GameObject;
     private puzzlePieces:UnityEngine.GameObject[] = [null,null,null,null,null,null,null,null]; // 0 전체,1 판, 2 왼아래, 3 왼얼굴 4 왼위 5 오른아래 6오른얼굴 7 오른위
     private AnswerPosition:UnityEngine.Vector3[] = [null,null,null,null,null,null];
@@ -76,6 +79,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
     private isVideoEnd:boolean = false;
     private winner:string;
     private isTimer:boolean = false;
+    private playerTiers:Map<string,number> = new Map<string,number>();
     Start() {   
         let kidID:string[] = ["jjiyeiye","tstscscs","jamminboy","jammingirl"];
         const ClonePlayerSpawnInfo = new SpawnInfo();
@@ -147,6 +151,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
             ZepetoWorldHelper.GetUserInfo(message,(info:Users[])=>{
                 for(let i = 0; i<info.length;i++){
                     this.Profiles[i].GetComponentInChildren<Text>().text = info[i].name;
+                    this.ProfileTierImages[i].sprite = this.ProfileTiers[this.playerTiers.get(message[i])];
                     ZepetoWorldHelper.GetProfileTexture(message[i],(texture:UnityEngine.Texture)=>{
                         this.ProfileImages[i].texture = texture;
                     },(error)=>{
@@ -236,20 +241,29 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.curRoom.AddMessageHandler("TotalScore",(message:TotalScore)=>{
             this.BGM[7].Play();
             this.UIGroup[9].SetActive(true);
+            const total = (message.surprise+message.puzzle)*message.multi*(1+(message.bonus/100));
+            const multi = (message.surprise+message.puzzle)*(message.multi-1) as number;
             console.log(message.surprise,message.puzzle,message.bonus,message.crystal,message.rank);
-            this.ScoreTexts[0].text = (message.surprise+message.puzzle).toString();
+            this.ScoreTexts[0].text = total.toString();
+            this.TierImage.sprite = this.TierImages[message.Tier];
             this.ScoreTexts[1].text = message.surprise.toString();
             this.ScoreTexts[2].text = message.puzzle.toString();
             this.ScoreTexts[3].text = "+"+message.bonus.toString()+"%";
             this.ScoreTexts[4].text = message.crystal.toString();
             this.ScoreTexts[5].text = (message.rank+1).toString()+"/"+message.member.toString();
-            this.ScoreTexts[6].text = message.multi.toString();
+            this.ScoreTexts[6].text = multi.toString();
             this.StartCoroutine(this.GoLobby());
         });
+        this.curRoom.AddMessageHandler("RespondPlayerTier",(message:TierModel)=>{
+            for(let i = 0; i<message.players.length; i++){
+                this.playerTiers.set(message.players[i],message.tiers[i]);
+            }
+        });
+        this.curRoom.Send("RequestPlayerTier");
     }
     FixedUpdate(){
         if(!this.isFindKid){
-            if(this._puzzleKid != null){
+            if(this._puzzleKid != null && this._clonePlayer != null){
                 //this._puzzleKid.SetGesture(this.SleepAnim);
                 this._puzzleKidObject = this._puzzleKid.transform.gameObject;
                 this._puzzleKidObject.transform.parent = this.Bed.transform;
@@ -580,6 +594,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.UIGroup[4].SetActive(false);
         this.UIGroup[1].SetActive(false);
         this.UIGroup[2].SetActive(false);
+        this.TimerText.gameObject.SetActive(false);
         this.BGM[5].clip = this.bgmClips[3];
         this.BGM[6].clip = this.bgmClips[4];
         this.TimerText.text = "";
@@ -662,15 +677,7 @@ export default class SketchCtrl extends ZepetoScriptBehaviour {
         this.ChangeScene();
     }
     ChangeScene(){
-        UnityEngine.Object.Destroy(GameObject.Find("ZepetoCharacter_"));
-        UnityEngine.Object.Destroy(GameObject.Find("[Debug Updater]"));
-        UnityEngine.Object.Destroy(GameObject.Find("MainThreadDispatcher"));
-        UnityEngine.Object.Destroy(GameObject.Find("ZepetoPlaeyrs"));
-        UnityEngine.Object.Destroy(GameObject.Find("WorldMultiplay"));
-        
-        
-        //ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform.position=new UnityEngine.Vector3(0,0,0);
-        SceneManager.LoadScene("test");
+        this.curRoom.Send("EndGame");
     }
 }
 
@@ -703,5 +710,10 @@ interface TotalScore{
     member:number,
     bonus:number,
     crystal:number,
-    multi:number
+    multi:number,
+    Tier:number
+}
+interface TierModel{
+    players:string[],
+    tiers:number[]
 }

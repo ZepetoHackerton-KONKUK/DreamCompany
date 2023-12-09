@@ -1,0 +1,44 @@
+fileFormatVersion: 2
+guid: 621626bf6c9ab2e47b90354932b44d77
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    MultiplayManager_1 = require(\"../Zepeto Multiplay Component/ZepetoScript/Common/MultiplayManager\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nclass WatingRoom extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.timer
+    = -1;\r\n        this.readyForGame = false;\r\n        this.isStart = false;\r\n       
+    this.impact = new UnityEngine_1.Vector3(0, 2, 0);\r\n    }\r\n    Start() {\r\n       
+    this.curRoom = MultiplayManager_1.default.instance.room;\r\n        this.localPlayer
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId);\r\n       
+    this.curRoom.AddMessageHandler(\"WaitGame\", (message) => {\r\n            this.timer
+    = message;\r\n        });\r\n        this.curRoom.Send(\"EnterWaiting\");\r\n       
+    this.isStart = false;\r\n        this.timer = -1;\r\n    }\r\n    Update() {\r\n       
+    if (this.isStart) {\r\n            this.timerText.text = \"\";\r\n           
+    return;\r\n        }\r\n        if (this.timer == -1) {\r\n            return;\r\n       
+    }\r\n        this.timerText.text = Number(this.timer).toFixed(0);\r\n       
+    if (this.timer <= 0 && this.readyForGame) {\r\n            this.curRoom.Send(\"StartGame\");\r\n           
+    this.readyForGame = false;\r\n            this.isStart = true;\r\n        }\r\n       
+    else if (this.timer <= 0 && !this.readyForGame) {\r\n            this.curRoom.Send(\"ReadyGame\");\r\n           
+    this.timer = 15;\r\n            this.readyForGame = true;\r\n        }\r\n       
+    this.timer -= UnityEngine_1.Time.deltaTime;\r\n    }\r\n}\r\nexports.default
+    = WatingRoom;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiV2F0aW5nUm9vbS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIldhdGluZ1Jvb20udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFDckQseUdBQWlHO0FBR2pHLDZDQUEwRTtBQUMxRSw2RUFBc0U7QUFDdEUsTUFBcUIsVUFBVyxTQUFRLHFDQUFxQjtJQUE3RDs7UUFJWSxVQUFLLEdBQVUsQ0FBQyxDQUFDLENBQUM7UUFDbEIsaUJBQVksR0FBVyxLQUFLLENBQUM7UUFDN0IsWUFBTyxHQUFXLEtBQUssQ0FBQztRQUN4QixXQUFNLEdBQVcsSUFBSSxxQkFBTyxDQUFDLENBQUMsRUFBQyxDQUFDLEVBQUMsQ0FBQyxDQUFDLENBQUM7SUFnQ2hELENBQUM7SUEvQkcsS0FBSztRQUNELElBQUksQ0FBQyxPQUFPLEdBQUcsMEJBQWdCLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQztRQUM5QyxJQUFJLENBQUMsV0FBVyxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQzVFLElBQUksQ0FBQyxPQUFPLENBQUMsaUJBQWlCLENBQUMsVUFBVSxFQUFDLENBQUMsT0FBYyxFQUFDLEVBQUU7WUFDeEQsSUFBSSxDQUFDLEtBQUssR0FBRyxPQUFpQixDQUFDO1FBQ25DLENBQUMsQ0FBQyxDQUFDO1FBQ0gsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsY0FBYyxDQUFDLENBQUM7UUFDbEMsSUFBSSxDQUFDLE9BQU8sR0FBRyxLQUFLLENBQUM7UUFDckIsSUFBSSxDQUFDLEtBQUssR0FBRyxDQUFDLENBQUMsQ0FBQztJQUNwQixDQUFDO0lBQ0QsTUFBTTtRQUNGLElBQUcsSUFBSSxDQUFDLE9BQU8sRUFBQztZQUNaLElBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxHQUFHLEVBQUUsQ0FBQztZQUN6QixPQUFPO1NBQ1Y7UUFDRCxJQUFHLElBQUksQ0FBQyxLQUFLLElBQUksQ0FBQyxDQUFDLEVBQUM7WUFDaEIsT0FBTztTQUNWO1FBQ0QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxJQUFJLEdBQUcsTUFBTSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQyxPQUFPLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDcEQsSUFBRyxJQUFJLENBQUMsS0FBSyxJQUFJLENBQUMsSUFBSSxJQUFJLENBQUMsWUFBWSxFQUFDO1lBQ3BDLElBQUksQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDO1lBQy9CLElBQUksQ0FBQyxZQUFZLEdBQUcsS0FBSyxDQUFDO1lBQzFCLElBQUksQ0FBQyxPQUFPLEdBQUcsSUFBSSxDQUFDO1NBQ3ZCO2FBQ0ksSUFBRyxJQUFJLENBQUMsS0FBSyxJQUFFLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxZQUFZLEVBQUM7WUFDeEMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUM7WUFDL0IsSUFBSSxDQUFDLEtBQUssR0FBRyxFQUFFLENBQUM7WUFDaEIsSUFBSSxDQUFDLFlBQVksR0FBRyxJQUFJLENBQUM7U0FDNUI7UUFDRCxJQUFJLENBQUMsS0FBSyxJQUFJLGtCQUFJLENBQUMsU0FBUyxDQUFDO0lBQ2pDLENBQUM7Q0FDSjtBQXZDRCw2QkF1Q0MifQ==","assetPath":"Assets/Scripts/WatingRoom.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"timerText","type":"UnityEngine.UI.Text","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"WatingRoom","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 96e6d15406b080d4de5c44ffe86ab16f
+  onlyWriteTrigger: 0

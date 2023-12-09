@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: f968086bddc84ef42a5c3c328b3fcd00
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nclass AuraCtrl extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        UnityEngine_1.GameObject.DontDestroyOnLoad(this.gameObject);\r\n   
+    }\r\n    GenerateAura(obj, index) {\r\n        let particle;\r\n        particle
+    = obj.GetComponentInChildren($typeof(UnityEngine_1.ParticleSystem));\r\n       
+    if (particle != null) {\r\n            UnityEngine_1.GameObject.Destroy(obj.GetComponentInChildren($typeof(UnityEngine_1.ParticleSystem)).gameObject);\r\n       
+    }\r\n        if (index > -1) {\r\n            UnityEngine_1.GameObject.Instantiate(this.Aura[index],
+    obj.transform);\r\n        }\r\n    }\r\n}\r\nexports.default = AuraCtrl;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQXVyYUN0cmwuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJBdXJhQ3RybC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUNyRCw2Q0FBcUQ7QUFFckQsTUFBcUIsUUFBUyxTQUFRLHFDQUFxQjtJQUd2RCxLQUFLO1FBQ0Qsd0JBQVUsQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUM7SUFDbEQsQ0FBQztJQUNNLFlBQVksQ0FBQyxHQUFjLEVBQUMsS0FBWTtRQUMzQyxJQUFJLFFBQXVCLENBQUM7UUFDNUIsUUFBUSxHQUFHLEdBQUcsQ0FBQyxzQkFBc0IsU0FBQyw0QkFBYyxFQUFHLENBQUM7UUFDeEQsSUFBRyxRQUFRLElBQUksSUFBSSxFQUFDO1lBQ2hCLHdCQUFVLENBQUMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxzQkFBc0IsU0FBQyw0QkFBYyxHQUFJLFVBQVUsQ0FBQyxDQUFDO1NBQy9FO1FBQ0QsSUFBRyxLQUFLLEdBQUcsQ0FBQyxDQUFDLEVBQUM7WUFDVix3QkFBVSxDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxFQUFDLEdBQUcsQ0FBQyxTQUFTLENBQUMsQ0FBQztTQUMxRDtJQUVMLENBQUM7Q0FFSjtBQWxCRCwyQkFrQkMifQ==","assetPath":"Assets/Scripts/AuraCtrl.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"Aura","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"AuraCtrl","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 3d3f4af4054b0e73a5e8259446db3eee
+  onlyWriteTrigger: 0

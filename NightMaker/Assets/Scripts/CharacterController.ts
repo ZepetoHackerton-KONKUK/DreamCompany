@@ -9,7 +9,6 @@ import {Room} from 'ZEPETO.Multiplay';
 export default class CharacterController extends ZepetoScriptBehaviour {
 
     public customAnimationClip: AnimationClip;
-    public playerAnimCtrl:RuntimeAnimatorController;
     public playCustomAnimationButton: Button;
     private _localPlayer:ZepetoPlayer = null;
     private isInit = false;
@@ -20,8 +19,7 @@ export default class CharacterController extends ZepetoScriptBehaviour {
 
 
         this.curRoom.AddMessageHandler("MoveToPuzzle",(message:string)=>{
-            console.log("message get by"+message);
-            SceneManager.LoadScene("Puzzle");
+            this._localPlayer.character.Teleport(new Vector3(0,-5,0),Quaternion.identity);
         });
         //
         //console.log(this._localPlayer.character.transform.position);
@@ -34,20 +32,9 @@ export default class CharacterController extends ZepetoScriptBehaviour {
             console.log(this._localPlayer);
             console.log(this._localPlayer.userId);
             //this._localPlayer.character.transform.position = new Vector3(-2.5,-7.5,20);
-            this._localPlayer.character.Teleport(new Vector3(-2.5,-7.5,20),Quaternion.Euler(new Vector3(0,100,0)));
-            //this._localPlayer.character.transform.rotation = Quaternion.Euler(new Vector3(0,100,0));
-            const z_CtrlUI = GameObject.Find("UIZepetoPlayerControl") as GameObject;
-            const z_camera = GameObject.Find("ZepetoCamera") as GameObject;
-            z_CtrlUI.SetActive(false);
-            z_camera.SetActive(false);
             console.log(this.curRoom.SessionId);
             console.log(this._localPlayer.userId);
             console.log(this._localPlayer.character);
-            this.AnimCtrl = this._localPlayer.character.gameObject.GetComponentInChildren<Animator>();
-            this.AnimCtrl.runtimeAnimatorController = this.playerAnimCtrl;
-            this.playCustomAnimationButton.onClick.AddListener(() => {
-                this.AnimCtrl.SetTrigger("Scream");
-            });
             this.isInit = true;
         }
     }

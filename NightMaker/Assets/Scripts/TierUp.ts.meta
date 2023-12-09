@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 683e36418985d9c46b4a7854d451685c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nclass TierUp extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    OnEnable() {\r\n        this.StartCoroutine(this.DisableAfterTouch());\r\n   
+    }\r\n    *DisableAfterTouch() {\r\n        yield new UnityEngine_1.WaitUntil(()
+    => UnityEngine_1.Input.GetMouseButton(0));\r\n        if (this.isDestroy) {\r\n           
+    UnityEngine_1.GameObject.Destroy(this.gameObject);\r\n        }\r\n        this.gameObject.SetActive(false);\r\n   
+    }\r\n}\r\nexports.default = TierUp;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGllclVwLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVGllclVwLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBQ3JELDZDQUFtRTtBQUNuRSxNQUFxQixNQUFPLFNBQVEscUNBQXFCO0lBR3JELFFBQVE7UUFDSixJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxpQkFBaUIsRUFBRSxDQUFDLENBQUM7SUFDbEQsQ0FBQztJQUNELENBQUMsaUJBQWlCO1FBQ2QsTUFBTSxJQUFJLHVCQUFTLENBQUMsR0FBRSxFQUFFLENBQUEsbUJBQUssQ0FBQyxjQUFjLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUNqRCxJQUFHLElBQUksQ0FBQyxTQUFTLEVBQUM7WUFDZCx3QkFBVSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUM7U0FDdkM7UUFDRCxJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUNyQyxDQUFDO0NBRUo7QUFkRCx5QkFjQyJ9","assetPath":"Assets/Scripts/TierUp.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"isDestroy","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"TierUp","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: dae3def3384bf06ce62f67c93c401b68
+  onlyWriteTrigger: 0

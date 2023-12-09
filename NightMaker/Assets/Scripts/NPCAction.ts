@@ -29,6 +29,8 @@ export default class NPCAction extends ZepetoScriptBehaviour {
     public timer:Text;
     public rankProfiles:RawImage[];
     public rankPlayers:GameObject[];
+    public rankTiers:Sprite[];
+    public rankTierImages:Image[];
     public rankScores:Text[];
     public FallAnimator:RuntimeAnimatorController;
     public rankNames:Text[];
@@ -53,12 +55,21 @@ export default class NPCAction extends ZepetoScriptBehaviour {
     private FirstAnimEnd:boolean = false;
     private playersNum:number = 0;
     private canvas:RectTransform;
+    private playerTiers:Map<string,number> = new Map<string,number>();
     Start() {
         this.curRoom = MultiplayManager.instance.room;
         this.startTime = Time.time;
         this.scoreText.text = "0";
-
+        this.curRoom.Send("RequestPlayersinGame");
         this.canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
+        this.curRoom.AddMessageHandler("RespondPlayerTier",(message:TierModel)=>{
+            console.log(message.players);
+            console.log(message.tiers);
+            for(let i = 0; i<message.players.length; i++){
+                this.playerTiers.set(message.players[i],message.tiers[i]);
+            }
+            console.log(this.playerTiers);
+        });
         this.curRoom.AddMessageHandler("UpdateScoreRank",(message:SurpScore)=>{
             console.log("GetMessage from UpdateScoreRank");
             if(!this.rankUI.transform.GetChild(4).gameObject.activeSelf){
@@ -84,6 +95,8 @@ export default class NPCAction extends ZepetoScriptBehaviour {
             ZepetoWorldHelper.GetUserInfo(message.players,(info:Users[])=>{
                 for(let i = 0; i<info.length;i++){
                     this.rankNames[i].text = info[i].name;
+                    console.log("In GetUserInfo",message.players[i]);
+                    this.rankTierImages[i].sprite = this.rankTiers[this.playerTiers.get(message.players[i])];
                     ZepetoWorldHelper.GetProfileTexture(message.players[i],(texture:Texture)=>{
                         this.rankProfiles[i].texture = texture;
                     },(error)=>{
@@ -94,6 +107,9 @@ export default class NPCAction extends ZepetoScriptBehaviour {
                 console.log(error);
             });
         });
+
+        this.curRoom.Send("RequestPlayerTier"); 
+    
         this.StartLoad.GetComponent<RectTransform>().sizeDelta = new Vector2(this.canvas.rect.width,this.canvas.rect.width/2);
         this.StartLoad.GetComponentInChildren<Text>().text = "들어봤어? 꿈의 갈림길에 대해서... 따라와. 어디로 보낼지는 너의 선택이야";
         this.EndLoad.GetComponent<RectTransform>().sizeDelta = new Vector2(this.canvas.rect.width,this.canvas.rect.width/2);
@@ -253,11 +269,10 @@ export default class NPCAction extends ZepetoScriptBehaviour {
         this.EndLoad.SetActive(true);
         yield new WaitForSeconds(3);
         this.curRoom.Send("EndSurprise");
-                
     }
     DoSurprise(){
         console.log(this.playerAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        if(this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
+        if(this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle")){
             this.playerAnimator.SetTrigger("Scream");
             this.BGM[1].Play();
             this._isButtonPressed = true;
@@ -391,5 +406,9 @@ export interface NPCs extends Array<NPC> { };
 interface SurpScore{
     players:string[],
     scores:number[]
+}
+interface TierModel{
+    players:string[],
+    tiers:number[]
 }
 

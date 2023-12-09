@@ -13,11 +13,14 @@
 		"types": [
 			"./Assets/World.multiplay/SchemaTypes",
 			"./Library/PackageCache/zepeto.mannequin@1.2.1/Script",
-			"./Library/PackageCache/zepeto.module@1.0.1/Core/Runtime",
-			"./Library/PackageCache/zepeto.module@1.0.1/Shop/Runtime",
-			"./Library/PackageCache/zepeto.module@1.0.1/Social/Runtime",
-			"./Library/PackageCache/zepeto.module@1.0.1/Teleport/Runtime",
-			"./Library/PackageCache/zepeto.module@1.0.1/Text/Runtime",
+			"./Library/PackageCache/zepeto.module@1.0.3/Core/Runtime",
+			"./Library/PackageCache/zepeto.module@1.0.3/Shop/Runtime",
+			"./Library/PackageCache/zepeto.module@1.0.3/Social/Runtime",
+			"./Library/PackageCache/zepeto.module@1.0.3/Teleport/Runtime",
+			"./Library/PackageCache/zepeto.module@1.0.3/Text/Runtime",
+			"./Library/PackageCache/zepeto.product@1.2.7/Runtime/Script/Currency",
+			"./Library/PackageCache/zepeto.product@1.2.7/Runtime/Script/Inventory",
+			"./Library/PackageCache/zepeto.product@1.2.7/Runtime/Script/Product",
 			"./Library/PackageCache/zepeto.voice.chat@0.3.0/Runtime/Scripts",
 			"./Library/PackageCache/zepeto.world@1.21.8",
 			"./Library/PackageCache/zepeto.world@1.21.8/typings/InputSystem",
@@ -103,7 +106,7 @@
 			"./Library/PackageCache/zepeto.script.unityengine.typings@1.1.1/UnityEngine.WindModule",
 			"./Library/PackageCache/zepeto.script.unityengine.typings@1.1.1/UnityEngine.XRModule",
 			"./Library/PackageCache/zepeto.script.leaderboard@1.1.10/Runtime",
-			"./Library/PackageCache/zepeto.world.gui@1.2.0-preview"
+			"./Library/PackageCache/zepeto.world.gui@1.2.2"
 		]
 	}
 }

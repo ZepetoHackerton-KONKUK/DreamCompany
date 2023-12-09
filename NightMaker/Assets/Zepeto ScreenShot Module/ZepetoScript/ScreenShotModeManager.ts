@@ -26,19 +26,15 @@ export default class ScreenShotModeManager extends ZepetoScriptBehaviour {
 
     Start() {
         this.screenShot = this.screenShotController.GetComponent<ScreenShotController>();
+        this.localPlayer = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer;
+        this.zepetoCamera = ZepetoPlayers.instance.LocalPlayer.zepetoCamera.camera;
+        this.myCharacter = this.localPlayer.character;
+        if(this.localPlayer.character.gameObject.layer != this.playerLayer) {
+            this.localPlayer.character.GetComponentsInChildren<Transform>().forEach((characterObj) => {
+                characterObj.gameObject.layer = this.playerLayer;
+            });
+        }            
         
-        // Caching objects related to the Zepeto Local player
-        ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(() => {
-            this.localPlayer = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer;
-            this.zepetoCamera = ZepetoPlayers.instance.LocalPlayer.zepetoCamera.camera;
-            this.myCharacter = this.localPlayer.character;
-
-            if(this.localPlayer.character.gameObject.layer != this.playerLayer) {
-                this.localPlayer.character.GetComponentsInChildren<Transform>().forEach((characterObj) => {
-                    characterObj.gameObject.layer = this.playerLayer;
-                });
-            }            
-        });
     }
 
     // Proceed with the specified settings when entering screenshot mode. 

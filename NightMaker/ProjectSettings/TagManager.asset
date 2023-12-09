@@ -12,6 +12,7 @@ TagManager:
   - AnswerPiece
   - Eyes
   - Controller
+  - Aura
   layers:
   - Default
   - TransparentFX
@@ -20,6 +21,7 @@ TagManager:
   - Water
   - UI
   - Pen
+  - OtherPlayer
   - 
   - 
   - 
@@ -33,8 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Player
   - 
   - 
   - 
