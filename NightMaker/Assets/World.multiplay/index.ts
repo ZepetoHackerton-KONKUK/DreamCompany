@@ -130,7 +130,7 @@ export default class extends Sandbox {
             if(this.isWaiting){
                 client.send("WaitGame",this.waitingTime);
             }else{
-                this.waitingTime = 60;
+                this.waitingTime = 10;
                 client.send("WaitGame",this.waitingTime);
                 this.isWaiting = true;
             }

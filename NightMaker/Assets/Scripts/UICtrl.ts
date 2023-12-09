@@ -62,6 +62,11 @@ export default class UICtrl extends ZepetoScriptBehaviour {
     private Auras:GameObject[];
     private AuraNum:number;
     Start() {    
+        this.ItemPackages = [];
+        this.CurrencyPackages = [];
+        this.AchieveNum = [];
+        this.AuraItem = [];
+        
         this.curRoom = MultiplayManager.instance.room;
         this.testCrystal.onClick.AddListener(()=>{
             const data = new RoomData();
@@ -250,9 +255,9 @@ export default class UICtrl extends ZepetoScriptBehaviour {
                 }
             });
             Btns[2].onClick.AddListener(()=>{
-                const selected = value.transform.GetChild(3).gameObject as GameObject;
+                const selected = value.transform.GetChild(2).gameObject as GameObject;
                 if(this.AuraNum>=0 && this.AuraNum != index){
-                    this.Auras[this.AuraNum].transform.GetChild(3).gameObject.SetActive(false);
+                    this.Auras[this.AuraNum].transform.GetChild(2).gameObject.SetActive(false);
                     selected.SetActive(true);
                     this.AuraNum = index;
                 }else if(this.AuraNum>= 0 && this.AuraNum == index){
@@ -268,14 +273,14 @@ export default class UICtrl extends ZepetoScriptBehaviour {
             if(Item){
                 if(Item.isPurchased){
                     value.transform.GetChild(1).gameObject.SetActive(false);
-                    value.transform.GetChild(2).gameObject.SetActive(true);
+                    value.transform.GetChild(3).gameObject.SetActive(true);
                 }else{
                     value.transform.GetChild(1).gameObject.SetActive(true);
-                    value.transform.GetChild(2).gameObject.SetActive(false);
+                    value.transform.GetChild(3).gameObject.SetActive(false);
                 }
             }
             if(index == this.AuraNum){
-                value.transform.GetChild(3).gameObject.SetActive(true);
+                value.transform.GetChild(2).gameObject.SetActive(true);
                 this.curRoom.Send("SyncAura",index);
             }
         });
@@ -404,7 +409,7 @@ export default class UICtrl extends ZepetoScriptBehaviour {
         if(request.responseData.isSuccess){
             const Aura = this.AuraMap.get(productId) as GameObject;
             Aura.transform.GetChild(1).gameObject.SetActive(false);
-            Aura.transform.GetChild(2).gameObject.SetActive(true);
+            Aura.transform.GetChild(3).gameObject.SetActive(true);
             const message = "Purchase Success!";
             this.OpenInformation(message);
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.28160366, g: 0.25484917, b: 0.26603505, a: 1}
+  m_IndirectSpecularColor: {r: 0.2817481, g: 0.25501117, b: 0.26614207, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5282,77 +5282,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1 &227179217
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 227179219}
-  - component: {fileID: 227179218}
-  m_Layer: 0
-  m_Name: AuraController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &227179218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227179217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1673316429, guid: 921f0445823004a16a499d629dd566a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  applyRootMotion: 0
-  script:
-    keys:
-    - Aura
-    unityValues:
-    - {fileID: 0}
-    values:
-    - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":0,\"length\":15,\"type\":\"UnityEngine.Object,
-      UnityEngine.CoreModule\",\"isUnity\":true}"}'
-    unityArrayValues:
-    - {fileID: 1053482233597168, guid: d9d19380460a0d04b810cd61b55d7944, type: 3}
-    - {fileID: 1670541608105498, guid: 2bb872316813d8e4e80b3aced9070178, type: 3}
-    - {fileID: 1056353965113168, guid: 5d6e98640b0c58b4ba9d0c6446a2e4a7, type: 3}
-    - {fileID: 1651284899731740, guid: 8689428cdd6125d4997454d0e73f9991, type: 3}
-    - {fileID: 1407188706030798, guid: 57692b1d836ae3b4098a2a93642ff355, type: 3}
-    - {fileID: 1817900190835674, guid: 82b5ba94883497945bc55d9d95348307, type: 3}
-    - {fileID: 1078496311052904, guid: 7ea2d6f460a54634bb4c04310de7146c, type: 3}
-    - {fileID: 1705840919145240, guid: 049453725f5139647abe5be41dcbd181, type: 3}
-    - {fileID: 1029131883512850, guid: 881ae05eed10e4e4aaf6b52458a68ca0, type: 3}
-    - {fileID: 1357281430290138, guid: 64c38e6316837fb49b27f698a0a10789, type: 3}
-    - {fileID: 1417001107151930, guid: f0e92438c6014a144be5528ebe0bb9b1, type: 3}
-    - {fileID: 1577962161804176, guid: e07d37dd5ebf3174c94aeffe25de7280, type: 3}
-    - {fileID: 1261857137596316, guid: d691bea6172f0ce4194744ff89af57d4, type: 3}
-    - {fileID: 1220171263709392, guid: c6d5c13442cab5b4aa66188067915b76, type: 3}
-    - {fileID: 1542403496074674, guid: f9d8e4476f97f87428cf82af539ed618, type: 3}
-    arrayValues: []
-    script: {fileID: 4458252877524076426, guid: f968086bddc84ef42a5c3c328b3fcd00, type: 3}
-    isExpaned: 0
---- !u!4 &227179219
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227179217}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 66
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &228854238
 GameObject:
   m_ObjectHideFlags: 0
@@ -10794,13 +10723,10 @@ MonoBehaviour:
   script:
     keys:
     - ZepetoId
-    - auraCtrl
     unityValues:
     - {fileID: 0}
-    - {fileID: 227179217}
     values:
     - '{"type":"System.String, mscorlib","value":"jck3040"}'
-    - 
     unityArrayValues: []
     arrayValues: []
     script: {fileID: 4458252877524076426, guid: 5ac21e4f04b0263428d8adc001c116fb, type: 3}
@@ -21023,7 +20949,6 @@ MonoBehaviour:
     - FrameContent
     - ItemLoader
     - CharGenerator
-    - auraCtrl
     - CheckPurchasAura
     - BlockOtherAura
     unityValues:
@@ -21054,7 +20979,6 @@ MonoBehaviour:
     - {fileID: 709803423}
     - {fileID: 2140368477}
     - {fileID: 575588548}
-    - {fileID: 227179217}
     - {fileID: 1006477887}
     - {fileID: 2109476609}
     values:
@@ -21094,7 +21018,6 @@ MonoBehaviour:
       UnityEngine.CoreModule\",\"isUnity\":true}"}'
     - '{"type":"ZEPETO.Script.ZepetoScriptSerializer+ArrayInfo, ZEPETO.Script","value":"{\"offset\":19,\"length\":6,\"type\":\"System.Single,
       mscorlib\",\"isUnity\":false}"}'
-    - 
     - 
     - 
     - 
@@ -37413,7 +37336,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 67
+  m_RootOrder: 66
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2059168628
 GameObject:
