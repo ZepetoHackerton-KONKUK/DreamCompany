@@ -12,7 +12,6 @@
 		],
 		"types": [
 			"./Assets/World.multiplay/SchemaTypes",
-			"./Library/PackageCache/zepeto.mannequin@1.2.1/Script",
 			"./Library/PackageCache/zepeto.module@1.0.3/Core/Runtime",
 			"./Library/PackageCache/zepeto.module@1.0.3/Shop/Runtime",
 			"./Library/PackageCache/zepeto.module@1.0.3/Social/Runtime",

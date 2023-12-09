@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Plasticine_08_8k_Small Green 2
   m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _NORMALMAP _SPECGLOSSMAP
+  m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -79,3 +79,4 @@ Material:
     m_Colors:
     - _Color: {r: 0, g: 0.6981132, b: 0.07665556, a: 1}
     - _EmissionColor: {r: 0.049944486, g: 0.11320752, b: 0, a: 1}
+  m_BuildTextureStacks: []
