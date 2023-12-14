@@ -1,0 +1,37 @@
+fileFormatVersion: 2
+guid: 54ab010d3d20e654b9ff569bc649a41f
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nclass
+    TextSize extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n       
+    this._nickname = this.GetComponent($typeof(UnityEngine_UI_1.Text));\r\n       
+    this.rect = this.GetComponent($typeof(UnityEngine_1.RectTransform));\r\n       
+    this.ChangeFont();\r\n    }\r\n    SetText(str) {\r\n        this._nickname =
+    this.GetComponent($typeof(UnityEngine_UI_1.Text));\r\n        this.rect = this.GetComponent($typeof(UnityEngine_1.RectTransform));\r\n       
+    this._nickname.text = str;\r\n        this.ChangeFont();\r\n    }\r\n    ChangeFont()
+    {\r\n        this._nickname.resizeTextForBestFit = true;\r\n        this._nickname.resizeTextMinSize
+    = 10;\r\n        this._nickname.resizeTextMaxSize = 100;\r\n        while (this._nickname.preferredWidth
+    > this.rect.sizeDelta.x) {\r\n            this._nickname.fontSize--;\r\n           
+    if (this._nickname.fontSize <= this._nickname.resizeTextMinSize) {\r\n               
+    break;\r\n            }\r\n        }\r\n    }\r\n}\r\nexports.default = TextSize;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGV4dFNpemUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJUZXh0U2l6ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFzRDtBQUN0RCxtREFBc0M7QUFDdEMsNkNBQXFEO0FBRXJELE1BQXFCLFFBQVMsU0FBUSxxQ0FBcUI7SUFJdkQsS0FBSztRQUNELElBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyxxQkFBSSxFQUFHLENBQUM7UUFDM0MsSUFBSSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLDJCQUFhLEVBQUcsQ0FBQztRQUMvQyxJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDdEIsQ0FBQztJQUNNLE9BQU8sQ0FBQyxHQUFVO1FBQ3JCLElBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyxxQkFBSSxFQUFHLENBQUM7UUFDM0MsSUFBSSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLDJCQUFhLEVBQUcsQ0FBQztRQUMvQyxJQUFJLENBQUMsU0FBUyxDQUFDLElBQUksR0FBRyxHQUFHLENBQUM7UUFDMUIsSUFBSSxDQUFDLFVBQVUsRUFBRSxDQUFDO0lBRXRCLENBQUM7SUFDTyxVQUFVO1FBQ2QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxvQkFBb0IsR0FBRyxJQUFJLENBQUM7UUFDM0MsSUFBSSxDQUFDLFNBQVMsQ0FBQyxpQkFBaUIsR0FBRyxFQUFFLENBQUM7UUFDdEMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxpQkFBaUIsR0FBRyxHQUFHLENBQUM7UUFFdkMsT0FBTSxJQUFJLENBQUMsU0FBUyxDQUFDLGNBQWMsR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDLEVBQUM7WUFDeEQsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEVBQUUsQ0FBQztZQUMxQixJQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxJQUFJLElBQUksQ0FBQyxTQUFTLENBQUMsaUJBQWlCLEVBQUU7Z0JBQzVELE1BQU07YUFDVDtTQUNKO0lBQ0wsQ0FBQztDQUNKO0FBNUJELDJCQTRCQyJ9","assetPath":"Assets/Scripts/TextSize.ts","manifest":{"properties":[],"name":"TextSize","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: ab5c2d5e2581344e17f5f4718635a3b3
+  onlyWriteTrigger: 0

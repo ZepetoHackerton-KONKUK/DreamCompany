@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 799d9d031e8e3a94aa278958b1df23d6
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - RixSinGoRound_Pro
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 87939dae943058744bbcfbbd1d9513da, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

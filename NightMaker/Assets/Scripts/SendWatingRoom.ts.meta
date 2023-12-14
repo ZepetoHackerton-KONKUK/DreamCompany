@@ -1,0 +1,43 @@
+fileFormatVersion: 2
+guid: 690472089b50e3a41937eb8730be5b67
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst MultiplayManager_1 = require(\"../Zepeto
+    Multiplay Component/ZepetoScript/Common/MultiplayManager\");\r\nconst UnityEngine_UI_1
+    = require(\"UnityEngine.UI\");\r\nclass SendWatingRoom extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    Start() {\r\n        this.curRoom = MultiplayManager_1.default.instance.room;\r\n       
+    this.curRoom.AddMessageHandler(\"EnterPerm\", (message) => {\r\n            console.log(message);\r\n           
+    if (this.WaitUI == null) {\r\n                return;\r\n            }\r\n           
+    if (message == 1) {\r\n                ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.Teleport(new
+    UnityEngine_1.Vector3(0, 6.5, 10.8), UnityEngine_1.Quaternion.Euler(new UnityEngine_1.Vector3(0,
+    180, 0)));\r\n                this.WaitUI.SetActive(true);\r\n            }\r\n           
+    else {\r\n                console.log(message);\r\n                this.OpenInformation(\"Game
+    is already started!\");\r\n                console.log(\"Cant Enter\");\r\n           
+    }\r\n        });\r\n    }\r\n    OnTriggerEnter(coll) {\r\n        if (coll.gameObject
+    == ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(this.curRoom.SessionId).character.gameObject)
+    {\r\n            this.curRoom.Send(\"TryEnterWaiting\");\r\n        }\r\n   
+    }\r\n    OpenInformation(message) {\r\n        const inforObj = UnityEngine_1.GameObject.Instantiate(this.Information,
+    this.NpcCanvas);\r\n        inforObj.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = message;\r\n    }\r\n    OnDestroy() {\r\n        this.WaitUI = null;\r\n   
+    }\r\n}\r\nexports.default = SendWatingRoom;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU2VuZFdhdGluZ1Jvb20uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJTZW5kV2F0aW5nUm9vbS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUNyRCw2Q0FBaUY7QUFDakYsNkVBQTJEO0FBRTNELHlHQUFpRztBQUVqRyxtREFBbUM7QUFFbkMsTUFBcUIsY0FBZSxTQUFRLHFDQUFxQjtJQU03RCxLQUFLO1FBQ0QsSUFBSSxDQUFDLE9BQU8sR0FBRywwQkFBZ0IsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDO1FBQzlDLElBQUksQ0FBQyxPQUFPLENBQUMsaUJBQWlCLENBQUMsV0FBVyxFQUFDLENBQUMsT0FBYyxFQUFDLEVBQUU7WUFDekQsT0FBTyxDQUFDLEdBQUcsQ0FBQyxPQUFPLENBQUMsQ0FBQztZQUNyQixJQUFHLElBQUksQ0FBQyxNQUFNLElBQUksSUFBSSxFQUFDO2dCQUNuQixPQUFPO2FBQ1Y7WUFDRCxJQUFHLE9BQU8sSUFBRSxDQUFDLEVBQUM7Z0JBQ1YsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDLElBQUkscUJBQU8sQ0FBQyxDQUFDLEVBQUMsR0FBRyxFQUFDLElBQUksQ0FBQyxFQUFDLHdCQUFVLENBQUMsS0FBSyxDQUFDLElBQUkscUJBQU8sQ0FBQyxDQUFDLEVBQUMsR0FBRyxFQUFDLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztnQkFDbkksSUFBSSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7YUFDL0I7aUJBQ0c7Z0JBQ0EsT0FBTyxDQUFDLEdBQUcsQ0FBQyxPQUFPLENBQUMsQ0FBQztnQkFDckIsSUFBSSxDQUFDLGVBQWUsQ0FBQywwQkFBMEIsQ0FBQyxDQUFDO2dCQUNqRCxPQUFPLENBQUMsR0FBRyxDQUFDLFlBQVksQ0FBQyxDQUFDO2FBQzdCO1FBQ0wsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBQ0QsY0FBYyxDQUFDLElBQWE7UUFDeEIsSUFBRyxJQUFJLENBQUMsVUFBVSxJQUFJLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLFNBQVMsQ0FBQyxDQUFDLFNBQVMsQ0FBQyxVQUFVLEVBQUM7WUFDaEcsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsaUJBQWlCLENBQUMsQ0FBQztTQUN4QztJQUNMLENBQUM7SUFDTyxlQUFlLENBQUMsT0FBYztRQUNsQyxNQUFNLFFBQVEsR0FBRyx3QkFBVSxDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUMsV0FBVyxFQUFDLElBQUksQ0FBQyxTQUFTLENBQWUsQ0FBQztRQUN2RixRQUFRLENBQUMsc0JBQXNCLFNBQUMscUJBQUksR0FBSSxJQUFJLEdBQUcsT0FBTyxDQUFDO0lBQzNELENBQUM7SUFDRCxTQUFTO1FBQ0wsSUFBSSxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUM7SUFDdkIsQ0FBQztDQUNKO0FBcENELGlDQW9DQyJ9","assetPath":"Assets/Scripts/SendWatingRoom.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"WaitUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"NpcCanvas","type":"UnityEngine.RectTransform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"Information","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"SendWatingRoom","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 14a26ec14449251c44870bb204470cd4
+  onlyWriteTrigger: 0

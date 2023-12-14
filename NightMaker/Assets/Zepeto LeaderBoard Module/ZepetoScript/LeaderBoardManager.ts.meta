@@ -1,0 +1,91 @@
+fileFormatVersion: 2
+guid: 1bf0a79d56a34b7469d1da89b559dba5
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Script_Leaderboard_1 = require(\"ZEPETO.Script.Leaderboard\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ITM_LeaderBoard_1 = require(\"./ITM_LeaderBoard\");\r\nclass
+    LeaderboardManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.leaderboardId = \"\";\r\n       
+    this._startRank = 1;\r\n        this._endRank = 10000; // Ranking information
+    can be processed up to 10,000 cases at a time\r\n    }\r\n    /* Singleton */\r\n   
+    Awake() {\r\n        if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Equality(LeaderboardManager.instance,
+    null)) {\r\n            LeaderboardManager.instance = this;\r\n        }\r\n       
+    else {\r\n            return;\r\n        }\r\n    }\r\n    Start() {\r\n       
+    if (this.leaderboardId === \"\") {\r\n            console.warn(\"error!  Leaderboard
+    Id is empty\");\r\n            const message = \"See the docs <color=blue><a>https://naverz-group.readme.io/studio-world/docs/leaderboard</a></color>
+    for more information.\";\r\n            console.warn(message);\r\n           
+    return;\r\n        }\r\n        this.SetSeasonText();\r\n        // Send based
+    on 0 point when connecting\r\n        this.SendScore(0);\r\n        this._loadCoroutine
+    = this.StartCoroutine(this.LoadLeaderboard());\r\n        this.openBtn.onClick.AddListener(()
+    => {\r\n            console.log(\"CLick\");\r\n            this._loadCoroutine
+    = this.StartCoroutine(this.LoadLeaderboard());\r\n        });\r\n        this.closeBtn.onClick.AddListener(()
+    => {\r\n            if (this._loadCoroutine != null) {\r\n                this.StopCoroutine(this._loadCoroutine);\r\n               
+    this._loadCoroutine = null;\r\n            }\r\n        });\r\n    }\r\n    //
+    Use Tip ! (If you reach a new record of 10)\r\n    // LeaderBoardManager.instance.SendScore(10);\r\n   
+    SendScore(score) {\r\n        this._myBestScore = (score < this._myBestScore
+    || this._myBestScore == 0) ? score : this._myBestScore;\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.SetScore(this.leaderboardId,
+    score, (result) => { console.log(`result.isSuccess: ${result.isSuccess}`); },
+    (error) => { console.error(error); });\r\n        return this._myBestScore;\r\n   
+    }\r\n    *LoadLeaderboard() {\r\n        let isResponsed = false;\r\n       
+    let totalRankCount = 1;\r\n        for (let i = 0; i < totalRankCount / 10; i++)
+    {\r\n            ZEPETO_Script_Leaderboard_1.LeaderboardAPI.GetRangeRank(this.leaderboardId,
+    i * 10 + 1, (i + 1) * 10, this.resetRule, false, (result) => {\r\n               
+    this.OnResult(result);\r\n                totalRankCount = Number(result.rankInfo.totalRankCount);\r\n               
+    isResponsed = true;\r\n            }, (error) => {\r\n                console.warn(\"GetRangeRank
+    Error :\" + error);\r\n                isResponsed = true;\r\n            });\r\n           
+    yield new UnityEngine_1.WaitUntil(() => isResponsed);\r\n            isResponsed
+    = false;\r\n        }\r\n    }\r\n    OnResult(result) {\r\n        if (result.rankInfo.myRank)
+    {\r\n            // Set Group - My Score\r\n            const myRank = result.rankInfo.myRank;\r\n           
+    const item = this.myScoreGroup.GetComponent($typeof(ITM_LeaderBoard_1.default));\r\n           
+    this._myBestScore = myRank.score;\r\n            item.SetGroup(myRank);\r\n       
+    }\r\n        if (result.rankInfo.rankList) {\r\n            const endCount =
+    (result.rankInfo.rankList.length < this._endRank) ? result.rankInfo.rankList.length
+    : this._endRank;\r\n            for (let i = 0; i < endCount; ++i) {\r\n               
+    const rank = result.rankInfo.rankList[i];\r\n                let item;\r\n               
+    if (this.contentsParent.childCount < result.rankInfo.rankList[i].rank) {\r\n                   
+    const newGroup = UnityEngine_1.GameObject.Instantiate(this.scoreGroupPrefab,
+    this.contentsParent);\r\n                    item = newGroup.GetComponent($typeof(ITM_LeaderBoard_1.default));\r\n               
+    }\r\n                else {\r\n                    item = this.contentsParent.GetChild(result.rankInfo.rankList[i].rank
+    - 1).GetComponent($typeof(ITM_LeaderBoard_1.default));\r\n                }\r\n               
+    item.SetGroup(rank);\r\n            }\r\n        }\r\n    }\r\n    SetSeasonText()
+    {\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.GetAllLeaderboards(this.OnLoadAllLeaderboardsResult,
+    this.OnError);\r\n    }\r\n    OnLoadAllLeaderboardsResult(result) {\r\n       
+    console.log(`result.isSuccess: ${result.isSuccess}`);\r\n        const leaderboardManager
+    = LeaderboardManager.instance;\r\n        if (result.leaderboards) {\r\n           
+    for (let i = 0; i < result.leaderboards.length; ++i) {\r\n                const
+    leaderboard = result.leaderboards[i];\r\n                console.log(`i: ${i},
+    id: ${leaderboard.id}, name: ${leaderboard.name} , resetRule: ${leaderboard.resetInfoList[0].resetRule}`);\r\n               
+    switch (leaderboard.resetInfoList[0].resetRule) {\r\n                    case
+    1: //Day\r\n                        leaderboardManager.seasonText.text = \"End
+    of Season : Every\" + leaderboard.resetInfoList[0].hour, leaderboard.resetInfoList[0].min;\r\n                       
+    break;\r\n                    case 2: // Week\r\n                        leaderboardManager.seasonText.text
+    = \"End of Season : Every\" + leaderboard.resetInfoList[0].weekDay, +leaderboard.resetInfoList[0].hour,
+    leaderboard.resetInfoList[0].min;\r\n                        break;\r\n                   
+    case 3: // Month\r\n                        leaderboardManager.seasonText.text
+    = \"End of Season : Every\" + leaderboard.resetInfoList[0].day, +leaderboard.resetInfoList[0].hour,
+    leaderboard.resetInfoList[0].min;\r\n                        break;\r\n                   
+    default:\r\n                        leaderboardManager.seasonText.text = \"No
+    reset Rule\";\r\n                        break;\r\n                }\r\n           
+    }\r\n        }\r\n    }\r\n    OnError(error) {\r\n        console.error(error);\r\n   
+    }\r\n}\r\nexports.default = LeaderboardManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTGVhZGVyQm9hcmRNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTGVhZGVyQm9hcmRNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBQ3JELHlFQUF3SDtBQUN4SCw2Q0FBMEU7QUFFMUUsdURBQStDO0FBRS9DLE1BQXFCLGtCQUFtQixTQUFRLHFDQUFxQjtJQUFyRTs7UUFFVyxrQkFBYSxHQUFXLEVBQUUsQ0FBQztRQVUxQixlQUFVLEdBQVcsQ0FBQyxDQUFDO1FBQ3ZCLGFBQVEsR0FBVyxLQUFLLENBQUMsQ0FBQyxvRUFBb0U7SUFvSTFHLENBQUM7SUEvSEcsZUFBZTtJQUNQLEtBQUs7UUFDVCxJQTFCQyxxQ0FBcUIsQ0EwSnlkLFdBQVksQ0FoSXZmLGtCQUFrQixDQUFDLFFBQVEsRUFBSSxJQUFJLEdBQUU7WUFDckMsa0JBQWtCLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQztTQUN0QzthQUFNO1lBQ0gsT0FBTztTQUNWO0lBQ0wsQ0FBQztJQUNPLEtBQUs7UUFDVCxJQUFJLElBQUksQ0FBQyxhQUFhLEtBQUssRUFBRSxFQUFFO1lBQzNCLE9BQU8sQ0FBQyxJQUFJLENBQUMsaUNBQWlDLENBQUMsQ0FBQztZQUNoRCxNQUFNLE9BQU8sR0FBRyw0SEFBNEgsQ0FBQztZQUM3SSxPQUFPLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFDO1lBQ3RCLE9BQU87U0FDVjtRQUNELElBQUksQ0FBQyxhQUFhLEVBQUUsQ0FBQztRQUVyQix3Q0FBd0M7UUFDeEMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUNsQixJQUFJLENBQUMsY0FBYyxHQUFHLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLGVBQWUsRUFBRSxDQUFDLENBQUM7UUFDbEUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUNsQyxPQUFPLENBQUMsR0FBRyxDQUFD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","assetPath":"Assets/Zepeto
+    LeaderBoard Module/ZepetoScript/LeaderBoardManager.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"leaderboardId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"ZEPETO.Script.Leaderboard","name":"resetRule","type":"ZEPETO.Script.Leaderboard.ResetRule","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"contentsParent","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"myScoreGroup","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"scoreGroupPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"openBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"closeBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"seasonText","type":"UnityEngine.UI.Text","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"LeaderboardManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: cc308b07cbb545405c72e701ee3336c8
+  onlyWriteTrigger: 0

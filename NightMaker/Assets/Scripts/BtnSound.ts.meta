@@ -1,0 +1,37 @@
+fileFormatVersion: 2
+guid: 99484ec930b9a234f906a9969b093e71
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nclass
+    BtnSound extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.isJump = false;\r\n    }\r\n   
+    Start() {\r\n        this.audioSource = this.GetComponent($typeof(UnityEngine_1.AudioSource));\r\n       
+    UnityEngine_1.GameObject.FindObjectsOfType($typeof(UnityEngine_UI_1.Button),
+    true).forEach((value) => {\r\n            if (value.transform.name == \"Jump\"
+    && this.isJump) {\r\n                value.onClick.AddListener(() => {\r\n                   
+    this.audioSource.Stop();\r\n                    this.audioSource.Play();\r\n               
+    });\r\n                return;\r\n            }\r\n            else if (!this.isJump
+    && value.transform.name != \"Jump\") {\r\n                value.onClick.AddListener(()
+    => {\r\n                    this.audioSource.Stop();\r\n                    this.audioSource.Play();\r\n               
+    });\r\n            }\r\n        });\r\n    }\r\n}\r\nexports.default = BtnSound;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQnRuU291bmQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJCdG5Tb3VuZC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUNyRCxtREFBcUM7QUFDckMsNkNBQWtEO0FBQ2xELE1BQXFCLFFBQVMsU0FBUSxxQ0FBcUI7SUFBM0Q7O1FBR1csV0FBTSxHQUFRLEtBQUssQ0FBQztJQXFCL0IsQ0FBQztJQXBCRyxLQUFLO1FBQ0QsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHlCQUFXLEVBQUcsQ0FBQztRQUNwRCx3QkFBVSxDQUFDLGlCQUFpQixTQUFDLHVCQUFNLEdBQUUsSUFBSSxFQUFFLE9BQU8sQ0FBQyxDQUFDLEtBQUssRUFBQyxFQUFFO1lBQ3hELElBQUcsS0FBSyxDQUFDLFNBQVMsQ0FBQyxJQUFJLElBQUksTUFBTSxJQUFJLElBQUksQ0FBQyxNQUFNLEVBQUM7Z0JBQzdDLEtBQUssQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUUsRUFBRTtvQkFDMUIsSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLEVBQUUsQ0FBQztvQkFDeEIsSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLEVBQUUsQ0FBQztnQkFDNUIsQ0FBQyxDQUFDLENBQUE7Z0JBQ0YsT0FBTzthQUNWO2lCQUNJLElBQUcsQ0FBQyxJQUFJLENBQUMsTUFBTSxJQUFJLEtBQUssQ0FBQyxTQUFTLENBQUMsSUFBSSxJQUFJLE1BQU0sRUFBQztnQkFDbkQsS0FBSyxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRSxFQUFFO29CQUMxQixJQUFJLENBQUMsV0FBVyxDQUFDLElBQUksRUFBRSxDQUFDO29CQUN4QixJQUFJLENBQUMsV0FBVyxDQUFDLElBQUksRUFBRSxDQUFDO2dCQUM1QixDQUFDLENBQUMsQ0FBQTthQUNMO1FBRUwsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0NBRUo7QUF4QkQsMkJBd0JDIn0=","assetPath":"Assets/Scripts/BtnSound.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"isJump","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"BtnSound","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: b11a5ebbd741d53ab52e602431cdab5c
+  onlyWriteTrigger: 0

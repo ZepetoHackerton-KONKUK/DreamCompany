@@ -1,0 +1,50 @@
+fileFormatVersion: 2
+guid: 1f339f78e61c1584c9accf1ab08e15a1
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst
+    UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nclass BoilingPot extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\\r\\n    constructor() {\\r\\n        super(...arguments);\\r\\n        this.shakingDuration
+    = 5;\\r\\n        this.isShaking = false;\\r\\n        this.shakeTimer = 0;\\r\\n       
+    this.sumTimer = 0;\\r\\n        this.shakeInterval = 0.5;\\r\\n    }\\r\\n   
+    OnEnable() {\\r\\n        console.log(\\\"Enable Pot\\\");\\r\\n        this.originalPotPosition
+    = this.potPrefabRigidbody.transform.position; // \uCD08\uAE30 \uC704\uCE58 \uC800\uC7A5\\r\\n       
+    this.originalPotRotation = this.potPrefabRigidbody.transform.rotation; // \uCD08\uAE30
+    \uD68C\uC804 \uC800\uC7A5\\r\\n        this.StartShaking();\\r\\n        this.PlayBoilingSound();\\r\\n       
+    this.shakeTimer = 0;\\r\\n        this.sumTimer = 0;\\r\\n    }\\r\\n    Update()
+    {\\r\\n        if (this.isShaking) {\\r\\n            this.sumTimer += UnityEngine_1.Time.deltaTime;\\r\\n           
+    this.shakeTimer += UnityEngine_1.Time.deltaTime;\\r\\n            if (this.shakeTimer
+    >= this.shakeInterval) {\\r\\n                this.shakeTimer = 0;\\r\\n               
+    this.ShakePot();\\r\\n            }\\r\\n            if (this.sumTimer >= this.shakingDuration)
+    {\\r\\n                this.StopShaking();\\r\\n            }\\r\\n        }\\r\\n   
+    }\\r\\n    PlayBoilingSound() {\\r\\n        this.audioSource.clip = this.boilingSoupSound;\\r\\n       
+    this.audioSource.Play();\\r\\n    }\\r\\n    StartShaking() {\\r\\n        this.isShaking
+    = true;\\r\\n    }\\r\\n    ShakePot() {\\r\\n        // \uB79C\uB364\uD55C \uD798\uACFC
+    \uD68C\uC804\uC744 \uC801\uC6A9\\r\\n        let force = new UnityEngine_1.Vector3(UnityEngine_1.Random.Range(0,
+    0), UnityEngine_1.Random.Range(50, 75), UnityEngine_1.Random.Range(0, 0));\\r\\n       
+    let torque = new UnityEngine_1.Vector3(UnityEngine_1.Random.Range(-10, 10), UnityEngine_1.Random.Range(-10,
+    10), UnityEngine_1.Random.Range(0, 0));\\r\\n        this.potPrefabRigidbody.AddForce(force);\\r\\n       
+    this.potPrefabRigidbody.AddTorque(torque);\\r\\n    }\\r\\n    StopShaking()
+    {\\r\\n        this.isShaking = false;\\r\\n        this.potPrefabRigidbody.gameObject.transform.position
+    = this.originalPotPosition;\\r\\n        this.potPrefabRigidbody.gameObject.transform.rotation
+    = this.originalPotRotation;\\r\\n        this.gameObject.SetActive(false);\\r\\n   
+    }\\r\\n}\\r\\nexports.default = BoilingPot;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQm9pbGluZ1BvdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkJvaWxpbmdQb3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBc0Q7QUFDdEQsNkNBQStHO0FBRy9HLE1BQXFCLFVBQVcsU0FBUSxxQ0FBcUI7SUFBN0Q7O1FBTVksb0JBQWUsR0FBVyxDQUFDLENBQUM7UUFHNUIsY0FBUyxHQUFZLEtBQUssQ0FBQztRQUMzQixlQUFVLEdBQVcsQ0FBQyxDQUFDO1FBQ3ZCLGFBQVEsR0FBVSxDQUFDLENBQUM7UUFDcEIsa0JBQWEsR0FBVyxHQUFHLENBQUM7SUFtRHhDLENBQUM7SUFqREcsUUFBUTtRQUNKLE9BQU8sQ0FBQyxHQUFHLENBQUMsWUFBWSxDQUFDLENBQUM7UUFDMUIsSUFBSSxDQUFDLG1CQUFtQixHQUFHLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDLENBQUMsV0FBVztRQUNsRixJQUFJLENBQUMsbUJBQW1CLEdBQUcsSUFBSSxDQUFDLGtCQUFrQixDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUMsQ0FBQyxXQUFXO1FBQ2xGLElBQUksQ0FBQyxZQUFZLEVBQUUsQ0FBQztRQUNwQixJQUFJLENBQUMsZ0JBQWdCLEVBQUUsQ0FBQztRQUN4QixJQUFJLENBQUMsVUFBVSxHQUFHLENBQUMsQ0FBQztRQUNwQixJQUFJLENBQUMsUUFBUSxHQUFHLENBQUMsQ0FBQztJQUN0QixDQUFDO0lBRUQsTUFBTTtRQUNGLElBQUksSUFBSSxDQUFDLFNBQVMsRUFBRTtZQUNoQixJQUFJLENBQUMsUUFBUSxJQUFJLGtCQUFJLENBQUMsU0FBUyxDQUFDO1lBQ2hDLElBQUksQ0FBQyxVQUFVLElBQUksa0JBQUksQ0FBQyxTQUFTLENBQUM7WUFDbEMsSUFBRyxJQUFJLENBQUMsVUFBVSxJQUFJLElBQUksQ0FBQyxhQUFhLEVBQUM7Z0JBQ3JDLElBQUksQ0FBQyxVQUFVLEdBQUcsQ0FBQyxDQUFDO2dCQUNwQixJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7YUFDbkI7WUFDRCxJQUFHLElBQUksQ0FBQyxRQUFRLElBQUksSUFBSSxDQUFDLGVBQWUsRUFBQztnQkFDckMsSUFBSSxDQUFDLFdBQVcsRUFBRSxDQUFDO2FBQ3RCO1NBQ0o7SUFDTCxDQUFDO0lBRU8sZ0JBQWdCO1FBQ3BCLElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQztRQUM5QyxJQUFJLENBQUMsV0FBVyxDQUFDLElBQUksRUFBRSxDQUFDO0lBQzVCLENBQUM7SUFJTyxZQUFZO1FBQ2hCLElBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDO0lBQzFCLENBQUM7SUFFTyxRQUFRO1FBQ1osZ0JBQWdCO1FBQ2hCLElBQUksS0FBSyxHQUFHLElBQUkscUJBQU8sQ0FBQyxvQkFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDLEVBQUUsb0JBQU0sQ0FBQyxLQUFLLENBQUMsRUFBRSxFQUFFLEVBQUUsQ0FBQyxFQUFFLG9CQUFNLENBQUMsS0FBSyxDQUFDLENBQUMsRUFBRSxDQUFDLENBQUMsQ0FBQyxDQUFDO1FBQ3RGLElBQUksTUFBTSxHQUFHLElBQUkscUJBQU8sQ0FBQyxvQkFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsRUFBRSxFQUFFLENBQUMsRUFBRSxvQkFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsRUFBRSxFQUFFLENBQUMsRUFBRSxvQkFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUMzRixJQUFJLENBQUMsa0JBQWtCLENBQUMsUUFBUSxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQ3hDLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLENBQUM7SUFDOUMsQ0FBQztJQUVPLFdBQVc7UUFDZixJQUFJLENBQUMsU0FBUyxHQUFHLEtBQUssQ0FBQztRQUN2QixJQUFJLENBQUMsa0JBQWtCLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLG1CQUFtQixDQUFDO1FBQ2pGLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUMsbUJBQW1CLENBQUM7UUFDakYsSUFBSSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDckMsQ0FBQztDQUNKO0FBL0RELDZCQStEQyJ9\",\"assetPath\":\"Assets/Scripts/BoilingPot.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.PhysicsModule\",\"name\":\"potPrefabRigidbody\",\"type\":\"UnityEngine.Rigidbody\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.AudioModule\",\"name\":\"boilingSoupSound\",\"type\":\"UnityEngine.AudioClip\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.AudioModule\",\"name\":\"audioSource\",\"type\":\"UnityEngine.AudioSource\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]}],\"name\":\"BoilingPot\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: 1a0b298933e82c0ee73db480397742a8
+  onlyWriteTrigger: 0

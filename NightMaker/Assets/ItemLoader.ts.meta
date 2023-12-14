@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: cefc22c8d1b79b84a90ab0b2c657d8cf
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst
+    UnityEngine_UI_1 = require(\\\"UnityEngine.UI\\\");\\r\\nconst UnityEngine_1
+    = require(\\\"UnityEngine\\\");\\r\\nclass ItemLoader extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\\r\\n    constructor() {\\r\\n        super(...arguments);\\r\\n        this._count
+    = 14; // \uC544\uC774\uD15C \uD328\uB110\uC744 \uC5EC\uB294 \uBC84\uD2BC\uC5D0
+    \uB300\uD55C \uCC38\uC870\\r\\n    }\\r\\n    // \uC544\uC774\uD15C \uB85C\uB529
+    \uBA54\uC11C\uB4DC\\r\\n    LoadItems() {\\r\\n        let objects = [];\\r\\n       
+    for (let i = 0; i < this._count; i++) {\\r\\n            // \uD504\uB9AC\uD339
+    \uC778\uC2A4\uD134\uC2A4\uD654\\r\\n            const newItemThumb = UnityEngine_1.GameObject.Instantiate(this._itemPrefab,
+    this._parent);\\r\\n            // Item \uC774\uBBF8\uC9C0 \uB85C\uB4DC \uBC0F
+    \uC801\uC6A9\\r\\n            const ItemImage = newItemThumb.transform.GetChild(0).gameObject;\\r\\n           
+    ItemImage.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.itemImages[i];\\r\\n           
+    // Cost \uC774\uBBF8\uC9C0 \uB85C\uB4DC \uBC0F \uC801\uC6A9\\r\\n           
+    let Cost = newItemThumb.transform.Find(\\\"Cost\\\").GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = this.costPrice[i].toString();\\r\\n            objects.push(newItemThumb);\\r\\n       
+    }\\r\\n        return objects;\\r\\n    }\\r\\n}\\r\\nexports.default = ItemLoader;\\r\\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSXRlbUxvYWRlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkl0ZW1Mb2FkZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBc0Q7QUFDdEQsbURBQTZEO0FBQzdELDZDQUFpRjtBQUNqRixNQUFxQixVQUFXLFNBQVEscUNBQXFCO0lBQTdEOztRQUlZLFdBQU0sR0FBWSxFQUFFLENBQUMsQ0FBSSx1QkFBdUI7SUF1QjVELENBQUM7SUFsQkcsYUFBYTtJQUNOLFNBQVM7UUFDWixJQUFJLE9BQU8sR0FBQyxFQUFFLENBQUM7UUFDZixLQUFLLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsSUFBSSxDQUFDLE1BQU0sRUFBRSxDQUFDLEVBQUUsRUFBRTtZQUNsQyxZQUFZO1lBQ1osTUFBTSxZQUFZLEdBQWdCLHdCQUFVLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxXQUFXLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBZSxDQUFDO1lBRXZHLG1CQUFtQjtZQUNuQixNQUFNLFNBQVMsR0FBRyxZQUFZLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUF3QixDQUFDO1lBQzlFLFNBQVMsQ0FBQyxZQUFZLFNBQUMsc0JBQUssR0FBSSxNQUFNLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDLENBQUMsQ0FBQztZQUc1RCxtQkFBbUI7WUFDbkIsSUFBSSxJQUFJLEdBQUcsWUFBWSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUMsc0JBQXNCLFNBQUMscUJBQUksR0FBSSxJQUFJLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxRQUFRLEVBQUUsQ0FBQztZQUNsSCxPQUFPLENBQUMsSUFBSSxDQUFDLFlBQVksQ0FBQyxDQUFDO1NBQzlCO1FBQ0QsT0FBTyxPQUFPLENBQUM7SUFDbkIsQ0FBQztDQUNKO0FBM0JELDZCQTJCQyJ9\",\"assetPath\":\"Assets/ItemLoader.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"_itemPrefab\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"_parent\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"itemImages\",\"type\":\"UnityEngine.Sprite[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]},{\"assembly\":\"mscorlib\",\"name\":\"costPrice\",\"type\":\"System.Single[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]}],\"name\":\"ItemLoader\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: 7d489ee284a7b4314e9b3c766bb58c54
+  onlyWriteTrigger: 0

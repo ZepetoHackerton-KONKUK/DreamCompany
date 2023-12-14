@@ -1,0 +1,56 @@
+fileFormatVersion: 2
+guid: 1cfdd825e3beb0e4dbf6e31863cfa90e
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nclass
+    NPCInteraction extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        const spawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    spawnInfo.position = this.transform.position;\r\n        spawnInfo.rotation =
+    this.transform.rotation;\r\n        ZEPETO_Character_Controller_1.ZepetoCharacterCreator.CreateByZepetoId(this.zepetoId,
+    spawnInfo, (character) => {\r\n            this._npc = character;\r\n           
+    this.SetBubble();\r\n        });\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedLocalPlayer.AddListener(()
+    => {\r\n            this._zepetoCharacter = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n       
+    });\r\n    }\r\n    OnTriggerEnter(collider) {\r\n        if (this._zepetoCharacter
+    == null || UnityEngine_1.Object.op_Inequality(collider.gameObject, this._zepetoCharacter.gameObject))
+    {\r\n            return;\r\n        }\r\n        this.SetBubbleText(this.changedSpeechBubbleText);\r\n   
+    }\r\n    OnTriggerExit(collider) {\r\n        if (this._zepetoCharacter == null
+    || UnityEngine_1.Object.op_Inequality(collider.gameObject, this._zepetoCharacter.gameObject))
+    {\r\n            return;\r\n        }\r\n        this.SetBubbleText(this.speechBubbleText);\r\n   
+    }\r\n    SetBubble() {\r\n        this._speechBubbleObject = UnityEngine_1.Object.Instantiate(this.speechBubblePrefab);\r\n       
+    const level = 2;\r\n        this._speechBubbleObject.transform.localScale = UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.one,
+    level);\r\n        this._speechBubbleObject.transform.SetParent(this._npc.transform);\r\n       
+    this._speechBubbleObject.transform.position = UnityEngine_1.Vector3.op_Addition(this._npc.GetSocket(ZEPETO_Character_Controller_1.KnowSockets.HEAD_UPPER).position,
+    new UnityEngine_1.Vector3(0, this.speechBubbleYOffset, 0));\r\n        this._speechBubbleText
+    = this._speechBubbleObject.GetComponentInChildren($typeof(UnityEngine_UI_1.Text));\r\n       
+    this._speechBubbleText.transform.localScale = UnityEngine_1.Vector3.op_Division(UnityEngine_1.Vector3.one,
+    level);\r\n        this.SetBubbleText(this.speechBubbleText);\r\n        this._canvas
+    = this._speechBubbleObject.GetComponent($typeof(UnityEngine_1.Canvas));\r\n       
+    this._cachedWorldCamera = UnityEngine_1.Object.FindObjectOfType($typeof(UnityEngine_1.Camera));\r\n       
+    this._canvas.worldCamera = this._cachedWorldCamera;\r\n    }\r\n    SetBubbleText(bubbleText)
+    {\r\n        this._speechBubbleObject.SetActive(true);\r\n        this._speechBubbleText.text
+    = bubbleText;\r\n    }\r\n    Update() {\r\n        if (this._canvas != null)
+    {\r\n            this.UpdateCanvasRotation();\r\n        }\r\n    }\r\n    UpdateCanvasRotation()
+    {\r\n        this._canvas.transform.LookAt(this._cachedWorldCamera.transform);\r\n       
+    this._canvas.transform.Rotate(0, 180, 0);\r\n    }\r\n}\r\nexports.default =
+    NPCInteraction;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTlBDU3BlZWNoQnViYmxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTlBDU3BlZWNoQnViYmxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXNEO0FBQ3RELDZFQUE2SDtBQUM3SCw2Q0FBb0Y7QUFDcEYsbURBQXNDO0FBRXRDLE1BQXFCLGNBQWUsU0FBUSxxQ0FBcUI7SUFtQjdELEtBQUs7UUFDRCxNQUFNLFNBQVMsR0FBRyxJQUFJLHVDQUFTLEVBQUUsQ0FBQztRQUNsQyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDO1FBQzdDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUM7UUFFN0Msb0RBQXNCLENBQUMsZ0JBQWdCLENBQUMsSUFBSSxDQUFDLFFBQVEsRUFBRSxTQUFTLEVBQUUsQ0FBQyxTQUEwQixFQUFFLEVBQUU7WUFDN0YsSUFBSSxDQUFDLElBQUksR0FBRyxTQUFTLENBQUM7WUFDdEIsSUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO1FBQ3JCLENBQUMsQ0FBQyxDQUFBO1FBRUYsMkNBQWEsQ0FBQyxRQUFRLENBQUMsa0JBQWtCLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN2RCxJQUFJLENBQUMsZ0JBQWdCLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUM7UUFDdEYsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRUQsY0FBYyxDQUFDLFFBQWtCO1FBQzdCLElBQUksSUFBSSxDQUFDLGdCQUFnQixJQUFJLElBQUksSUF0Q1Asb0JBQU0sQ0FtRjg1UCxhQUFjLENBN0N2NlAsUUFBUSxDQUFDLFVBQVUsRUFBSSxJQUFJLENBQUMsZ0JBQWdCLENBQUMsVUFBVSxDQUFBLEVBQUU7WUFDMUYsT0FBTztTQUNWO1FBQ0QsSUFBSSxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsdUJB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","assetPath":"Assets/Scripts/NPCSpeechBubble.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"zepetoId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"speechBubbleText","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"","name":"S","type":"any","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"changedSpeechBubbleText","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"speechBubblePrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"speechBubbleYOffset","type":"System.Single","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"NPCInteraction","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: dbb5d5b967978dae038878d68f5a1c55
+  onlyWriteTrigger: 0

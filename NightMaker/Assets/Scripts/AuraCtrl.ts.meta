@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: f968086bddc84ef42a5c3c328b3fcd00
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nclass
+    AuraCtrl extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n       
+    UnityEngine_1.GameObject.DontDestroyOnLoad(this.gameObject);\r\n    }\r\n   
+    GenerateAura(obj, index) {\r\n        let particle;\r\n        particle = obj.GetComponentsInChildren($typeof(UnityEngine_1.ParticleSystem));\r\n       
+    if (particle.length > 0) {\r\n            particle.forEach((value) => {\r\n               
+    UnityEngine_1.GameObject.Destroy(value.GetComponentInChildren($typeof(UnityEngine_1.ParticleSystem)).gameObject);\r\n           
+    });\r\n        }\r\n        if (index > -1) {\r\n            const Aura = UnityEngine_1.GameObject.Instantiate(this.Aura[index],
+    obj.transform);\r\n            if (!(__UnityEngine__.Object.op_Equality(obj,
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject)))
+    {\r\n                this.ChangeLayerRecursively(Aura.transform);\r\n           
+    }\r\n            Aura.transform.localScale = __UnityEngine__.Vector3.op_Multiply(Aura.transform.localScale,
+    0.5);\r\n        }\r\n    }\r\n    ChangeLayerRecursively(trans) {\r\n       
+    trans.gameObject.layer = 7;\r\n        for (let i = 0; i < trans.childCount;
+    i++) {\r\n            this.ChangeLayerRecursively(trans.GetChild(i));\r\n       
+    }\r\n    }\r\n}\r\nexports.default = AuraCtrl;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQXVyYUN0cmwuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJBdXJhQ3RybC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxpREFBcUQ7QUFDckQsNkNBQStEO0FBQy9ELDZFQUE0RDtBQUM1RCxNQUFxQixRQUFTLFNBQVEscUNBQXFCO0lBR3ZELEtBQUs7UUFDRCx3QkFBVSxDQUFDLGlCQUFpQixDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQztJQUNsRCxDQUFDO0lBQ00sWUFBWSxDQUFDLEdBQWMsRUFBQyxLQUFZO1FBQzNDLElBQUksUUFBeUIsQ0FBQztRQUM5QixRQUFRLEdBQUcsR0FBRyxDQUFDLHVCQUF1QixTQUFDLDRCQUFjLEVBQUcsQ0FBQztRQUN6RCxJQUFHLFFBQVEsQ0FBQyxNQUFNLEdBQUUsQ0FBQyxFQUFDO1lBQ2xCLFFBQVEsQ0FBQyxPQUFPLENBQUMsQ0FBQyxLQUFLLEVBQUMsRUFBRTtnQkFDdEIsd0JBQVUsQ0FBQyxPQUFPLENBQUMsS0FBSyxDQUFDLHNCQUFzQixTQUFDLDRCQUFjLEdBQUksVUFBVSxDQUFDLENBQUM7WUFDbEYsQ0FBQyxDQUFDLENBQUM7U0FDTjtRQUNELElBQUcsS0FBSyxHQUFHLENBQUMsQ0FBQyxFQUFDO1lBQ1YsTUFBTSxJQUFJLEdBQUcsd0JBQVUsQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsRUFBQyxHQUFHLENBQUMsU0FBUyxDQUFlLENBQUM7WUFDbEYsSUFBRyxDQUFDLHdCQWF3dVQsV0FBWSxDQWJudlQsR0FBRyxFQUFJLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFVBQVUsRUFBQyxFQUFDO2dCQUM5RSxJQUFJLENBQUMsc0JBQXNCLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO2FBQy9DO1lBQ0QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxVQUFVLDJCQVVpc3BCLFdBQVksQ0FWdHVwQixJQUFJLENBQUMsU0FBUyxDQUFDLFVBQVUsRUFBSSxHQUFHLEVBQUM7U0FDcEM7SUFFTCxDQUFDO0lBQ08sc0JBQXNCLENBQUMsS0FBZTtRQUMxQyxLQUFLLENBQUMsVUFBVSxDQUFDLEtBQUssR0FBRyxDQUFDLENBQUM7UUFDM0IsS0FBSSxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxHQUFDLEtBQUssQ0FBQyxVQUFVLEVBQUUsQ0FBQyxFQUFFLEVBQUM7WUFDbkMsSUFBSSxDQUFDLHNCQUFzQixDQUFDLEtBQUssQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztTQUNsRDtJQUNMLENBQUM7Q0FDSjtBQTdCRCwyQkE2QkMifQ==","assetPath":"Assets/Scripts/AuraCtrl.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"Aura","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"AuraCtrl","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 1208efd89de30f4af71b8126467d1c8a
+  onlyWriteTrigger: 0

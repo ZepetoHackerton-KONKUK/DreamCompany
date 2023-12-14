@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: 2ef5e9feb29b1ea418867603a939abbb
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nclass LogoFloat extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.Dir
+    = true;\r\n        this.time = 0;\r\n    }\r\n    Start() {\r\n        this.rigid
+    = this.gameObject.GetComponent($typeof(UnityEngine_1.Rigidbody));\r\n    }\r\n   
+    Update() {\r\n        if (this.time < 0) {\r\n            this.Dir = true;\r\n       
+    }\r\n        else if (this.time > 1) {\r\n            this.Dir = false;\r\n       
+    }\r\n        if (this.Dir) {\r\n            this.time += UnityEngine_1.Time.deltaTime;\r\n           
+    this.rigid.velocity = new UnityEngine_1.Vector3(0, 0.1, 0);\r\n        }\r\n       
+    else {\r\n            this.time -= UnityEngine_1.Time.deltaTime;\r\n           
+    this.rigid.velocity = new UnityEngine_1.Vector3(0, -0.1, 0);\r\n        }\r\n       
+    this.transform.Rotate(UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up,
+    0.1));\r\n    }\r\n}\r\nexports.default = LogoFloat;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9nb0Zsb2F0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTG9nb0Zsb2F0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBQ3JELDZDQUE2RDtBQUM3RCxNQUFxQixTQUFVLFNBQVEscUNBQXFCO0lBQTVEOztRQUVZLFFBQUcsR0FBUSxJQUFJLENBQUM7UUFDaEIsU0FBSSxHQUFVLENBQUMsQ0FBQztJQXdCNUIsQ0FBQztJQXZCRyxLQUFLO1FBQ0QsSUFBSSxDQUFDLEtBQUssR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyx1QkFBUyxFQUFHLENBQUM7SUFDM0QsQ0FBQztJQUVELE1BQU07UUFDRixJQUFHLElBQUksQ0FBQyxJQUFJLEdBQUcsQ0FBQyxFQUFDO1lBQ2IsSUFBSSxDQUFDLEdBQUcsR0FBRyxJQUFJLENBQUE7U0FDbEI7YUFDSSxJQUFHLElBQUksQ0FBQyxJQUFJLEdBQUcsQ0FBQyxFQUFDO1lBQ2xCLElBQUksQ0FBQyxHQUFHLEdBQUcsS0FBSyxDQUFDO1NBQ3BCO1FBQ0QsSUFBRyxJQUFJLENBQUMsR0FBRyxFQUFDO1lBQ1IsSUFBSSxDQUFDLElBQUksSUFBRyxrQkFBSSxDQUFDLFNBQVMsQ0FBQztZQUMzQixJQUFJLENBQUMsS0FBSyxDQUFDLFFBQVEsR0FBRyxJQUFJLHFCQUFPLENBQUMsQ0FBQyxFQUFDLEdBQUcsRUFBQyxDQUFDLENBQUMsQ0FBQztTQUM5QzthQUNHO1lBQ0EsSUFBSSxDQUFDLElBQUksSUFBRyxrQkFBSSxDQUFDLFNBQVMsQ0FBQztZQUMzQixJQUFJLENBQUMsS0FBSyxDQUFDLFFBQVEsR0FBRyxJQUFJLHFCQUFPLENBQUMsQ0FBQyxFQUFDLENBQUMsR0FBRyxFQUFDLENBQUMsQ0FBQyxDQUFDO1NBQy9DO1FBQ0QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBeEJWLHFCQUFPLENBNEJvc3FCLFdBQVksQ0FKNXNxQixxQkFBTyxDQUFDLEVBQUUsRUFBQyxHQUFHLEVBQUMsQ0FBQztJQUUxQyxDQUFDO0NBRUo7QUEzQkQsNEJBMkJDIn0=","assetPath":"Assets/Scripts/LogoFloat.ts","manifest":{"properties":[],"name":"LogoFloat","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: c0adde108497406482bf354631fe883c
+  onlyWriteTrigger: 0
