@@ -8,14 +8,14 @@ Casual, Puzzle, Role Playing
 Nightmaker—an employee of Dream Company, a company specializing in crafting nightmares.
 
 ### [Our USP]
-1. - 'KONKUK' Team's Unique Interpretation of Dreams and World Style
+1. 'KONKUK' Team's Unique Interpretation of Dreams and World Style
 We adopted the fundamental human question of "Where dreams come from?" as the main background for our game design (as seen earlier in "What we want to tell the judges"). This idea puts a twist on the negative keywords that often come to mind when we think of "nightmares": horror, fear, pain, bleakness, and loss.
 
-- By maintaining the tone and manner of the 'nightmare' we typically associate with it, while imagining a world in which the company that creates the nightmare exists - the Dream Company - it transforms a potentially heavy subject into something that is both familiar and exciting to us.
+By maintaining the tone and manner of the 'nightmare' we typically associate with it, while imagining a world in which the company that creates the nightmare exists - the Dream Company - it transforms a potentially heavy subject into something that is both familiar and exciting to us.
 
-- The game starts as players move from the ticket gate to the waiting room of 'Dream Company', mirroring the daily routine of commuters passing through subway gates to go to work, thereby enhancing realism and immersion.
+The game starts as players move from the ticket gate to the waiting room of 'Dream Company', mirroring the daily routine of commuters passing through subway gates to go to work, thereby enhancing realism and immersion.
 
-- Additionally, we've added fun elements to the game with the sub-concept of 'kids who don't easily feel fear in modern times' (similar to the concept of a devil made redundant by greater human atrocities). As the world evolves, kids no longer fear simple nightmares. However, to earn scores and 'Crystals', players need to strive to become stronger 'Nightmakers', understanding and catering to the fears kids do feel.
+Additionally, we've added fun elements to the game with the sub-concept of 'kids who don't easily feel fear in modern times' (similar to the concept of a devil made redundant by greater human atrocities). As the world evolves, kids no longer fear simple nightmares. However, to earn scores and 'Crystals', players need to strive to become stronger 'Nightmakers', understanding and catering to the fears kids do feel.
 
 2. Designing a World that inspires creativity and motivation in users
 We have designed a system that allows users to unleash their creativity while also challenges in the game. 
