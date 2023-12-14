@@ -11,35 +11,35 @@ Nightmaker—an employee of Dream Company, a company specializing in crafting ni
 1. 'KONKUK' Team's Unique Interpretation of Dreams and World Style
 We adopted the fundamental human question of "Where dreams come from?" as the main background for our game design (as seen earlier in "What we want to tell the judges"). This idea puts a twist on the negative keywords that often come to mind when we think of "nightmares": horror, fear, pain, bleakness, and loss.
 
-By maintaining the tone and manner of the 'nightmare' we typically associate with it, while imagining a world in which the company that creates the nightmare exists - the Dream Company - it transforms a potentially heavy subject into something that is both familiar and exciting to us.
+  By maintaining the tone and manner of the 'nightmare' we typically associate with it, while imagining a world in which the company that creates the nightmare exists - the Dream Company - it transforms a potentially heavy subject into something that is both familiar and exciting to us.
 
-The game starts as players move from the ticket gate to the waiting room of 'Dream Company', mirroring the daily routine of commuters passing through subway gates to go to work, thereby enhancing realism and immersion.
+  The game starts as players move from the ticket gate to the waiting room of 'Dream Company', mirroring the daily routine of commuters passing through subway gates to go to work, thereby enhancing realism and immersion.
 
-Additionally, we've added fun elements to the game with the sub-concept of 'kids who don't easily feel fear in modern times' (similar to the concept of a devil made redundant by greater human atrocities). As the world evolves, kids no longer fear simple nightmares. However, to earn scores and 'Crystals', players need to strive to become stronger 'Nightmakers', understanding and catering to the fears kids do feel.
+  Additionally, we've added fun elements to the game with the sub-concept of 'kids who don't easily feel fear in modern times' (similar to the concept of a devil made redundant by greater human atrocities). As the world evolves, kids no longer fear simple nightmares. However, to earn scores and 'Crystals', players need to strive to become stronger 'Nightmakers', understanding and catering to the fears kids do feel.
 
 2. Designing a World that inspires creativity and motivation in users
 We have designed a system that allows users to unleash their creativity while also challenges in the game. 
 
-By giving users the role of 'Nightmaker', an employee who is tasked with giving kids nightmares at ‘Dream Company’, they can recognize their mission in our world.
+  By giving users the role of 'Nightmaker', an employee who is tasked with giving kids nightmares at ‘Dream Company’, they can recognize their mission in our world.
 
-We also give users a reason to want to play and stay in our world, knowing that the more scary nightmares they give kids, the more 'Crystals' they can earn to advance in the company, and the higher their game score ranking to be recognized.
+  We also give users a reason to want to play and stay in our world, knowing that the more scary nightmares they give kids, the more 'Crystals' they can earn to advance in the company, and the higher their game score ranking to be recognized.
 
-Consistency in concept and ongoing storytelling is also a point of pride in our world. Elements such as the intro video, transitions between game phases, statements within loading images, and overall world design effectively communicate the intended concept to users. Users will likely quickly grasp our world's concept and find resonance with the story.
+  Consistency in concept and ongoing storytelling is also a point of pride in our world. Elements such as the intro video, transitions between game phases, statements within loading images, and overall world design effectively communicate the intended concept to users. Users will likely quickly grasp our world's concept and find resonance with the story.
 
-'Special Items' are another way to motivate users to play your game. These items can be used to decorate the user's avatar with colorful effects, creating a desire to collect them. (It's a proven fact in ZEPETO that you want to make your avatar look better.) In order to collect ‘Special Items’, user need to collect ‘Crystals’, which in turn motivates you to play the game again. They can also act as bait to take pictures in the world and share them on user’s feed.
+  'Special Items' are another way to motivate users to play your game. These items can be used to decorate the user's avatar with colorful effects, creating a desire to collect them. (It's a proven fact in ZEPETO that you want to make your avatar look better.) In order to collect ‘Special Items’, user need to collect ‘Crystals’, which in turn motivates you to play the game again. They can also act as bait to take pictures in the world and share them on user’s feed.
 
 3. Fundamental Human Psychology and Desire Stimulating Content Planning
 The French scholar Roger Caillois, building upon the theory of 'Homo Ludens', defined the 'four elements of play' as 'Agon (competition)', 'Mimicry (role-playing)', 'Ilinx (vertigo)', and 'Alea (chance)' in his book 'Man, Plays and Games'. These four elements are known to have evolved in all forms of human play and are considered very important theories in modern video games.
 
-In our world, these four elements of play are applied in every corner of the content.
+  In our world, these four elements of play are applied in every corner of the content.
 
-'Crossroads' and 'Pieces: Puzzle' are simple casual/puzzle games that simultaneously feature multiplayer and voting, competitive elements, allowing users to feel a sense of achievement and superiority by winning against other users. The real-time ranking competition in 'Crossroads' and the variety in 'Pieces: Puzzle' from different pictures, voting results, and the novelty of the changing puzzles make the game enjoyable for users. (Agon, Ilinx)
+  'Crossroads' and 'Pieces: Puzzle' are simple casual/puzzle games that simultaneously feature multiplayer and voting, competitive elements, allowing users to feel a sense of achievement and superiority by winning against other users. The real-time ranking competition in 'Crossroads' and the variety in 'Pieces: Puzzle' from different pictures, voting results, and the novelty of the changing puzzles make the game enjoyable for users. (Agon, Ilinx)
 
-By placing the ranking board prominently and centrally in the world, we stimulate the desire to become a top-ranked player and the desire to show off, providing a strong motivation to play. Users who achieve ranks 1 to 3 will likely feel immense exhilaration. (Agon, Ilinx)
+  By placing the ranking board prominently and centrally in the world, we stimulate the desire to become a top-ranked player and the desire to show off, providing a strong motivation to play. Users who achieve ranks 1 to 3 will likely feel immense exhilaration. (Agon, Ilinx)
 
-As previously mentioned, by assigning the role of 'Nightmaker', we allow users to experience new emotions and experiences unique to our 'Dream Company'. Various ranks provide users with goals for achievement, and the 'Tier Icon' and 'ID Card Frame' obtained upon tier promotion help users feel both recognition for their position earned through gameplay and the desire to collect items. (Mimicry, Ilinx)
+  As previously mentioned, by assigning the role of 'Nightmaker', we allow users to experience new emotions and experiences unique to our 'Dream Company'. Various ranks provide users with goals for achievement, and the 'Tier Icon' and 'ID Card Frame' obtained upon tier promotion help users feel both recognition for their position earned through gameplay and the desire to collect items. (Mimicry, Ilinx)
 
-Lastly, in our world, the game-changer item 'Soup' maximizes Alea (chance) and Ilinx (vertigo). The buff effect of 'Soup' carries extreme probabilities. Users can experience catharsis as they obtain more dramatic percentage buffs from the high-priced 'Soup' item. At the same time, the less desirable buff effects motivate users to invest more 'jam' in our World to achieve better effects.
+  Lastly, in our world, the game-changer item 'Soup' maximizes Alea (chance) and Ilinx (vertigo). The buff effect of 'Soup' carries extreme probabilities. Users can experience catharsis as they obtain more dramatic percentage buffs from the high-priced 'Soup' item. At the same time, the less desirable buff effects motivate users to invest more 'jam' in our World to achieve better effects.
 
 ### [Overall World Flow / Game Composition]
 1. Intro: When a user first enters the world, they are greeted with an opening video that encapsulates the concept of our world. This video is skippable and serves to preview the experiences they will have at Dream Company.
@@ -51,15 +51,15 @@ Lastly, in our world, the game-changer item 'Soup' maximizes Alea (chance) and I
 4. World Space Composition: Our World consists of areas such as the lobby, help desks, waiting room, lounge, and photo spots. The initial spawn point for users is the lobby, surrounded by four help desks. These desks help 'Nightmakers' achieve their goals smoothly in 'Dream Company'. Detailed explanations will follow in the next section. The waiting room is where users wait for other players for multiplayer gameplay. Like commuting to work by passing through a platform's ticket gates and taking the subway in real life, the 'Nightmakers' also pass through gates to embark on their work. The lounge and photo spots are spaces created to convey the concept of a 'company'. Here, users can interact, take beautiful photos, and share them on the ZEPETO feed.
 
 5. World UI: The default UI of our World is composed as follows:
-- User's current job title and tier icon.
-- Number of 'Crystals' owned.
-- 'Soup' bonus percentage and remaining game turns for the bonus.
-- User profile photo with an ID card border item.
-- World missions.
-- 7-day attendance reward.
-- World usage guide.
-- Pose selection.
-- Raking System (Leaderboard)
+  - User's current job title and tier icon.
+  - Number of 'Crystals' owned.
+  - 'Soup' bonus percentage and remaining game turns for the bonus.
+  - User profile photo with an ID card border item.
+  - World missions.
+  - 7-day attendance reward.
+  - World usage guide.
+  - Pose selection.
+  - Raking System (Leaderboard)
 
 ### [Game : Crossroads & Pieces(Puzzle)]
 Note: From least one, Multi-play is possible to eight. 
